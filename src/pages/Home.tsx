@@ -1,4 +1,5 @@
 import React from "react";
+import { IonContent, IonButton, IonPage } from '@ionic/react';
 import { useHistory } from "react-router-dom";
 
 const Home = () => {
@@ -9,11 +10,14 @@ const Home = () => {
     history.push("/login"); // Redirect to the login page
   };
 
-  return (
-    <div className="login-main">
-      <h1>Home page</h1>
-      <button onClick={handleLogout}>Logout</button>
-    </div>
+  return (<IonPage>
+    <IonContent>
+      <div className="login-main">
+        <h1>Home page</h1>
+        <IonButton onClick={handleLogout}>Logout</IonButton>
+      </div>
+    </IonContent>
+  </IonPage>
   );
 };
 

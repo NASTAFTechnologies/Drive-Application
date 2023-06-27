@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import './Form.css';
 import {
-  IonApp,
   IonContent,
   IonInput,
   IonButton,
@@ -39,8 +38,7 @@ const Login = () => {
     e.preventDefault();
     if (email === 'admin@gmail.com' && password === 'Admin@321') {
       setTimeout(() => {
-        localStorage.setItem('auth', true);
-        history.push('/home');
+        localStorage.setItem('auth', 'true');
         setShowLoginSuccess(true);
       }, 2000);
     } else {
@@ -52,68 +50,67 @@ const Login = () => {
     setEmail('');
     setPassword('');
     setShowLoginSuccess(false);
-    history.push('/home'); // Redirect to /home route
+
+    setTimeout(() => {
+      history.push('/home'); // Redirect to /home route
+    }, 0);
   };
 
   return (
-    <IonApp>
-      <IonPage>
-        <IonContent>
-          <div className="login-container">
-            <div className="glasses">
-              <form onSubmit={handleLogin}>
-                <h1>Login</h1>
-                <div className="form-input">
-                  <div className="icon">
-                    <IonIcon icon={mailOutline} />
-                  </div>
-                  <IonInput
-                    className="custom-input"
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onIonChange={(e) => setEmail(e.target.value)}
-                    required
-                  ></IonInput>
+    <IonPage>
+      <IonContent>
+        <div className="login-container">
+          <div className="glasses">
+            <form onSubmit={handleLogin}>
+              <h1>Login</h1>
+              <div className="form-input">
+                <div className="icon">
+                  <IonIcon icon={mailOutline} />
                 </div>
-                <div className="form-input">
-                  <div className="icon">
-                    <IonIcon icon={lockClosedOutline} />
-                  </div>
-                  <IonInput
-                    className="custom-input"
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="Password"
-                    value={password}
-                    onIonChange={(e) => setPassword(e.target.value)}
-                    required
-                  ></IonInput>
-                  <div
-                    className="toggle-password"
-                    onClick={togglePasswordVisibility}
-                  >
-                    <IonIcon
-                      icon={showPassword ? eyeOffOutline : eyeOutline}
-                    />
-                  </div>
+                <IonInput
+                  className="custom-input"
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onIonChange={(e) => setEmail(e.detail.value)}
+                  required
+                ></IonInput>
+              </div>
+              <div className="form-input">
+                <div className="icon">
+                  <IonIcon icon={lockClosedOutline} />
                 </div>
-                <div className="action-btn">
-                  <IonButton
-                    className="Login-btn"
-                    size="large"
-                    fill="outline"
-                    type="submit"
-                  >
-                    Login
-                  </IonButton>
-                  <p>Forgotten Password?</p>
+                <IonInput
+                  className="custom-input"
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Password"
+                  value={password}
+                  onIonChange={(e) => setPassword(e.detail.value)}
+                  required
+                ></IonInput>
+                <div
+                  className="toggle-password"
+                  onClick={togglePasswordVisibility}
+                >
+                  <IonIcon
+                    icon={showPassword ? eyeOffOutline : eyeOutline}
+                  />
                 </div>
-              </form>
-            </div>
+              </div>
+              <div className="action-btn">
+                <IonButton
+                  className="Login-btn"
+                  expand="block"
+                  type="submit"
+                >
+                  Login
+                </IonButton>
+                <p>Forgotten Password?</p>
+              </div>
+            </form>
           </div>
-        </IonContent>
-      </IonPage>
-
+        </div>
+      </IonContent>
       <IonAlert
         isOpen={showLoginSuccess}
         onDidDismiss={handleLoginSuccessAlertClose}
@@ -121,7 +118,7 @@ const Login = () => {
         message="You have successfully logged in!"
         buttons={['OK']}
       />
-    </IonApp>
+    </IonPage>
   );
 };
 
