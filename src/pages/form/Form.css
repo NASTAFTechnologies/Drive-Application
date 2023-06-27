@@ -1,0 +1,96 @@
+.login-container {
+  background-image: url("https://img.freepik.com/free-vector/flat-design-muscle-car-illustration_23-2149453165.jpg?w=740&t=st=1687765084~exp=1687765684~hmac=8800b8f8479e6f50150bcb48464fd4cafca23fe0fcee380015d94ba658aafcde");
+  background-repeat: cover;
+  background-position: 10%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.glasses {
+  height: 100%;
+  width: 100%;
+  backdrop-filter: blur(5px);
+  gap: 16px;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.login-container form {
+  background-color: #00000068;
+  border: 2px solid #ffffff;
+  padding: 20px;
+  width: 100%;
+  height: 60%;
+  margin: 20px 10px;
+  border-radius: 10px;
+}
+
+.login-container form h1 {
+  color: #fff;
+  text-align: center;
+  font-weight: 600;
+  font-size: 35px;
+}
+
+.form-input {
+  position: relative;
+  display: flex;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  /* background-color: #fff; */
+  margin: 10px;
+}
+
+.form-input .icon {
+  color: #dfff41;
+  font-size: 20px;
+  font-weight: bolder;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 10px;
+}
+
+.custom-input {
+  letter-spacing: 1px;
+  --color: #fff;
+}
+
+.action-btn {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.action-btn p {
+  color: #fff;
+  font-size: 23px;
+}
+
+.action-btn p:hover {
+  opacity: .9;
+  text-decoration: underline;
+}
+
+.toggle-password {
+  color: #fff;
+  font-weight: bolder;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 8px;
+}
+
+.action-btn .Login-btn {
+  width: 90%;
+  --border-radius: 30px;
+  --background: #dfff41;
+  --border-color: #dfff41;
+  color: #000;
+  font-weight: bold;
+}
