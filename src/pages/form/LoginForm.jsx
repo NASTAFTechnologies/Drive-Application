@@ -30,7 +30,7 @@ const Login = () => {
   useEffect(() => {
     const isAuthenticated = localStorage.getItem('auth');
     if (isAuthenticated) {
-      history.replace('/home');
+      history.replace('/menu');
     }
   }, [history]);
 
@@ -52,7 +52,7 @@ const Login = () => {
     setShowLoginSuccess(false);
 
     setTimeout(() => {
-      history.push('/home'); // Redirect to /home route
+      history.push('/menu/menu1'); // Redirect to /home route
     }, 0);
   };
 
