@@ -1,12 +1,12 @@
 import React from 'react'
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/react'
-const Details = () => {
+const Settings = () => {
     return (
         <IonPage>
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>
-                        Menu3
+                        Settings
                     </IonTitle>
                 </IonToolbar>
             </IonHeader>
@@ -16,4 +16,4 @@ const Details = () => {
     )
 }
 
-export default Details
+export default Settings

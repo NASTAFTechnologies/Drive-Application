@@ -1,37 +1,37 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel, IonPage } from '@ionic/react';
-import { ellipse, triangle } from 'ionicons/icons';
-import Menu1 from './Menu1';
+import { settingsOutline, locationOutline, homeOutline } from 'ionicons/icons';
+import Home from './Home';
 import Menu2 from './Menu2';
-import Details from './Details';
+import Settings from './Settings';
 
 const Menu: React.FC = () => {
   return (
     <IonPage >
       <IonTabs>
         <IonRouterOutlet>
-          <Route exact path="/menu/menu1" component={Menu1} />
-          <Route exact path="/menu/menu2" component={Menu2} />
-          <Route exact path="/menu/menu3" component={Details} />
+          <Route exact path="/menu/home" component={Home} />
+          <Route exact path="/menu/location" component={Menu2} />
+          <Route exact path="/menu/setting" component={Settings} />
           <Route exact path="/menu">
-            <Redirect to="/menu/menu1" />
-            <Redirect to="/menu/menu2" />
-            <Redirect to="/menu/menu3" />
+            <Redirect to="/menu/home" />
+            <Redirect to="/menu/location" />
+            <Redirect to="/menu/setting" />
           </Route>
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
-          <IonTabButton tab="Menu1" href="/menu/menu1">
-            <IonIcon icon={ellipse} />
-            <IonLabel>Menu1</IonLabel>
+          <IonTabButton tab="Menu1" href="/menu/home">
+            <IonIcon icon={homeOutline} />
+            <IonLabel>Home</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="Menu2" href="/menu/menu2">
-            <IonIcon icon={triangle} />
-            <IonLabel>Menu2</IonLabel>
+          <IonTabButton tab="Menu2" href="/menu/location">
+            <IonIcon icon={locationOutline} />
+            <IonLabel>Loction</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="Menu3" href="/menu/menu3">
-            <IonIcon icon={ellipse} />
-            <IonLabel>Menu3</IonLabel>
+          <IonTabButton tab="Menu3" href="/menu/setting">
+            <IonIcon icon={settingsOutline} />
+            <IonLabel>Settings</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>

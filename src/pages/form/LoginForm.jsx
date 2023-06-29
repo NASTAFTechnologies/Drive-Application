@@ -18,8 +18,8 @@ import {
 
 const Login = () => {
   const history = useHistory();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('admin@gmail.com');
+  const [password, setPassword] = useState('Admin@321');
   const [showPassword, setShowPassword] = useState(false);
   const [showLoginSuccess, setShowLoginSuccess] = useState(false);
 
@@ -30,7 +30,7 @@ const Login = () => {
   useEffect(() => {
     const isAuthenticated = localStorage.getItem('auth');
     if (isAuthenticated) {
-      history.replace('/menu');
+      history.replace('/home');
     }
   }, [history]);
 
@@ -52,7 +52,7 @@ const Login = () => {
     setShowLoginSuccess(false);
 
     setTimeout(() => {
-      history.push('/menu/menu1'); // Redirect to /home route
+      history.push('/home'); // Redirect to /home route
     }, 0);
   };
 
