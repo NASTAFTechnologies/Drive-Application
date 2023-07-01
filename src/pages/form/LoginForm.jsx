@@ -52,7 +52,7 @@ const Login = () => {
     setShowLoginSuccess(false);
 
     setTimeout(() => {
-      history.push('/menu'); // Redirect to /home route
+      history.push('/menu'); // Redirect to /menu route
     }, 0);
   };
 

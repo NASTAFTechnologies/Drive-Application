@@ -1,5 +1,5 @@
-import React from 'react';
-import './Home.css'
+import React, { useEffect } from 'react';
+import './Home.css';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon } from '@ionic/react';
 import { useHistory } from "react-router-dom";
 import { logOutOutline } from 'ionicons/icons';
@@ -11,6 +11,14 @@ const Home: React.FC = () => {
     localStorage.removeItem("auth"); // Remove the authentication flag from localStorage
     history.push("/"); // Redirect to the login page
   };
+
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem('auth');
+    if (!isAuthenticated) {
+      history.replace('/'); // Redirect to the login page if not authenticated
+    }
+  }, [history]);
+
   return (
     <IonPage>
       <IonHeader>
@@ -19,12 +27,16 @@ const Home: React.FC = () => {
             <IonButton fill="clear" onClick={handleLogout}>
               <IonIcon style={{ color: "#000" }} icon={logOutOutline} />
             </IonButton>
-            <IonTitle >Home</IonTitle>
+            <IonTitle>Home</IonTitle>
           </div>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid tempora, impedit reiciendis velit ratione suscipit deserunt odit esse delectus magni! In suscipit nostrum dolore a esse excepturi rem neque voluptate!</p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid tempora,
+          impedit reiciendis velit ratione suscipit deserunt odit esse delectus magni!
+          In suscipit nostrum dolore a esse excepturi rem neque voluptate!
+        </p>
       </IonContent>
     </IonPage>
   );

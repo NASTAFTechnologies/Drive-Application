@@ -28,7 +28,6 @@ const Menu: React.FC = () => {
             <Redirect to="/menu/location" />
             <Redirect to="/menu/setting" />
             <Redirect to="/menu/home" />
-
           </Route>
         </IonRouterOutlet>
         <IonTabBar slot="bottom">

@@ -8,7 +8,8 @@ declare global {
   }
 }
 
-const libraries = ['places']; // Required library for places autocomplete
+const libraries: ("places" | "drawing" | "geometry" | "localContext" | "visualization")[] = ['places'];
+
 
 const center = { lat: 37.7749, lng: -122.4194 }; // Initial map center
 
@@ -16,7 +17,7 @@ const MapContainer = () => {
   const mapRef = useRef<google.maps.Map | null>(null);
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: 'YOUR_GOOGLE_MAPS_API_KEY',
+    googleMapsApiKey: 'YOUR_GOOGLE_MAPS_API_KEY', 
     libraries,
   });
 
