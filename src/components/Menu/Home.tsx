@@ -9,7 +9,7 @@ const Home: React.FC = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("auth"); // Remove the authentication flag from localStorage
-    history.push("/login"); // Redirect to the login page
+    history.push("/"); // Redirect to the login page
   };
   return (
     <IonPage>

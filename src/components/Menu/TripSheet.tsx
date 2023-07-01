@@ -1,12 +1,12 @@
 import React from 'react';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/react';
 
-const Menu1: React.FC = () => {
+const TripSheet: React.FC = () => {
   return (
     <IonPage >
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Loction</IonTitle>
+          <IonTitle>TripSheet</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -16,4 +16,4 @@ const Menu1: React.FC = () => {
   );
 };
 
-export default Menu1;
+export default TripSheet;

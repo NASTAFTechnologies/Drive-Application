@@ -1,0 +1,24 @@
+.Menu-Button {
+    background: #000;
+    transition: 0.5s;
+  }
+  
+  .Menu-Button:hover {
+    background: #dfff41;
+    color: #000;
+  }
+  
+  .Menu-Button:hover .Menu-icon,
+  .Menu-Button:hover .Menu-lable {
+    color: #000;
+  }
+  
+  .Menu-icon {
+    color: #dfff41;
+    transition: 0.5s;
+  }
+  
+  .Menu-lable {
+    color: #fff;
+  }
+  
