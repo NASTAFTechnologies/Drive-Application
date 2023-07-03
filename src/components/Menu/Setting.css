@@ -1,0 +1,14 @@
+.list .list-item{
+    width: 100%;
+    padding: 24px 15px;
+}
+.list .logout-btn{
+    color: #000;
+}
+.list .logout-icon{
+    padding-left: 10px;
+
+}
+.list .list-item:hover{
+    background-color: #ccc;
+}

@@ -1,8 +1,8 @@
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import { logOutOutline } from 'ionicons/icons';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonButton, IonIcon } from '@ionic/react';
-
+import './Setting.css'
 const Settings: React.FC = () => {
   const history = useHistory();
 
@@ -26,20 +26,30 @@ const Settings: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonList>
-          <IonItem>
-            <IonLabel>Item 1</IonLabel>
-          </IonItem>
-          <IonItem>
-            <IonLabel>Item 2</IonLabel>
-          </IonItem>
-          <IonItem>
-              <IonButton fill="clear" onClick={handleLogout}>
-                Log Out
-                <IonIcon style={{ color: "#000" }} icon={logOutOutline} />
-              </IonButton>
-          </IonItem>
-        </IonList>
+        <div className='list'>
+          <IonList>
+            <IonItem>
+              <div className='list-item opstion'>
+                <IonLabel>Item 1</IonLabel>
+              </div>
+            </IonItem>
+            <IonItem>
+              <div className='list-item opstion'>
+                <IonLabel>Item 2</IonLabel>
+              </div>
+            </IonItem>
+            <IonItem>
+              <div className='list-item' onClick={handleLogout}>
+                <IonButton fill="clear" className="logout-btn">
+                  Log Out
+                  <div className='logout-icon'>
+                    <IonIcon style={{ color: "#000" }} icon={logOutOutline} />
+                  </div>
+                </IonButton>
+              </div>
+            </IonItem>
+          </IonList>
+        </div>
       </IonContent>
     </IonPage>
   );
