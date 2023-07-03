@@ -1,14 +1,46 @@
-.list .list-item{
-    width: 100%;
-    padding: 24px 15px;
-}
-.list .logout-btn{
+.list {
+    background-color: #f5f5f5;
+    padding: 10px;
+  }
+  
+  .list-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .list-item:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .option {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logout-btn {
+    display: flex;
+    align-items: center;
     color: #000;
-}
-.list .logout-icon{
-    padding-left: 10px;
-
-}
-.list .list-item:hover{
-    background-color: #ccc;
-}
+    font-weight: bold;
+  }
+  
+  .logout-btn:hover {
+    color: #333;
+  }
+  
+  .logout-icon {
+    margin-right: 5px;
+  }
+  
+  .list-item-label {
+    display: flex;
+    align-items: center;
+  }
+  
+  .list-item-label .icon {
+    margin-right: 10px;
+    color: #ff0000; /* Change this value to your desired color */
+  }
+  

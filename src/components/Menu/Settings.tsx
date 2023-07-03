@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
-import { useHistory } from "react-router-dom";
-import { logOutOutline } from 'ionicons/icons';
+import { useHistory } from 'react-router-dom';
+import { logOutOutline, personCircle } from 'ionicons/icons';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonButton, IonIcon } from '@ionic/react';
-import './Setting.css'
+import './Setting.css';
+
 const Settings: React.FC = () => {
   const history = useHistory();
 
   const handleLogout = () => {
-    localStorage.removeItem("auth"); // Remove the authentication flag from localStorage
-    history.push("/"); // Redirect to the login page
+    localStorage.removeItem('auth'); // Remove the authentication flag from localStorage
+    history.push('/'); // Redirect to the login page
   };
 
   useEffect(() => {
@@ -26,33 +27,31 @@ const Settings: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <div className='list'>
+        <div className="list">
           <IonList>
-            <IonItem>
-              <div className='list-item opstion'>
-                <IonLabel>Item 1</IonLabel>
-              </div>
-            </IonItem>
-            <IonItem>
-              <div className='list-item opstion'>
-                <IonLabel>Item 2</IonLabel>
-              </div>
-            </IonItem>
-            <IonItem>
-              <div className='list-item' onClick={handleLogout}>
+            <div className="list-item option" onClick={() => history.push('/menu/settings/profile')}>
+              <IonItem>
+                <div className="list-item-label">
+                  <IonIcon className="icon" icon={personCircle} />
+                  <IonLabel>Profile</IonLabel>
+                </div>
+              </IonItem>
+            </div>
+            <div className="list-item" onClick={handleLogout}>
+              <IonItem>
                 <IonButton fill="clear" className="logout-btn">
-                  Log Out
-                  <div className='logout-icon'>
-                    <IonIcon style={{ color: "#000" }} icon={logOutOutline} />
+                  <div className="logout-icon">
+                    <IonIcon className="icon" icon={logOutOutline} />
                   </div>
+                  <IonLabel>Log Out</IonLabel>
                 </IonButton>
-              </div>
-            </IonItem>
+              </IonItem>
+            </div>
           </IonList>
         </div>
       </IonContent>
     </IonPage>
   );
-}
+};
 
 export default Settings;
