@@ -33,8 +33,9 @@ const Settings: React.FC = () => {
               <IonItem>
                 <div className="list-item-label">
                   <IonIcon className="icon" icon={personCircle} />
-                  <IonLabel>Profile</IonLabel>
+                  <IonLabel className='label'>Profile</IonLabel>
                 </div>
+
               </IonItem>
             </div>
             <div className="list-item" onClick={handleLogout}>
@@ -43,7 +44,7 @@ const Settings: React.FC = () => {
                   <div className="logout-icon">
                     <IonIcon className="icon" icon={logOutOutline} />
                   </div>
-                  <IonLabel>Log Out</IonLabel>
+                  <IonLabel className='label'>Log Out</IonLabel>
                 </IonButton>
               </IonItem>
             </div>
