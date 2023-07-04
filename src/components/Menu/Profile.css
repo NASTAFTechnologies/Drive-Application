@@ -1,0 +1,38 @@
+.profile-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* padding: 20px; */
+  }
+  .Avatar{
+    position: relative;
+  }
+  .profile-avatar {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+  }
+  .profile-avatar-overlay{
+    position: absolute;
+    bottom: -10px;
+    right: 120px;
+    font-size: 20px;
+  }
+  .profile-input {
+    margin-top: 10px;
+  }
+  
+  .profile-checkbox {
+    margin-top: 20px;
+  }
+  
+  .profile-back-button {
+    margin-top: 20px;
+  }
+  .input-container{
+    padding-right:  20px;
+  }
