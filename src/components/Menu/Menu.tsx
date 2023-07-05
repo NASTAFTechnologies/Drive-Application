@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import './Menu.css';
 import { Route, Redirect } from 'react-router-dom';
 import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel, IonPage } from '@ionic/react';
-import { settingsOutline, locationOutline, homeOutline,receiptOutline } from 'ionicons/icons';
+import { settingsOutline, locationOutline, homeOutline, receiptOutline } from 'ionicons/icons';
 import Home from './Home';
 import Location from './Location';
 import Settings from './Settings';
 import TripSheet from './TripSheet';
 import Profile from './Profile';
+import NewBooking from './NewBooking';
+import ViewBooking from './ViewBooking';
 
 const Menu: React.FC = () => {
   const [activeTab, setActiveTab] = useState('Menu1');
@@ -21,6 +23,8 @@ const Menu: React.FC = () => {
       <IonTabs>
         <IonRouterOutlet>
           <Route exact path="/menu/home" component={Home} />
+          <Route exact path="/menu/home/newbooking" component={NewBooking} />
+          <Route exact path="/menu/home/viewbooking" component={ViewBooking} />
           <Route exact path="/menu/tripsheet" component={TripSheet} />
           <Route exact path="/menu/location" component={Location} />
           <Route exact path="/menu/setting" component={Settings} />
@@ -30,6 +34,8 @@ const Menu: React.FC = () => {
             <Redirect to="/menu/location" />
             <Redirect to="/menu/setting" />
             <Redirect to="/menu/settings/profile" />
+            <Redirect to="/menu/home/newbooking" />
+            <Redirect to="/menu/home/viewbooking" />
             <Redirect to="/menu/home" />
           </Route>
         </IonRouterOutlet>
