@@ -8,6 +8,8 @@ const Profile: React.FC = () => {
   const history = useHistory();
   const [name, setName] = useState("Fahad");
   const [mobile, setMobile] = useState("7550256613");
+  const [password, setPassword] = useState("hello");
+  const [confirmpassword, setConfirmPassword] = useState("hello");
   const [email, setEmail] = useState("fahadlee@gmail.com");
   const [isEditMode, setIsEditMode] = useState(false);
   const [avatar, setAvatar] = useState('https://static.vecteezy.com/system/resources/previews/002/002/403/original/man-with-beard-avatar-character-isolated-icon-free-vector.jpgx`');
@@ -111,6 +113,14 @@ const Profile: React.FC = () => {
           <IonItem className="profile-input">
             <IonLabel position="floating">Mobile Number</IonLabel>
             <IonInput value={mobile} onIonInput={handleMobileChange} disabled={!isEditMode}></IonInput>
+          </IonItem>
+          <IonItem className="profile-input">
+            <IonLabel position="floating">Password</IonLabel>
+            <IonInput value={password} onIonInput={handleMobileChange} disabled={!isEditMode}></IonInput>
+          </IonItem>
+          <IonItem className="profile-input">
+            <IonLabel position="floating">Confirm Password</IonLabel>
+            <IonInput value={confirmpassword} onIonInput={handleMobileChange} disabled={!isEditMode}></IonInput>
           </IonItem>
           <IonItem className="profile-input">
             <IonLabel position="floating">Email ID</IonLabel>

@@ -3,13 +3,14 @@ import './Menu.css';
 import { Route, Redirect } from 'react-router-dom';
 import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel, IonPage } from '@ionic/react';
 import { settingsOutline, locationOutline, homeOutline, receiptOutline } from 'ionicons/icons';
-import Home from './Home';
-import Location from './Location';
-import Settings from './Settings';
-import TripSheet from './TripSheet';
-import Profile from './Profile';
-import NewBooking from './NewBooking';
-import ViewBooking from './ViewBooking';
+
+import Location from '../Location/Location';
+import Settings from '../Settings/Settings';
+import TripSheet from '../History/History';
+import NewBooking from '../NewBooking/NewBooking';
+import ViewBooking from '../VewBooking/ViewBooking';
+import Home from '../Home/Home';
+import Profile from '../Settings/Profile/Profile';
 
 const Menu: React.FC = () => {
   const [activeTab, setActiveTab] = useState('Menu1');
