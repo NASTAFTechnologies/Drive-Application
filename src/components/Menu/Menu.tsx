@@ -9,9 +9,10 @@ import Location from '../Location/Location';
 import Settings from '../Settings/Settings';
 import TripSheet from '../History/History';
 import NewBooking from '../NewBooking/NewBooking';
-import ViewBooking from '../VewBooking/ViewBooking';
+import ViewBooking from '../NewBooking/VewBooking/ViewBooking';
 import Home from '../Home/Home';
 import Profile from '../Settings/Profile/Profile';
+import ClosedBooking from '../ClosedBooking/ClosedBooking';
 
 const Menu: React.FC = () => {
   const history = useHistory();
@@ -33,6 +34,7 @@ const Menu: React.FC = () => {
           <Route exact path="/menu/home" component={Home} />
           <Route exact path="/menu/home/newbooking" component={NewBooking} />
           <Route exact path="/menu/home/viewbooking" component={ViewBooking} />
+          <Route exact path="/menu/home/closebooking" component={ClosedBooking} />
           <Route exact path="/menu/tripsheet" component={TripSheet} />
           <Route exact path="/menu/location" component={Location} />
           <Route exact path="/menu/setting" component={Settings} />

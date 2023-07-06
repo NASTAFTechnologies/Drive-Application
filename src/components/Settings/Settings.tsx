@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { logOutOutline, personCircle } from 'ionicons/icons';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonButton, IonIcon } from '@ionic/react';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonButton } from '@ionic/react';
 import './Setting.css';
 
 const Settings: React.FC = () => {
