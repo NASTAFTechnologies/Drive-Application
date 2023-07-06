@@ -14,15 +14,15 @@ import {
     IonBackButton,
     useIonToast,
 } from '@ionic/react';
-// import './ViewBooking.css'
+import './StartDuty.css';
 import { useHistory } from 'react-router-dom';
 
 const StartDuty: React.FC = () => {
-
     const [present] = useIonToast();
+
     const presentToast = (position: 'top' | 'middle' | 'bottom') => {
         present({
-            message: 'Your Booking Was Accepted !',
+            message: 'Your Booking Was Accepted!',
             duration: 1500,
             position: position,
         });
@@ -33,10 +33,13 @@ const StartDuty: React.FC = () => {
     const [reportTime, setReportTime] = useState('11:33');
     const [dutyType, setDutyType] = useState('Local');
     const [vehicleType, setVehicleType] = useState('-');
+    const [contactNumber, setContactNumber] = useState('7550256616');
     const [companyName, setCompanyName] = useState('Default Company');
     const [guestName, setGuestName] = useState('Default Guest');
-    const [contactNumber, setContactNumber] = useState('7550256616');
     const [address, setAddress] = useState('ITC Choll Park');
+    const [startDate, setStartDate] = useState(tripDate);
+    const [startTime, setStartTime] = useState('');
+    const [startKilometers, setStartKilometers] = useState('');
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -64,6 +67,24 @@ const StartDuty: React.FC = () => {
             case 'contactNumber':
                 setContactNumber(value);
                 break;
+            case 'companyName':
+                setCompanyName(value);
+                break;
+            case 'guestName':
+                setGuestName(value);
+                break;
+            case 'address':
+                setAddress(value);
+                break;
+            case 'startDate':
+                setStartDate(value);
+                break;
+            case 'startTime':
+                setStartTime(value);
+                break;
+            case 'startKilometers':
+                setStartKilometers(value);
+                break;
             default:
                 break;
         }
@@ -82,7 +103,6 @@ const StartDuty: React.FC = () => {
         history.push('/menu/home/closebooking');
     };
 
-
     return (
         <IonPage>
             <IonHeader>
@@ -96,73 +116,124 @@ const StartDuty: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                <div className='form-container'>
+                <div className='form-container-StartDuty'>
                     <form onSubmit={handleSubmit}>
                         <IonItem className='field-item'>
-                            <IonLabel className="bold-label">Trip Sheet No :</IonLabel>
-                            <IonInput
-                                name="tripSheetNo"
-                                value={tripSheetNo}
-                                onIonChange={handleInputChange}
-                                readonly
-                            />
+                            <IonLabel className='bold-label'>Trip Sheet No :</IonLabel>
+                            <IonInput name='tripSheetNo' value={tripSheetNo} readonly />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className="bold-label">Trip Date :</IonLabel>
+                            <IonLabel className='bold-label'>Trip Date :</IonLabel>
                             <IonInput
-                                type="date"
-                                name="tripDate"
+                                type='date'
+                                name='tripDate'
                                 value={tripDate}
                                 onIonChange={handleInputChange}
                                 required
                             />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className="bold-label">Report Time :</IonLabel>
+                            <IonLabel className='bold-label'>Report Time :</IonLabel>
                             <IonInput
-                                type="time"
-                                name="reportTime"
+                                type='time'
+                                name='reportTime'
                                 value={reportTime}
                                 onIonChange={handleInputChange}
                                 required
                             />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className="bold-label">Duty Type :</IonLabel>
-                            <IonInput name="dutyType" value={dutyType} readonly />
+                            <IonLabel className='bold-label'>Duty Type :</IonLabel>
+                            <IonInput name='dutyType' value={dutyType} readonly />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className="bold-label">Vehicle Type :</IonLabel>
-                            <IonInput name="vehicleType" value={vehicleType} readonly />
+                            <IonLabel className='bold-label'>Vehicle Type :</IonLabel>
+                            <IonInput name='vehicleType' value={vehicleType} readonly />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className="bold-label">Company Name :</IonLabel>
-                            <IonInput name="companyName" value={companyName} readonly />
-                        </IonItem>
-                        <IonItem className='field-item'>
-                            <IonLabel className="bold-label">Guest Name :</IonLabel>
-                            <IonInput name="guestName" value={guestName} readonly />
-                        </IonItem>
-                        <IonItem className='field-item'>
-                            <IonLabel className="bold-label">Contact Number :</IonLabel>
+                            <IonLabel className='bold-label'>Company Name :</IonLabel>
                             <IonInput
-                                type="tel"
-                                name="contactNumber"
+                                name='companyName'
+                                value={companyName}
+                                onIonChange={handleInputChange}
+                                readonly
+                            />
+                        </IonItem>
+                        <IonItem className='field-item'>
+                            <IonLabel className='bold-label'>Guest Name :</IonLabel>
+                            <IonInput
+                                name='guestName'
+                                value={guestName}
+                                onIonChange={handleInputChange}
+                                readonly
+                            />
+                        </IonItem>
+                        <IonItem className='field-item'>
+                            <IonLabel className='bold-label'>Contact Number :</IonLabel>
+                            <IonInput
+                                type='tel'
+                                name='contactNumber'
                                 value={contactNumber}
                                 onIonChange={handleInputChange}
                                 readonly
                             />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className="bold-label">Address :</IonLabel>
+                            <IonLabel className='bold-label'>Address :</IonLabel>
                             <IonTextarea
-                                name="address"
+                                name='address'
                                 value={address}
                                 onIonChange={handleInputChange}
                                 readonly
                             />
                         </IonItem>
-                        <IonButton className="booking-accept-btn" expand="block" onClick={() => presentToast('top')} size="small" type="submit">Accept
+                        <IonItem className='field-item'>
+                            <IonLabel className='bold-label'>Start Date :</IonLabel>
+                            <IonInput
+                                type='date'
+                                name='startDate'
+                                value={startDate}
+                                onIonChange={handleInputChange}
+                                required
+                            />
+                        </IonItem>
+                        <IonItem className='field-item'>
+                            <IonLabel className='bold-label'>Start Time :</IonLabel>
+                            <IonInput
+                                type='time'
+                                name='startTime'
+                                value={startTime}
+                                onIonChange={handleInputChange}
+                                required
+                            />
+                        </IonItem>
+                        <IonItem className='field-item'>
+                            <IonLabel className='bold-label'>Start Kilometers :</IonLabel>
+                            <IonInput
+                                type='tel'
+                                name='startKilometers'
+                                value={startKilometers}
+                                onIonChange={handleInputChange}
+                                required
+                            />
+                        </IonItem>
+                        <IonButton
+                            className='booking-accept-btn'
+                            expand='block'
+                            onClick={() => presentToast('top')}
+                            size='small'
+                            type='submit'
+                        >
+                            Start Duty
+                        </IonButton>
+                        <IonButton
+                            className='accept-btn'
+                            expand='block'
+                            onClick={() => presentToast('top')}
+                            size='small'
+                            type='submit'
+                        >
+                            Upload-Toll / Parking
                         </IonButton>
                     </form>
                 </div>

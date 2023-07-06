@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import './Menu.css';
 import { Route, Redirect } from 'react-router-dom';
 import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel, IonPage } from '@ionic/react';
@@ -18,12 +17,7 @@ import CloseDuty from '../ClosedBooking/CloseDuty/CloseDuty';
 import ViewDuty from '../ClosedBooking/ViewDuty/ViewDuty';
 
 const Menu: React.FC = () => {
-  const history = useHistory();
 
-  const handleLogout = () => {
-    localStorage.removeItem('auth'); // Remove the authentication flag from localStorage
-    history.push('/'); // Redirect to the login page
-  };
   const [activeTab, setActiveTab] = useState('Menu1');
 
   const handleTabChange = (tab: string) => {

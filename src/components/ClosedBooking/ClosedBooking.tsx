@@ -7,10 +7,8 @@ import './ClosedBooking.css';
 const ClosedBooking: React.FC = () => {
   const history = useHistory();
   const [showPopup, setShowPopup] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('');
 
-  const handleCardClickBooking = (option: string) => {
-    setSelectedOption(option);
+  const handleCardClickBooking = () => {
     setShowPopup(true);
   };
 
@@ -50,14 +48,14 @@ const ClosedBooking: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonCard onClick={() => handleCardClickBooking('')}>
+        <IonCard onClick={handleCardClickBooking}>
           <IonCardHeader>
             <IonCardTitle>Local</IonCardTitle>
           </IonCardHeader>
           <IonCardContent>20/05/2022@08.00</IonCardContent>
         </IonCard>
 
-        <IonCard onClick={() => handleCardClickBooking('')}>
+        <IonCard onClick={handleCardClickBooking}>
           <IonCardHeader>
             <IonCardTitle>Transfer</IonCardTitle>
           </IonCardHeader>

@@ -42,32 +42,40 @@ const ViewBooking: React.FC = () => {
         e.preventDefault();
         // Add logic to handle form submission
     };
-
     const handleInputChange = (e: CustomEvent) => {
         const { name, value } = e.detail;
         switch (name) {
-            case 'tripSheetNo':
-                setTripSheetNo(value);
-                break;
-            case 'tripDate':
-                setTripDate(value);
-                break;
-            case 'reportTime':
-                setReportTime(value);
-                break;
-            case 'dutyType':
-                setDutyType(value);
-                break;
-            case 'vehicleType':
-                setVehicleType(value);
-                break;
-            case 'contactNumber':
-                setContactNumber(value);
-                break;
-            default:
-                break;
+          case 'tripSheetNo':
+            setTripSheetNo(value);
+            break;
+          case 'tripDate':
+            setTripDate(value);
+            break;
+          case 'reportTime':
+            setReportTime(value);
+            break;
+          case 'dutyType':
+            setDutyType(value);
+            break;
+          case 'vehicleType':
+            setVehicleType(value);
+            break;
+          case 'contactNumber':
+            setContactNumber(value);
+            break;
+          case 'companyName':
+            setCompanyName(value); // Use the setter function to update the variable
+            break;
+          case 'guestName':
+            setGuestName(value); // Use the setter function to update the variable
+            break;
+          case 'address':
+            setAddress(value); // Use the setter function to update the variable
+            break;
+          default:
+            break;
         }
-    };
+      };
 
     const history = useHistory();
 
