@@ -29,20 +29,16 @@ const Settings: React.FC = () => {
       <IonContent>
         <div className="list">
           <IonList>
-            <div className="list-item option" onClick={() => history.push('/menu/settings/profile')}>
+            <div className="list-item" onClick={() => history.push('/menu/settings/profile')}>
               <IonItem>
-                <div className="list-item-label">
-                  <IonIcon className="icon" icon={personCircle} />
+                <IonButton fill="clear" className="List">
                   <IonLabel className='label'>Profile</IonLabel>
-                </div>
+                </IonButton>
               </IonItem>
             </div>
             <div className="list-item" onClick={handleLogout}>
               <IonItem>
-                <IonButton fill="clear" className="logout-btn">
-                  <div className="logout-icon">
-                    <IonIcon className="icon" icon={logOutOutline} />
-                  </div>
+                <IonButton fill="clear" className="List">
                   <IonLabel className='label'>Log Out</IonLabel>
                 </IonButton>
               </IonItem>

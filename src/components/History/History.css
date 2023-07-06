@@ -1,7 +1,7 @@
 .table-container {
     width: 100%;
     overflow-x: auto;
-    margin-top: 10px;
+    margin-top: 20px;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 16px;
   }
