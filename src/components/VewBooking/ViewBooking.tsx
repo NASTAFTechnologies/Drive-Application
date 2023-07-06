@@ -20,13 +20,12 @@ import { useHistory } from 'react-router-dom';
 const ViewBooking: React.FC = () => {
 
     const [present] = useIonToast();
-
     const presentToast = (position: 'top' | 'middle' | 'bottom') => {
-      present({
-        message: 'Your Booking Was Accepted !',
-        duration: 1500,
-        position: position,
-      });
+        present({
+            message: 'Your Booking Was Accepted !',
+            duration: 1500,
+            position: position,
+        });
     };
 
     const [tripSheetNo, setTripSheetNo] = useState('98897');
