@@ -60,7 +60,7 @@ const Menu: React.FC = () => {
           >
             <IonIcon className={`Menu-icon ${activeTab === 'Menu1' ? 'active' : ''}`} icon={receiptOutline} />
             <div className={`Menu-lable ${activeTab === 'Menu1' ? 'active' : ''}`}>
-              <IonLabel>Trip Sheet</IonLabel>
+              <IonLabel>History</IonLabel>
             </div>
           </IonTabButton>
           <IonTabButton

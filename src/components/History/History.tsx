@@ -16,7 +16,7 @@ const TripSheet: React.FC = () => {
     <IonPage >
       <IonHeader>
         <IonToolbar>
-          <IonTitle>TripSheet</IonTitle>
+          <IonTitle>History</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>

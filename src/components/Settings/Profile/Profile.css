@@ -39,3 +39,17 @@
 .input-container {
     padding-right: 20px;
 }
+/*  */
+.profile-input ion-input {
+    position: relative;
+  }
+  
+  .profile-input ion-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    color: #000;
+    cursor: pointer;
+  }
+  

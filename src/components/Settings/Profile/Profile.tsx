@@ -1,7 +1,7 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonItem, IonLabel, IonAvatar, IonButtons, IonIcon, IonBackButton, IonInput, IonAlert } from '@ionic/react';
 import { useHistory } from "react-router-dom";
-import { createOutline } from 'ionicons/icons';
+import { createOutline, eye, eyeOff } from 'ionicons/icons';
 import './Profile.css';
 
 const Profile: React.FC = () => {
@@ -9,11 +9,13 @@ const Profile: React.FC = () => {
   const [name, setName] = useState("Fahad");
   const [mobile, setMobile] = useState("7550256613");
   const [password, setPassword] = useState("hello");
-  const [confirmpassword, setConfirmPassword] = useState("hello");
+  const [confirmPassword, setConfirmPassword] = useState("hello");
   const [email, setEmail] = useState("fahadlee@gmail.com");
   const [isEditMode, setIsEditMode] = useState(false);
-  const [avatar, setAvatar] = useState('https://static.vecteezy.com/system/resources/previews/002/002/403/original/man-with-beard-avatar-character-isolated-icon-free-vector.jpgx`');
+  const [avatar, setAvatar] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_52W9ux_gz02TW9vR2Wypppvuxycuftej6jD2qm4&s');
   const [showSaveAlert, setShowSaveAlert] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
   const handleNameChange = (event: CustomEvent) => {
     const inputElement = event.target as HTMLInputElement;
@@ -32,6 +34,16 @@ const Profile: React.FC = () => {
   const handleEmailChange = (event: CustomEvent) => {
     const inputElement = event.target as HTMLInputElement;
     setEmail(inputElement.value);
+  };
+
+  const handlePasswordChange = (event: CustomEvent) => {
+    const inputElement = event.target as HTMLInputElement;
+    setPassword(inputElement.value);
+  };
+
+  const handleConfirmPasswordChange = (event: CustomEvent) => {
+    const inputElement = event.target as HTMLInputElement;
+    setConfirmPassword(inputElement.value);
   };
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -75,6 +87,14 @@ const Profile: React.FC = () => {
     }
   }, [history]);
 
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setConfirmPasswordVisible(!confirmPasswordVisible);
+  };
+
   return (
     <IonPage className="profile-page">
       <IonHeader>
@@ -116,11 +136,15 @@ const Profile: React.FC = () => {
           </IonItem>
           <IonItem className="profile-input">
             <IonLabel position="floating">Password</IonLabel>
-            <IonInput value={password} onIonInput={handleMobileChange} disabled={!isEditMode}></IonInput>
+            <IonInput type={passwordVisible ? 'text' : 'password'} value={password} onIonInput={handlePasswordChange} disabled={!isEditMode}>
+              <IonIcon slot="end" icon={passwordVisible ? eyeOff : eye} onClick={togglePasswordVisibility} />
+            </IonInput>
           </IonItem>
           <IonItem className="profile-input">
             <IonLabel position="floating">Confirm Password</IonLabel>
-            <IonInput value={confirmpassword} onIonInput={handleMobileChange} disabled={!isEditMode}></IonInput>
+            <IonInput type={confirmPasswordVisible ? 'text' : 'password'} value={confirmPassword} onIonInput={handleConfirmPasswordChange} disabled={!isEditMode}>
+              <IonIcon slot="end" icon={confirmPasswordVisible ? eyeOff : eye} onClick={toggleConfirmPasswordVisibility} />
+            </IonInput>
           </IonItem>
           <IonItem className="profile-input">
             <IonLabel position="floating">Email ID</IonLabel>
@@ -153,7 +177,7 @@ const Profile: React.FC = () => {
                 handler: handleSaveCancel
               },
               {
-                text: 'Save',
+               text: 'Save',
                 handler: handleSaveConfirm
               }
             ]}

@@ -12,10 +12,22 @@ import {
     IonButtons,
     IonButton,
     IonBackButton,
+    useIonToast,
 } from '@ionic/react';
+import './ViewBooking.css'
 import { useHistory } from 'react-router-dom';
 
 const ViewBooking: React.FC = () => {
+
+    const [present] = useIonToast();
+
+    const presentToast = (position: 'top' | 'middle' | 'bottom') => {
+      present({
+        message: 'Your Booking Was Accepted !',
+        duration: 1500,
+        position: position,
+      });
+    };
 
     const [tripSheetNo, setTripSheetNo] = useState('98897');
     const [tripDate, setTripDate] = useState('2023-07-20');
@@ -81,78 +93,80 @@ const ViewBooking: React.FC = () => {
                             <IonBackButton defaultHref="/menu" className="profile-back-button" />
                         </IonButton>
                     </IonButtons>
-                    <IonTitle>View Booking :</IonTitle>
+                    <IonTitle>View Booking</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                <form onSubmit={handleSubmit}>
-                    <IonItem>
-                        <IonLabel>Trip Sheet No :</IonLabel>
-                        <IonInput
-                            name="tripSheetNo"
-                            value={tripSheetNo}
-                            onIonChange={handleInputChange}
-                            readonly
-                        />
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel>Trip Date :</IonLabel>
-                        <IonInput
-                            type="date"
-                            name="tripDate"
-                            value={tripDate}
-                            onIonChange={handleInputChange}
-                            required
-                        />
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel>Report Time :</IonLabel>
-                        <IonInput
-                            type="time"
-                            name="reportTime"
-                            value={reportTime}
-                            onIonChange={handleInputChange}
-                            required
-                        />
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel>Duty Type :</IonLabel>
-                        <IonInput name="dutyType" value={dutyType} readonly />
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel>Vehicle Type :</IonLabel>
-                        <IonInput name="vehicleType" value={vehicleType} readonly />
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel>Company Name :</IonLabel>
-                        <IonInput name="companyName" value={companyName} readonly />
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel>Guest Name :</IonLabel>
-                        <IonInput name="guestName" value={guestName} readonly />
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel>Contact Number :</IonLabel>
-                        <IonInput
-                            type="tel"
-                            name="contactNumber"
-                            value={contactNumber}
-                            onIonChange={handleInputChange}
-                            readonly
-                        />
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel>Address :</IonLabel>
-                        <IonTextarea
-                            name="address"
-                            value={address}
-                            onIonChange={handleInputChange}
-                            readonly
-                        />
-                    </IonItem>
-                    <IonButton className="booking-accept-btn" expand="block" size="small" type="submit">Accept
-                    </IonButton>
-                </form>
+                <div className='form-container'>
+                    <form onSubmit={handleSubmit}>
+                        <IonItem className='field-item'>
+                            <IonLabel className="bold-label">Trip Sheet No :</IonLabel>
+                            <IonInput
+                                name="tripSheetNo"
+                                value={tripSheetNo}
+                                onIonChange={handleInputChange}
+                                readonly
+                            />
+                        </IonItem>
+                        <IonItem className='field-item'>
+                            <IonLabel className="bold-label">Trip Date :</IonLabel>
+                            <IonInput
+                                type="date"
+                                name="tripDate"
+                                value={tripDate}
+                                onIonChange={handleInputChange}
+                                required
+                            />
+                        </IonItem>
+                        <IonItem className='field-item'>
+                            <IonLabel className="bold-label">Report Time :</IonLabel>
+                            <IonInput
+                                type="time"
+                                name="reportTime"
+                                value={reportTime}
+                                onIonChange={handleInputChange}
+                                required
+                            />
+                        </IonItem>
+                        <IonItem className='field-item'>
+                            <IonLabel className="bold-label">Duty Type :</IonLabel>
+                            <IonInput name="dutyType" value={dutyType} readonly />
+                        </IonItem>
+                        <IonItem className='field-item'>
+                            <IonLabel className="bold-label">Vehicle Type :</IonLabel>
+                            <IonInput name="vehicleType" value={vehicleType} readonly />
+                        </IonItem>
+                        <IonItem className='field-item'>
+                            <IonLabel className="bold-label">Company Name :</IonLabel>
+                            <IonInput name="companyName" value={companyName} readonly />
+                        </IonItem>
+                        <IonItem className='field-item'>
+                            <IonLabel className="bold-label">Guest Name :</IonLabel>
+                            <IonInput name="guestName" value={guestName} readonly />
+                        </IonItem>
+                        <IonItem className='field-item'>
+                            <IonLabel className="bold-label">Contact Number :</IonLabel>
+                            <IonInput
+                                type="tel"
+                                name="contactNumber"
+                                value={contactNumber}
+                                onIonChange={handleInputChange}
+                                readonly
+                            />
+                        </IonItem>
+                        <IonItem className='field-item'>
+                            <IonLabel className="bold-label">Address :</IonLabel>
+                            <IonTextarea
+                                name="address"
+                                value={address}
+                                onIonChange={handleInputChange}
+                                readonly
+                            />
+                        </IonItem>
+                        <IonButton className="booking-accept-btn" expand="block" onClick={() => presentToast('top')} size="small" type="submit">Accept
+                        </IonButton>
+                    </form>
+                </div>
             </IonContent>
         </IonPage>
     );
