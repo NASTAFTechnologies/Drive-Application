@@ -1,0 +1,60 @@
+.my-modal {
+    --background: transparent;
+    --border-radius: 0;
+    --height: auto;
+}
+
+.popup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90%;
+}
+
+.popup-title {
+    text-transform: capitalize;
+    font-size: 20px;
+    font-weight: 400;
+    background-color: #fff;
+    padding: 10px;
+    display: flex;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    margin: 30px auto;
+
+}
+
+.popup-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 100px;
+}
+
+.popup-row .popup-btn {
+    display: flex;
+    align-items: center;
+    width: 75%;
+    height: 80px;
+    font-size: 17px;
+    --background: #fff;
+    --color: #000;
+    --background-hover: #ccc;
+    --background-activated: #ccc;
+    --background-focused: #ccc;
+    --border-color: #ccc;
+    --border-style: solid;
+    --border-width: 2px;
+}
+
+.popup-row .popup-btn .popupicon {
+    position: absolute;
+    top: 7px;
+}
+
+.popup-row .popup-btn .popuplabel {
+    margin-top: 20px;
+    font-size: 19px;
+}

@@ -13,6 +13,8 @@ import ViewBooking from '../NewBooking/VewBooking/ViewBooking';
 import Home from '../Home/Home';
 import Profile from '../Settings/Profile/Profile';
 import ClosedBooking from '../ClosedBooking/ClosedBooking';
+import StartDuty from '../ClosedBooking/StartDuty/StartDuty';
+import CloseDuty from '../ClosedBooking/CloseDuty/CloseDuty';
 
 const Menu: React.FC = () => {
   const history = useHistory();
@@ -35,6 +37,9 @@ const Menu: React.FC = () => {
           <Route exact path="/menu/home/newbooking" component={NewBooking} />
           <Route exact path="/menu/home/viewbooking" component={ViewBooking} />
           <Route exact path="/menu/home/closebooking" component={ClosedBooking} />
+          <Route exact path="/menu/home/closebooking/startduty" component={StartDuty} />
+          <Route exact path="/menu/home/closebooking/closeduty" component={CloseDuty} />
+          <Route exact path="/menu/home/closebooking/viewduty" component={ViewBooking} />
           <Route exact path="/menu/tripsheet" component={TripSheet} />
           <Route exact path="/menu/location" component={Location} />
           <Route exact path="/menu/setting" component={Settings} />
