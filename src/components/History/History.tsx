@@ -41,13 +41,19 @@ const TripSheet: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {data.map(item => (
+              {data.map((item) => (
                 <tr key={item.id}>
                   <td>{item.date}</td>
                   <td>{item.startTime}</td>
                   <td>{item.duty}</td>
                   <td>{item.vehicleType}</td>
-                  <td>{item.Action}</td>
+                  <td>
+                    <div
+                      className={`action-button action-${item.Action.toLowerCase()}`}
+                    >
+                      {item.Action}
+                    </div>
+                  </td>
                 </tr>
               ))}
             </tbody>
