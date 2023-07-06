@@ -1,11 +1,18 @@
 .list-item {
   padding: 10px 0px;
+
 }
+/* 
+.list-container {
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 16px;
+  margin: 10px 10px 0px 10px;
+} */
 
 .List {
   text-transform: uppercase;
   display: flex;
+  letter-spacing: 1px;
   align-items: center;
   color: #000;
-  font-weight: bold;
+  font-size: 15px;
 }

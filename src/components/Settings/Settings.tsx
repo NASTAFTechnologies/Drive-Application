@@ -27,7 +27,7 @@ const Settings: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <div className="list">
+        <div className="list-container">
           <IonList>
             <div className="list-item" onClick={() => history.push('/menu/settings/profile')}>
               <IonItem>
