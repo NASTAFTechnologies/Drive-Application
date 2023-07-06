@@ -1,7 +1,7 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonItem, IonLabel, IonAvatar, IonButtons, IonIcon, IonBackButton, IonInput, IonAlert } from '@ionic/react';
 import { useHistory } from "react-router-dom";
-import { createOutline, eye, eyeOff } from 'ionicons/icons';
+import { createOutline} from 'ionicons/icons';
 import './Profile.css';
 
 const Profile: React.FC = () => {
@@ -85,10 +85,10 @@ const Profile: React.FC = () => {
     }
   }, [history]);
 
+
   return (
     <IonPage className="profile-page">
       <IonHeader>
-       ```jsx
         <IonToolbar>
           <IonButtons slot="start">
             <IonButton onClick={handleBack}>
@@ -132,7 +132,7 @@ const Profile: React.FC = () => {
           </IonItem>
           <IonItem className="profile-input">
             <IonLabel position="floating">Confirm Password</IonLabel>
-            <IonInput type='password'value={confirmPassword} onIonInput={handleConfirmPasswordChange} disabled={!isEditMode}>
+            <IonInput type='password' value={confirmPassword} onIonInput={handleConfirmPasswordChange} disabled={!isEditMode}>
             </IonInput>
           </IonItem>
           <IonItem className="profile-input">
