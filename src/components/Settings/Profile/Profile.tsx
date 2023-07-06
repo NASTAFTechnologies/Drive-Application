@@ -14,8 +14,6 @@ const Profile: React.FC = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [avatar, setAvatar] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_52W9ux_gz02TW9vR2Wypppvuxycuftej6jD2qm4&s');
   const [showSaveAlert, setShowSaveAlert] = useState(false);
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
   const handleNameChange = (event: CustomEvent) => {
     const inputElement = event.target as HTMLInputElement;
@@ -87,17 +85,10 @@ const Profile: React.FC = () => {
     }
   }, [history]);
 
-  const togglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
-  };
-
-  const toggleConfirmPasswordVisibility = () => {
-    setConfirmPasswordVisible(!confirmPasswordVisible);
-  };
-
   return (
     <IonPage className="profile-page">
       <IonHeader>
+       ```jsx
         <IonToolbar>
           <IonButtons slot="start">
             <IonButton onClick={handleBack}>
@@ -136,14 +127,12 @@ const Profile: React.FC = () => {
           </IonItem>
           <IonItem className="profile-input">
             <IonLabel position="floating">Password</IonLabel>
-            <IonInput type={passwordVisible ? 'text' : 'password'} value={password} onIonInput={handlePasswordChange} disabled={!isEditMode}>
-              <IonIcon slot="end" icon={passwordVisible ? eyeOff : eye} onClick={togglePasswordVisibility} />
+            <IonInput type='password' value={password} onIonInput={handlePasswordChange} disabled={!isEditMode}>
             </IonInput>
           </IonItem>
           <IonItem className="profile-input">
             <IonLabel position="floating">Confirm Password</IonLabel>
-            <IonInput type={confirmPasswordVisible ? 'text' : 'password'} value={confirmPassword} onIonInput={handleConfirmPasswordChange} disabled={!isEditMode}>
-              <IonIcon slot="end" icon={confirmPasswordVisible ? eyeOff : eye} onClick={toggleConfirmPasswordVisibility} />
+            <IonInput type='password'value={confirmPassword} onIonInput={handleConfirmPasswordChange} disabled={!isEditMode}>
             </IonInput>
           </IonItem>
           <IonItem className="profile-input">
@@ -177,7 +166,7 @@ const Profile: React.FC = () => {
                 handler: handleSaveCancel
               },
               {
-               text: 'Save',
+                text: 'Save',
                 handler: handleSaveConfirm
               }
             ]}

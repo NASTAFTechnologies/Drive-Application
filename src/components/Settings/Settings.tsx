@@ -35,6 +35,7 @@ const Settings: React.FC = () => {
                   <IonIcon className="icon" icon={personCircle} />
                   <IonLabel className='label'>Profile</IonLabel>
                 </div>
+
               </IonItem>
             </div>
             <div className="list-item" onClick={handleLogout}>
