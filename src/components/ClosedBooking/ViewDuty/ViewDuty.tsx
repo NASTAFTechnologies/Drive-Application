@@ -17,7 +17,7 @@ import {
     IonCardHeader,
     IonCardTitle,
 } from '@ionic/react';
-// import './StartDuty.css';
+import './ViewDuty.css';
 import { useHistory } from 'react-router-dom';
 
 const ViewDuty: React.FC = () => {
@@ -127,7 +127,7 @@ const ViewDuty: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                <div className='form-container-StartDuty'>
+                <div className='form-container-ViewDuty'>
                     <h1>Trip Details</h1>
                     <form onSubmit={handleSubmit}>
                         <IonItem className='field-item'>
@@ -257,21 +257,42 @@ const ViewDuty: React.FC = () => {
                         </IonItem>
                     </form>
                 </div>
-                <IonButton
-                    className='accept-btn'
-                    expand='block'
-                    onClick={() => presentToast('top')}
-                    size='small'
-                    type='submit'
-                >
-                    Signature
-                </IonButton>
-                <IonCard>
-                    {/* <img alt="Silhouette of mountains" src="https://img.freepik.com/free-vector/businessman-planning-events-deadlines-agenda_74855-6274.jpg?w=900&t=st=1688480583~exp=1688481183~hmac=88e85cab2e58b10bc489eff32fc71d1633f201a0f8155c6a88b5657262e6a543" /> */}
-                    <IonCardHeader>
-                        <IonCardTitle>Signature</IonCardTitle>
-                    </IonCardHeader>
-                </IonCard>
+                <div className="Uploaded-img">
+                    <div className='Sig-btn'>
+                        <IonButton
+                            className='accept-btn'
+                            expand='block'
+                            onClick={() => presentToast('top')}
+                            // size='small'
+                            type='submit'
+                        >
+                            Signature
+                        </IonButton>
+                    </div>
+                    <IonCard>
+                        {/* <img alt="Silhouette of mountains" src="https://img.freepik.com/free-vector/businessman-planning-events-deadlines-agenda_74855-6274.jpg?w=900&t=st=1688480583~exp=1688481183~hmac=88e85cab2e58b10bc489eff32fc71d1633f201a0f8155c6a88b5657262e6a543" /> */}
+                        <IonCardHeader>
+                            <IonCardTitle>Signature Image</IonCardTitle>
+                        </IonCardHeader>
+                    </IonCard>
+                    <div className='Attachment-btn'>
+                        <IonButton
+                            className='accept-btn'
+                            expand='block'
+                            onClick={() => presentToast('top')}
+                            // size='small'
+                            type='submit'
+                        >
+                            Attachments
+                        </IonButton>
+                    </div>
+                    <IonCard>
+                        {/* <img alt="Silhouette of mountains" src="https://img.freepik.com/free-vector/businessman-planning-events-deadlines-agenda_74855-6274.jpg?w=900&t=st=1688480583~exp=1688481183~hmac=88e85cab2e58b10bc489eff32fc71d1633f201a0f8155c6a88b5657262e6a543" /> */}
+                        <IonCardHeader>
+                            <IonCardTitle>Attachment Image</IonCardTitle>
+                        </IonCardHeader>
+                    </IonCard>
+                </div>
             </IonContent>
         </IonPage>
     );

@@ -1,0 +1,34 @@
+.form-container-ViewDuty {
+    padding: 10px;
+    margin: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 16px;
+}
+
+.form-container-ViewDuty .booking-accept-btn {
+    margin: 10px 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.form-container-ViewDuty .accept-btn {
+    margin: 10px 50px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-container-ViewDuty .field-item .bold-label {
+    font-weight: 600;
+} 
+.Uploaded-img{
+    padding: 20px;
+}
+.Uploaded-img .Sig-btn{
+    margin:20px 40px ;
+}
+.Uploaded-img .Attachment-btn{
+    margin: 20px 40px;
+}
