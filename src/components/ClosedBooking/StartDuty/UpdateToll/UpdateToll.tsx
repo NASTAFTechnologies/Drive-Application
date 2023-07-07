@@ -10,7 +10,8 @@ import {
     IonBackButton,
     IonInput,
     IonItem,
-    IonList
+    IonList,
+    useIonToast
 } from '@ionic/react';
 import './UpdateToll.css';
 import { useHistory } from 'react-router-dom';
@@ -18,6 +19,7 @@ import { useHistory } from 'react-router-dom';
 const UpdateToll: React.FC = () => {
     const history = useHistory();
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [present] = useIonToast();
 
     useEffect(() => {
         const isAuthenticated = localStorage.getItem('auth');
@@ -37,7 +39,16 @@ const UpdateToll: React.FC = () => {
             const file = files[0];
             setSelectedFile(file);
             console.log(file);
+            presentToast('top'); // Show toast notification after file upload
         }
+    };
+
+    const presentToast = (position: 'top' | 'middle' | 'bottom') => {
+        present({
+            message: 'File Uploaded Successfully!',
+            duration: 1500,
+            position: position,
+        });
     };
 
     return (
@@ -73,7 +84,7 @@ const UpdateToll: React.FC = () => {
                             Upload Bill PDF or Photo
                         </IonButton>
                         {selectedFile && (
-                            <div className='Uploaded-file'>
+                            <div>
                                 Uploaded File: {selectedFile.name}
                                 {/* You can display additional information about the file if needed */}
                             </div>
