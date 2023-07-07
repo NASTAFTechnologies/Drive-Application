@@ -226,15 +226,7 @@ const StartDuty: React.FC = () => {
                         >
                             Start Duty
                         </IonButton>
-                        <IonButton
-                            className='accept-btn'
-                            expand='block'
-                            onClick={() => presentToast('top')}
-                            size='small'
-                            type='submit'
-                        >
-                            Upload-Toll / Parking
-                        </IonButton>
+                        <IonButton onClick={() => presentToast('top')} className='accept-btn' size='small'>Upload-Toll / Parking</IonButton>
                     </form>
                 </div>
             </IonContent>

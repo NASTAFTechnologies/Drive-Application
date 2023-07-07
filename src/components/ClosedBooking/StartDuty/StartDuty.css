@@ -7,16 +7,15 @@
 }
 
 .form-container-StartDuty .booking-accept-btn {
-    margin: 20px auto;
+    margin: 10px 80px;
     display: flex;
-    width: 30%;
     align-items: center;
     justify-content: center;
 }
 .form-container-StartDuty .accept-btn {
-    margin: 20px auto;
+    margin: 10px 50px;
     display: flex;
-    width: 50%;
+    text-align: center;
     align-items: center;
     justify-content: center;
 }

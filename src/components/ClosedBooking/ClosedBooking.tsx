@@ -5,6 +5,12 @@ import { closeCircleOutline, earthOutline, eyeOutline } from 'ionicons/icons';
 import './ClosedBooking.css';
 
 const ClosedBooking: React.FC = () => {
+  const [isIPhone, setIsIPhone] = useState(false);
+
+  useEffect(() => {
+    const isiPhone = /iPhone/.test(navigator.userAgent);
+    setIsIPhone(isiPhone);
+  }, []);
   const history = useHistory();
   const [showPopup, setShowPopup] = useState(false);
 
@@ -64,7 +70,7 @@ const ClosedBooking: React.FC = () => {
 
         <IonModal isOpen={showPopup} onDidDismiss={() => setShowPopup(false)} className="my-modal">
           <div className="popup-title"><span>Bhuvaneswari muthusamy</span></div>
-          <div className="popup-container">
+          <div className={isIPhone ? 'popup-container iphone' : 'popup-container android'} id="popupContainer">
             <div className="popup-row">
               <IonButton className="popup-btn" onClick={() => handleOptionClick('Start Duty')}>
                 <IonIcon className="popupicon" icon={earthOutline} />
@@ -85,6 +91,7 @@ const ClosedBooking: React.FC = () => {
             </div>
           </div>
         </IonModal>
+
       </IonContent>
     </IonPage>
   );
