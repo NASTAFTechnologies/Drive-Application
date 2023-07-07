@@ -128,7 +128,7 @@ const ViewDuty: React.FC = () => {
             </IonHeader>
             <IonContent>
                 <div className='form-container-ViewDuty'>
-                    <h1>Trip Details</h1>
+                    <h1 className='trip-Title'>Trip Details</h1>
                     <form onSubmit={handleSubmit}>
                         <IonItem className='field-item'>
                             <IonLabel className='bold-label'>Trip Sheet No :</IonLabel>

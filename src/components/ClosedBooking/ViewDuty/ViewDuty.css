@@ -5,7 +5,10 @@
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 16px;
 }
-
+.form-container-ViewDuty .trip-Title{
+    text-align: center;
+    margin-bottom: 20px;
+}
 .form-container-ViewDuty .booking-accept-btn {
     margin: 10px 80px;
     display: flex;
