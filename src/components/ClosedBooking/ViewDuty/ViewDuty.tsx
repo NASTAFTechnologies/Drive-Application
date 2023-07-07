@@ -267,7 +267,7 @@ const ViewDuty: React.FC = () => {
                     Signature
                 </IonButton>
                 <IonCard>
-                    <img alt="Silhouette of mountains" src="https://img.freepik.com/free-vector/businessman-planning-events-deadlines-agenda_74855-6274.jpg?w=900&t=st=1688480583~exp=1688481183~hmac=88e85cab2e58b10bc489eff32fc71d1633f201a0f8155c6a88b5657262e6a543" />
+                    {/* <img alt="Silhouette of mountains" src="https://img.freepik.com/free-vector/businessman-planning-events-deadlines-agenda_74855-6274.jpg?w=900&t=st=1688480583~exp=1688481183~hmac=88e85cab2e58b10bc489eff32fc71d1633f201a0f8155c6a88b5657262e6a543" /> */}
                     <IonCardHeader>
                         <IonCardTitle>Signature</IonCardTitle>
                     </IonCardHeader>
