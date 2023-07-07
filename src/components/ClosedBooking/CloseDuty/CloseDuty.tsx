@@ -34,12 +34,17 @@ const CloseDuty: React.FC = () => {
     const [dutyType, setDutyType] = useState('Local');
     const [vehicleType, setVehicleType] = useState('-');
     const [contactNumber, setContactNumber] = useState('7550256616');
-    const [companyName, setCompanyName] = useState('Default Company');
+    const [TollCharges, setTollCharges] = useState('0');
+    const [PermitCharges, setPermitCharges] = useState('0');
+    const [companyName, setCompanyName] = useState('HCL Technology');
     const [guestName, setGuestName] = useState('Default Guest');
     const [address, setAddress] = useState('ITC Choll Park');
     const [startDate, setStartDate] = useState(tripDate);
-    const [startTime, setStartTime] = useState('');
-    const [startKilometers, setStartKilometers] = useState('');
+    const [startTime, setStartTime] = useState('16:18');
+    const [ClosingDate, setClosingDate] = useState('2023-07-20');
+    const [ClosingTime, setClosingTime] = useState('16:18');
+    const [startKilometers, setStartKilometers] = useState('31919');
+    const [ClosingKilometers, setClosingKilometers] = useState('40011');
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -67,6 +72,12 @@ const CloseDuty: React.FC = () => {
             case 'contactNumber':
                 setContactNumber(value);
                 break;
+            case 'TollCharges':
+                setTollCharges(value);
+                break;
+            case 'PermitCharges':
+                setPermitCharges(value);
+                break;
             case 'companyName':
                 setCompanyName(value);
                 break;
@@ -82,8 +93,17 @@ const CloseDuty: React.FC = () => {
             case 'startTime':
                 setStartTime(value);
                 break;
+            case 'ClosingDate':
+                setClosingDate(value);
+                break;
+            case 'ClosingTime':
+                setClosingTime(value);
+                break;
             case 'startKilometers':
                 setStartKilometers(value);
+                break;
+            case 'ClsoingKilometers':
+                setClosingKilometers(value);
                 break;
             default:
                 break;
@@ -102,7 +122,9 @@ const CloseDuty: React.FC = () => {
     const handleBack = () => {
         history.push('/menu/home/closebooking');
     };
-
+    const handleBtnClickToll = () => {
+        history.push('/menu/home/startduty/updatetoll'); // Replace '/another-page' with the desired path of the destination page
+    };
     return (
         <IonPage>
             <IonHeader>
@@ -188,6 +210,26 @@ const CloseDuty: React.FC = () => {
                             />
                         </IonItem>
                         <IonItem className='field-item'>
+                            <IonLabel className='bold-label'>Toll Charges :</IonLabel>
+                            <IonInput
+                                type='number'
+                                name='TollCharges'
+                                value={TollCharges}
+                                onIonChange={handleInputChange}
+                                required
+                            />
+                        </IonItem>
+                        <IonItem className='field-item'>
+                            <IonLabel className='bold-label'>Permit Charges :</IonLabel>
+                            <IonInput
+                                type='number'
+                                name='PermitCharges'
+                                value={PermitCharges}
+                                onIonChange={handleInputChange}
+                                required
+                            />
+                        </IonItem>
+                        <IonItem className='field-item'>
                             <IonLabel className='bold-label'>Start Date :</IonLabel>
                             <IonInput
                                 type='date'
@@ -204,7 +246,7 @@ const CloseDuty: React.FC = () => {
                                 name='startTime'
                                 value={startTime}
                                 onIonChange={handleInputChange}
-                                required
+                                readonly
                             />
                         </IonItem>
                         <IonItem className='field-item'>
@@ -217,6 +259,36 @@ const CloseDuty: React.FC = () => {
                                 required
                             />
                         </IonItem>
+                        <IonItem className='field-item'>
+                            <IonLabel className='bold-label'>Closing Date :</IonLabel>
+                            <IonInput
+                                type='date'
+                                name='ClosingtDate'
+                                value={ClosingDate}
+                                onIonChange={handleInputChange}
+                                required
+                            />
+                        </IonItem>
+                        <IonItem className='field-item'>
+                            <IonLabel className='bold-label'>Closing Time :</IonLabel>
+                            <IonInput
+                                type='time'
+                                name='Closingtime'
+                                value={ClosingTime}
+                                onIonChange={handleInputChange}
+                                readonly
+                            />
+                        </IonItem>
+                        <IonItem className='field-item'>
+                            <IonLabel className='bold-label'>Closing Kilometers :</IonLabel>
+                            <IonInput
+                                type='tel'
+                                name='ClosingKilometers'
+                                value={ClosingKilometers}
+                                onIonChange={handleInputChange}
+                                required
+                            />
+                        </IonItem>
                         <IonButton
                             className='booking-accept-btn'
                             expand='block'
@@ -224,17 +296,10 @@ const CloseDuty: React.FC = () => {
                             size='small'
                             type='submit'
                         >
-                            Start Duty
+                            Close Duty
                         </IonButton>
-                        <IonButton
-                            className='accept-btn'
-                            expand='block'
-                            onClick={() => presentToast('top')}
-                            size='small'
-                            type='submit'
-                        >
-                            Upload-Toll / Parking
-                        </IonButton>
+                        <IonButton onClick={handleBtnClickToll} className='accept-btn' size='small'>Upload-Toll / Parking</IonButton>
+
                     </form>
                 </div>
             </IonContent>
