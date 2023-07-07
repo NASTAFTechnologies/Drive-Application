@@ -1,7 +1,7 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonItem, IonLabel, IonAvatar, IonButtons, IonIcon, IonBackButton, IonInput, IonAlert } from '@ionic/react';
 import { useHistory } from "react-router-dom";
-import { createOutline} from 'ionicons/icons';
+import { createOutline, create } from 'ionicons/icons';
 import './Profile.css';
 
 const Profile: React.FC = () => {
@@ -151,6 +151,7 @@ const Profile: React.FC = () => {
           ) : (
             <IonButton fill="clear" size="small" onClick={toggleEditMode}>
               Edit
+              <IonIcon slot="end" icon={create}></IonIcon>
             </IonButton>
           )}
           <IonAlert
