@@ -22,7 +22,7 @@ const StartDuty: React.FC = () => {
 
     const presentToast = (position: 'top' | 'middle' | 'bottom') => {
         present({
-            message: 'Your Booking Was Accepted!',
+            message: 'Your Duty Was Started !',
             duration: 1500,
             position: position,
         });
@@ -34,8 +34,8 @@ const StartDuty: React.FC = () => {
     const [dutyType, setDutyType] = useState('Local');
     const [vehicleType, setVehicleType] = useState('-');
     const [contactNumber, setContactNumber] = useState('7550256616');
-    const [companyName, setCompanyName] = useState('Default Company');
-    const [guestName, setGuestName] = useState('Default Guest');
+    const [companyName, setCompanyName] = useState('HCL Technology LTD');
+    const [guestName, setGuestName] = useState('Bavanee');
     const [address, setAddress] = useState('ITC Choll Park');
     const [startDate, setStartDate] = useState(tripDate);
     const [startTime, setStartTime] = useState('');
@@ -102,7 +102,9 @@ const StartDuty: React.FC = () => {
     const handleBack = () => {
         history.push('/menu/home/closebooking');
     };
-
+    const handleBtnClickToll = () => {
+        history.push('/menu/home/startduty/updatetoll'); // Replace '/another-page' with the desired path of the destination page
+      };
     return (
         <IonPage>
             <IonHeader>
@@ -226,7 +228,7 @@ const StartDuty: React.FC = () => {
                         >
                             Start Duty
                         </IonButton>
-                        <IonButton onClick={() => presentToast('top')} className='accept-btn' size='small'>Upload-Toll / Parking</IonButton>
+                        <IonButton onClick={handleBtnClickToll} className='accept-btn' size='small'>Upload-Toll / Parking</IonButton>
                     </form>
                 </div>
             </IonContent>
