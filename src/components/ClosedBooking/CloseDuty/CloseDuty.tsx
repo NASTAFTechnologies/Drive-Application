@@ -14,7 +14,7 @@ import {
     IonBackButton,
     useIonToast,
 } from '@ionic/react';
-// import './StartDuty.css';
+import './CloseDuty.css';
 import { useHistory } from 'react-router-dom';
 
 const CloseDuty: React.FC = () => {
@@ -138,7 +138,7 @@ const CloseDuty: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                <div className='form-container-StartDuty'>
+                <div className='form-container-CloseDuty'>
                     <form onSubmit={handleSubmit}>
                         <IonItem className='field-item'>
                             <IonLabel className='bold-label'>Trip Sheet No :</IonLabel>
