@@ -70,7 +70,7 @@ const UpdateToll: React.FC = () => {
                             <IonInput label="Enter Toll & Parking" labelPlacement="floating" placeholder=""></IonInput>
                         </IonItem>
                         <IonItem>
-                            <IonInput label="Enter Amount" labelPlacement="floating" placeholder=""></IonInput>
+                        <IonInput type='number' label="Enter Amount" labelPlacement="floating" placeholder=""></IonInput>
                         </IonItem>
                     </IonList>
                     <div className="File-upload-btn">

@@ -104,7 +104,7 @@ const StartDuty: React.FC = () => {
     };
     const handleBtnClickToll = () => {
         history.push('/menu/home/startduty/updatetoll'); // Replace '/another-page' with the desired path of the destination page
-      };
+    };
     return (
         <IonPage>
             <IonHeader>
@@ -212,7 +212,7 @@ const StartDuty: React.FC = () => {
                         <IonItem className='field-item'>
                             <IonLabel className='bold-label'>Start Kilometers :</IonLabel>
                             <IonInput
-                                type='tel'
+                                type='number'
                                 name='startKilometers'
                                 value={startKilometers}
                                 onIonChange={handleInputChange}
