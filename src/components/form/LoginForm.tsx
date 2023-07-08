@@ -16,7 +16,7 @@ import {
   eyeOffOutline,
 } from 'ionicons/icons';
 
-const Login = () => {
+const Login: React.FC = () => {
   const history = useHistory();
   const [email, setEmail] = useState('admin@gmail.com');
   const [password, setPassword] = useState('Admin@321');
@@ -34,7 +34,7 @@ const Login = () => {
     }
   }, [history]);
 
-  const handleLogin = (e) => {
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (email === 'admin@gmail.com' && password === 'Admin@321') {
       setTimeout(() => {
@@ -72,7 +72,7 @@ const Login = () => {
                   type="email"
                   placeholder="Email"
                   value={email}
-                  onIonChange={(e) => setEmail(e.detail.value)}
+                  onIonChange={(e) => setEmail(e.detail.value!)}
                   required
                 ></IonInput>
               </div>
@@ -85,7 +85,7 @@ const Login = () => {
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Password"
                   value={password}
-                  onIonChange={(e) => setPassword(e.detail.value)}
+                  onIonChange={(e) => setPassword(e.detail.value!)}
                   required
                 ></IonInput>
                 <div

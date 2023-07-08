@@ -12,22 +12,11 @@ import {
     IonButtons,
     IonButton,
     IonBackButton,
-    useIonToast,
 } from '@ionic/react';
 import './CloseDuty.css';
 import { useHistory } from 'react-router-dom';
 
 const CloseDuty: React.FC = () => {
-    const [present] = useIonToast();
-
-    const presentToast = (position: 'top' | 'middle' | 'bottom') => {
-        present({
-            message: 'Your Booking Was Accepted!',
-            duration: 1500,
-            position: position,
-        });
-    };
-
     const [tripSheetNo, setTripSheetNo] = useState('98897');
     const [tripDate, setTripDate] = useState('2023-07-20');
     const [reportTime, setReportTime] = useState('11:33');
@@ -102,9 +91,10 @@ const CloseDuty: React.FC = () => {
             case 'startKilometers':
                 setStartKilometers(value);
                 break;
-            case 'ClsoingKilometers':
+            case 'ClosingKilometers':
                 setClosingKilometers(value);
                 break;
+
             default:
                 break;
         }
@@ -124,6 +114,9 @@ const CloseDuty: React.FC = () => {
     };
     const handleBtnClickToll = () => {
         history.push('/menu/home/startduty/updatetoll'); // Replace '/another-page' with the desired path of the destination page
+    };
+    const handleBtnClickCloseduty = () => {
+        history.push('/menu/home/startduty/digitalsign'); // Replace '/another-page' with the desired path of the destination page
     };
     return (
         <IonPage>
@@ -292,7 +285,7 @@ const CloseDuty: React.FC = () => {
                         <IonButton
                             className='booking-accept-btn'
                             expand='block'
-                            onClick={() => presentToast('top')}
+                            onClick={handleBtnClickCloseduty}
                             size='small'
                             type='submit'
                         >

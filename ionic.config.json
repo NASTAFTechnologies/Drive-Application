@@ -1,5 +1,7 @@
 {
-  "name": "driverApp",
-  "integrations": {},
-  "type": "react"
+  "name": "Drive-Application",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
 }
