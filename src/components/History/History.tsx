@@ -31,8 +31,10 @@ const TripSheet: React.FC = () => {
   const data = [
     { id: 1, date: '2023-07-01', startTime: '09:00', duty: 'Morning Shift', vehicleType: 'Car', Action: 'Accept' },
     { id: 2, date: '2023-07-02', startTime: '13:00', duty: 'Afternoon Shift', vehicleType: 'Truck', Action: 'Accept' },
-    { id: 2, date: '2023-07-04', startTime: '13:00', duty: 'Evening Shift', vehicleType: 'Truck', Action: 'Open' },
-    { id: 2, date: '2023-07-07', startTime: '13:00', duty: 'Night Shift', vehicleType: 'Truck', Action: 'Pending' },
+    { id: 3, date: '2023-07-04', startTime: '13:00', duty: 'Evening Shift', vehicleType: 'Truck', Action: 'Open' },
+    { id: 4, date: '2023-07-07', startTime: '13:00', duty: 'Night Shift', vehicleType: 'Truck', Action: 'Pending' },
+    { id: 5, date: '2023-07-12', startTime: '13:00', duty: 'Night Shift', vehicleType: 'Truck', Action: 'Pending' },
+    { id: 6, date: '2023-07-17', startTime: '13:00', duty: 'Night Shift', vehicleType: 'Truck', Action: 'Pending' },
     // Add more data rows here...
   ];
 

@@ -4,7 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel, IonPage } from '@ionic/react';
 import { settingsOutline, locationOutline, homeOutline, receiptOutline } from 'ionicons/icons';
 
-import Location from '../Location/Location';
+// import Location from '../Location/Location';
 import Settings from '../Settings/Settings';
 import TripSheet from '../History/History';
 import NewBooking from '../NewBooking/NewBooking';
@@ -40,12 +40,12 @@ const Menu: React.FC = () => {
           <Route exact path="/menu/home/closebooking/closeduty" component={CloseDuty} />
           <Route exact path="/menu/home/closebooking/viewduty" component={ViewDuty} />
           <Route exact path="/menu/tripsheet" component={TripSheet} />
-          <Route exact path="/menu/location" component={Location} />
+          {/* <Route exact path="/menu/location" component={Location} /> */}
           <Route exact path="/menu/setting" component={Settings} />
           <Route exact path="/menu/settings/profile" component={Profile} />
           <Route exact path="/menu">
             <Redirect to="/menu/tripsheet" />
-            <Redirect to="/menu/location" />
+            {/* <Redirect to="/menu/location" /> */}
             <Redirect to="/menu/setting" />
             <Redirect to="/menu/settings/profile" />
             <Redirect to="/menu/home/newbooking" />
@@ -76,7 +76,7 @@ const Menu: React.FC = () => {
               <IonLabel>History</IonLabel>
             </div>
           </IonTabButton>
-          <IonTabButton
+          {/* <IonTabButton
             tab="Menu3"
             href="/menu/location"
             className={`Menu-Button ${activeTab === 'Menu2' ? 'active' : ''}`}
@@ -86,7 +86,7 @@ const Menu: React.FC = () => {
             <div className={`Menu-lable ${activeTab === 'Menu2' ? 'active' : ''}`}>
               <IonLabel>Location</IonLabel>
             </div>
-          </IonTabButton>
+          </IonTabButton> */}
           <IonTabButton
             tab="Menu4"
             href="/menu/setting"

@@ -1,7 +1,8 @@
 .login-container {
   background-image: url("https://img.freepik.com/free-vector/flat-design-muscle-car-illustration_23-2149453165.jpg?w=740&t=st=1687765084~exp=1687765684~hmac=8800b8f8479e6f50150bcb48464fd4cafca23fe0fcee380015d94ba658aafcde");
+  /* background-image: url("https://img.freepik.com/free-vector/transport-service-taxi-app-concept_23-2148493912.jpg?w=740&t=st=1688974383~exp=1688974983~hmac=c61684c1831f074d03edd0d9badc81c159c186cdab58167a80d7fa9cf0496097s"); */
   background-repeat: cover;
-  background-position: 10%;
+  background-position: 15%;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -13,7 +14,7 @@
 .glasses {
   height: 100%;
   width: 100%;
-  backdrop-filter: blur(5px);
+  /* backdrop-filter: blur(5px); */
   gap: 16px;
   overflow: hidden;
   justify-content: center;
