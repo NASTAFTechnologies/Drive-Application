@@ -158,7 +158,7 @@ const handleDownloadExcel = () => {
         isOpen={showPopupForSubmit}
         onDidDismiss={() => setshowPopupForSubmit(false)}
         header="Missing Dates"
-        message="You enter the date was not in your memory !!"
+        message="You entered a date that was not in your memory. !!"
         buttons={['OK']}
       />
     </IonPage>
