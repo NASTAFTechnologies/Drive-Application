@@ -1,10 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './History.css';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import { useHistory } from "react-router-dom";
+import { IonButton, IonContent, IonHeader, IonInput, IonPage, IonTitle, IonToolbar, IonAlert } from '@ionic/react';
+import { useHistory } from 'react-router-dom';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 const TripSheet: React.FC = () => {
   const history = useHistory();
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [filteredData, setFilteredData] = useState<{
+    id: number;
+    date: string;
+    startTime: string;
+    duty: string;
+    vehicleType: string;
+    Action: string;
+  }[]>([]);
+  const [showPopup, setShowPopup] = useState(false);
+  const [showPopupForSubmit, setshowPopupForSubmit] = useState(false);
+
   useEffect(() => {
     const isAuthenticated = localStorage.getItem('auth');
     if (!isAuthenticated) {
@@ -21,6 +36,52 @@ const TripSheet: React.FC = () => {
     // Add more data rows here...
   ];
 
+// Filter the data based on the selected date range
+// Filter the data based on the selected date range
+const filterData = () => {
+  if (!startDate || !endDate) {
+    setshowPopupForSubmit(true);
+    setFilteredData([]);
+  } else {
+    const filtered = data.filter(item => {
+      return item.date >= startDate && item.date <= endDate;
+    });
+    setFilteredData(filtered);
+
+    if (filtered.length === 0) {
+      setshowPopupForSubmit(true);
+    } else {
+      setshowPopupForSubmit(false);
+    }
+  }
+};
+
+
+
+// Function to handle downloadExcel button click
+const handleDownloadExcel = () => {
+  if (!startDate || !endDate) {
+    setShowPopup(true);
+  } else {
+    if (filteredData.length === 0) {
+      setshowPopupForSubmit(true);
+    } else {
+      downloadExcel();
+    }
+  }
+};
+
+
+  // Function to download the data as an Excel file
+  const downloadExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(filteredData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Trip Data');
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
+    saveAs(data, 'trip_data.xlsx');
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -29,7 +90,29 @@ const TripSheet: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
+        <div className="date-filter">
+          <label className='filter-label' htmlFor="fromDate">From:</label>
+          <IonInput
+            type="date"
+            id="fromDate"
+            value={startDate}
+            onIonChange={(e) => setStartDate(e.detail.value!)}
+          />
+          <label className='filter-label' htmlFor="toDate">To:</label>
+          <IonInput
+            type="date"
+            id="toDate"
+            value={endDate}
+            onIonChange={(e) => setEndDate(e.detail.value!)}
+          />
+          <div className='sumbit-flt-btn'>
+            <IonButton size='small' onClick={filterData}>Submit</IonButton>
+          </div>
+        </div>
         <div className="table-container">
+          <div className='excel-download-btn'>
+            <IonButton color="success" size='small' onClick={handleDownloadExcel}>Download Excel</IonButton>
+          </div>
           <table className="ionic-table">
             <thead>
               <tr>
@@ -41,25 +124,43 @@ const TripSheet: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {data.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.date}</td>
-                  <td>{item.startTime}</td>
-                  <td>{item.duty}</td>
-                  <td>{item.vehicleType}</td>
-                  <td>
-                    <div
-                      className={`action-button action-${item.Action.toLowerCase()}`}
-                    >
-                      {item.Action}
-                    </div>
-                  </td>
+              {filteredData.length > 0 ? (
+                filteredData.map((item) => (
+                  <tr key={item.id}>
+                    <td>{item.date}</td>
+                    <td>{item.startTime}</td>
+                    <td>{item.duty}</td>
+                    <td>{item.vehicleType}</td>
+                    <td>
+                      <div className={`action-button action-${item.Action.toLowerCase()}`}>
+                        {item.Action}
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={5}>No data available.</td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>
       </IonContent>
+      <IonAlert
+        isOpen={showPopup}
+        onDidDismiss={() => setShowPopup(false)}
+        header="Missing Dates"
+        message="Please enter both start and end dates."
+        buttons={['OK']}
+      />
+          <IonAlert
+        isOpen={showPopupForSubmit}
+        onDidDismiss={() => setshowPopupForSubmit(false)}
+        header="Missing Dates"
+        message="You enter the date was not in your memory !!"
+        buttons={['OK']}
+      />
     </IonPage>
   );
 };

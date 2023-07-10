@@ -1,3 +1,16 @@
+.date-filter{
+  margin: 20px 5px;
+  padding:10px 25px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 16px;
+}
+.date-filter .filter-label{
+  font-weight: 600;
+}
+.date-filter .sumbit-flt-btn{
+  text-align: center;
+  margin-top: 20px;
+}
 .table-container {
     width: 100%;
     overflow-x: auto;
@@ -5,7 +18,10 @@
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 16px;
   }
-  
+  .table-container .excel-download-btn{
+    text-align: end;
+    margin:5px 10px ;
+  }
   .ionic-table {
     width: 100%;
     border-collapse: collapse;
