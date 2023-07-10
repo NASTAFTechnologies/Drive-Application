@@ -115,7 +115,7 @@ const Login: React.FC = () => {
         isOpen={showLoginSuccess}
         onDidDismiss={handleLoginSuccessAlertClose}
         header="Success"
-        message="You have successfully logged in!"
+        message="You have successfully logged in"
         buttons={['OK']}
       />
     </IonPage>
