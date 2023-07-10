@@ -1,4 +1,8 @@
-.header{
+.header-title {
+    box-shadow: none;
+}
+
+.header {
     display: flex;
     flex-direction: row-reverse;
 }

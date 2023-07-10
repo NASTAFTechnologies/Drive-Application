@@ -53,7 +53,7 @@ const Menu: React.FC = () => {
             <Redirect to="/menu/home" />
           </Route>
         </IonRouterOutlet>
-        <IonTabBar slot="bottom">
+        <IonTabBar slot="bottom" className='tab-bar-menu'>
           <IonTabButton
             tab="Menu1"
             href="/menu/home"

@@ -1,24 +1,34 @@
+.tab-bar-menu {
+  background-color: transparent !important;
+  margin: 0px 10px 10px 10px;
+  display: flex;
+  box-shadow: none;
+  border-radius: 15px;
+}
+
 .Menu-Button {
-    background: #000;
-    transition: 0.5s;
-  }
-  
-  .Menu-Button:hover {
-    background: #dfff41;
-    color: #000;
-  }
-  
-  .Menu-Button:hover .Menu-icon,
-  .Menu-Button:hover .Menu-lable {
-    color: #000;
-  }
-  
-  .Menu-icon {
-    color: #dfff41;
-    transition: 0.5s;
-  }
-  
-  .Menu-lable {
-    color: #fff;
-  }
-  
+  padding: 5px;
+  background: #000;
+  transition: 0.5s;
+}
+
+.Menu-Button:hover {
+  background: #dfff41;
+  color: #000;
+}
+
+.Menu-Button:hover .Menu-icon,
+.Menu-Button:hover .Menu-lable {
+  color: #000;
+}
+
+.Menu-icon {
+  color: #dfff41;
+  transition: 0.5s;
+  font-size: 30px;
+}
+
+.Menu-lable {
+  color: #fff;
+  font-size: 13px;
+}

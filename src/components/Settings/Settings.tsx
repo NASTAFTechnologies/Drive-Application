@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonButton } from '@ionic/react';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonButton, IonIcon } from '@ionic/react';
 import './Setting.css';
+import { logOutOutline, personOutline } from 'ionicons/icons';
 
 const Settings: React.FC = () => {
   const history = useHistory();
@@ -20,7 +21,7 @@ const Settings: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader className='header-title'>
         <IonToolbar>
           <IonTitle>Settings</IonTitle>
         </IonToolbar>
@@ -31,17 +32,21 @@ const Settings: React.FC = () => {
             <div className="list-item" onClick={() => history.push('/menu/settings/profile')}>
               <IonItem>
                 <IonButton fill="clear" className="List">
-                  <IonLabel className='label'>Profile</IonLabel>
+                  <IonIcon className='profile-icon' slot="start" icon={personOutline} />
+                  <IonLabel className="label">Profile</IonLabel>
                 </IonButton>
               </IonItem>
             </div>
+
             <div className="list-item" onClick={handleLogout}>
               <IonItem>
                 <IonButton fill="clear" className="List">
-                  <IonLabel className='label'>Log Out</IonLabel>
+                  <IonIcon className='logout-icon' slot="start" icon={logOutOutline} />
+                  <IonLabel className="label">Log Out</IonLabel>
                 </IonButton>
               </IonItem>
             </div>
+
           </IonList>
         </div>
       </IonContent>

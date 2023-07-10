@@ -29,7 +29,7 @@ const Home: React.FC = () => {
   };
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader className='header-title'>
         <IonToolbar>
           <div className='header'>
             <IonButton fill="clear" onClick={handleLogout}>

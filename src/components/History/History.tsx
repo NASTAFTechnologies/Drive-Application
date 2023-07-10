@@ -86,7 +86,7 @@ const TripSheet: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader className='header-title'>
         <IonToolbar>
           <IonTitle>History</IonTitle>
         </IonToolbar>

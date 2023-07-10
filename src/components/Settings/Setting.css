@@ -2,11 +2,17 @@
   padding: 10px 0px;
 
 }
-/* 
-.list-container {
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 16px;
-  margin: 10px 10px 0px 10px;
-} */
+
+.profile-icon {
+  margin-right: 30px;
+  margin-left: 10px;
+}
+
+.logout-icon {
+  margin-right: 30px;
+  margin-left: 10px;
+  color: rgb(252, 28, 28);
+}
 
 .List {
   text-transform: uppercase;
