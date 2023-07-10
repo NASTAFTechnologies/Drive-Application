@@ -7,6 +7,9 @@
 .date-filter .filter-label{
   font-weight: 600;
 }
+.date-filter .filter-input {
+  margin-top: 15px;
+}
 .date-filter .sumbit-flt-btn{
   text-align: center;
   margin-top: 20px;
@@ -18,7 +21,7 @@
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 16px;
   }
-  .table-container .excel-download-btn{
+   .excel-download-btn{
     text-align: end;
     margin:5px 10px ;
   }

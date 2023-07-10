@@ -36,40 +36,40 @@ const TripSheet: React.FC = () => {
     // Add more data rows here...
   ];
 
-// Filter the data based on the selected date range
-// Filter the data based on the selected date range
-const filterData = () => {
-  if (!startDate || !endDate) {
-    setshowPopupForSubmit(true);
-    setFilteredData([]);
-  } else {
-    const filtered = data.filter(item => {
-      return item.date >= startDate && item.date <= endDate;
-    });
-    setFilteredData(filtered);
-
-    if (filtered.length === 0) {
+  // Filter the data based on the selected date range
+  // Filter the data based on the selected date range
+  const filterData = () => {
+    if (!startDate || !endDate) {
       setshowPopupForSubmit(true);
+      setFilteredData([]);
     } else {
-      setshowPopupForSubmit(false);
+      const filtered = data.filter(item => {
+        return item.date >= startDate && item.date <= endDate;
+      });
+      setFilteredData(filtered);
+
+      if (filtered.length === 0) {
+        setshowPopupForSubmit(true);
+      } else {
+        setshowPopupForSubmit(false);
+      }
     }
-  }
-};
+  };
 
 
 
-// Function to handle downloadExcel button click
-const handleDownloadExcel = () => {
-  if (!startDate || !endDate) {
-    setShowPopup(true);
-  } else {
-    if (filteredData.length === 0) {
-      setshowPopupForSubmit(true);
+  // Function to handle downloadExcel button click
+  const handleDownloadExcel = () => {
+    if (!startDate || !endDate) {
+      setShowPopup(true);
     } else {
-      downloadExcel();
+      if (filteredData.length === 0) {
+        setshowPopupForSubmit(true);
+      } else {
+        downloadExcel();
+      }
     }
-  }
-};
+  };
 
 
   // Function to download the data as an Excel file
@@ -91,28 +91,34 @@ const handleDownloadExcel = () => {
       </IonHeader>
       <IonContent>
         <div className="date-filter">
-          <label className='filter-label' htmlFor="fromDate">From:</label>
-          <IonInput
-            type="date"
-            id="fromDate"
-            value={startDate}
-            onIonChange={(e) => setStartDate(e.detail.value!)}
-          />
-          <label className='filter-label' htmlFor="toDate">To:</label>
-          <IonInput
-            type="date"
-            id="toDate"
-            value={endDate}
-            onIonChange={(e) => setEndDate(e.detail.value!)}
-          />
+          <div className="filter-input">
+            <label className='filter-label' htmlFor="fromDate">From:</label>
+            <IonInput
+              type="date"
+              id="fromDate"
+              value={startDate}
+              onIonChange={(e) => setStartDate(e.detail.value!)}
+              required
+            />
+          </div>
+          <div className="filter-input">
+            <label className='filter-label' htmlFor="toDate">To:</label>
+            <IonInput
+              type="date"
+              id="toDate"
+              value={endDate}
+              onIonChange={(e) => setEndDate(e.detail.value!)}
+              required
+            />
+          </div>
           <div className='sumbit-flt-btn'>
             <IonButton size='small' onClick={filterData}>Submit</IonButton>
           </div>
         </div>
-        <div className="table-container">
-          <div className='excel-download-btn'>
+        <div className='excel-download-btn'>
             <IonButton color="success" size='small' onClick={handleDownloadExcel}>Download Excel</IonButton>
           </div>
+        <div className="table-container">
           <table className="ionic-table">
             <thead>
               <tr>
@@ -150,11 +156,11 @@ const handleDownloadExcel = () => {
       <IonAlert
         isOpen={showPopup}
         onDidDismiss={() => setShowPopup(false)}
-        header="Missing Dates"
-        message="Please enter both start and end dates."
+        header="Download Failured"
+        message="Please enter both from and to dates."
         buttons={['OK']}
       />
-          <IonAlert
+      <IonAlert
         isOpen={showPopupForSubmit}
         onDidDismiss={() => setshowPopupForSubmit(false)}
         header="Missing Dates"
