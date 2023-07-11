@@ -18,6 +18,7 @@
     width: 100%;
     overflow-x: auto;
     margin-top: 20px;
+    margin-bottom: 20px;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 16px;
   }
@@ -88,7 +89,12 @@
 .dark-history  .ionic-table th {
   color: #000000;
 }
-
+.dark-history .date-filter{
+  border: 2px solid #ccc;
+}
+.dark-history .table-container {
+  border: 2px solid #ccc;
+}
 .content {
   padding: 20px;
   text-align: center;
