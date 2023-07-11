@@ -5,7 +5,9 @@
   box-shadow: none;
   border-radius: 15px;
 }
-
+.white{
+  background-color: transparent;
+}
 .Menu-Button {
   padding: 5px;
   background: #000;
@@ -31,4 +33,33 @@
 .Menu-lable {
   color: #fff;
   font-size: 13px;
+}
+.light-menu {
+  --ion-background-color: #f4f4f4;
+  --ion-text-color: #000000;
+}
+
+.dark-menu {
+  --ion-background-color: #222222;
+  --ion-text-color: #ffffff;
+}
+.dark-menu .Menu-icon{
+  color: #000;
+}
+.dark-menu .Menu-lable {
+  color: #000;
+}
+.dark-menu .tab-bar-menu{
+  background-color: #0e0c0c;
+}
+.dark-menu .Menu-Button{
+  background: #fff;
+}
+.dark-menu .Menu-Button:hover {
+  background: #dfff41;
+  color: #000;
+}
+.content {
+  padding: 20px;
+  text-align: center;
 }

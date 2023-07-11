@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Menu.css';
 import { Route, Redirect } from 'react-router-dom';
 import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel, IonPage } from '@ionic/react';
@@ -25,10 +25,26 @@ const Menu: React.FC = () => {
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
   };
+  // Dark Mode & Light Mode
+  useEffect(() => {
+    const colorModeListener = (e: MediaQueryListEvent | MediaQueryList) => {
+      const rootElement = document.documentElement;
+      rootElement.classList.remove('dark-menu', 'light-menu');
+      rootElement.classList.add(e.matches ? 'dark-menu' : 'light-menu');
+    };
+
+    const colorModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    colorModeListener(colorModeQuery); // Set initial class based on current color mode
+    colorModeQuery.addListener(colorModeListener); // Listen for changes in color mode
+
+    return () => {
+      colorModeQuery.removeListener(colorModeListener); // Clean up the listener when the component unmounts
+    };
+  }, []);
 
   return (
     <IonPage>
-      <IonTabs>
+      <IonTabs className='white'>
         <IonRouterOutlet>
           <Route exact path="/menu/home" component={Home} />
           <Route exact path="/menu/home/newbooking" component={NewBooking} />
@@ -53,7 +69,7 @@ const Menu: React.FC = () => {
             <Redirect to="/menu/home" />
           </Route>
         </IonRouterOutlet>
-        <IonTabBar slot="bottom" className='tab-bar-menu'>
+        <IonTabBar slot="bottom" className={`tab-bar-menu`}>
           <IonTabButton
             tab="Menu1"
             href="/menu/home"
