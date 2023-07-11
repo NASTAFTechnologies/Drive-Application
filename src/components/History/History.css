@@ -75,4 +75,20 @@
       overflow-x: auto;
     }
   }
-  
+  /*  */
+  /* App.css */
+.light {
+  --ion-background-color: #f4f4f4;
+  --ion-text-color: #000000;
+}
+
+.dark {
+  --ion-background-color: #222222;
+  --ion-text-color: #ffffff;
+}
+
+.content {
+  padding: 20px;
+  text-align: center;
+}
+

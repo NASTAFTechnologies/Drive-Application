@@ -9,31 +9,48 @@ const Home: React.FC = () => {
   const history = useHistory();
 
   const handleLogout = () => {
-    localStorage.removeItem("auth"); // Remove the authentication flag from localStorage
-    history.push("/"); // Redirect to the login page
+    localStorage.removeItem("auth");
+    history.push("/");
   };
 
   useEffect(() => {
     const isAuthenticated = localStorage.getItem('auth');
     if (!isAuthenticated) {
-      history.replace('/'); // Redirect to the login page if not authenticated
+      history.replace('/');
     }
   }, [history]);
 
-
   const handleCardClickNewBooking = () => {
-    history.push('/menu/home/newbooking'); // Replace '/another-page' with the desired path of the destination page
+    history.push('/menu/home/newbooking');
   };
+
   const handleCardClosedNewBooking = () => {
-    history.push('/menu/home/closebooking'); // Replace '/another-page' with the desired path of the destination page
+    history.push('/menu/home/closebooking');
   };
+
+  useEffect(() => {
+    const colorModeListener = (e: MediaQueryListEvent | MediaQueryList) => {
+      const rootElement = document.documentElement;
+      rootElement.classList.remove('dark', 'light');
+      rootElement.classList.add(e.matches ? 'dark' : 'light');
+    };
+
+    const colorModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    colorModeListener(colorModeQuery); // Set initial class based on current color mode
+    colorModeQuery.addListener(colorModeListener); // Listen for changes in color mode
+
+    return () => {
+      colorModeQuery.removeListener(colorModeListener); // Clean up the listener when the component unmounts
+    };
+  }, []);
+
   return (
-    <IonPage>
+    <IonPage className={`theme ${document.documentElement.classList.contains('dark') ? 'dark' : 'light'}`}>
       <IonHeader className='header-title'>
         <IonToolbar>
           <div className='header'>
             <IonButton fill="clear" onClick={handleLogout}>
-              <IonIcon style={{ color: "#000" }} icon={logOutOutline} />
+              <IonIcon className={`logout-btn`} icon={logOutOutline} />
             </IonButton>
             <IonTitle>Home</IonTitle>
           </div>
