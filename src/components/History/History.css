@@ -91,9 +91,11 @@
 }
 .dark-history .date-filter{
   border: 2px solid #ccc;
+  background-color: #222222;
 }
 .dark-history .table-container {
   border: 2px solid #ccc;
+  background-color: #222222;
 }
 .content {
   padding: 20px;
