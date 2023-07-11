@@ -35,19 +35,19 @@ const Settings: React.FC = () => {
             </IonButton>
             <IonIcon className="right-icon" slot="end" icon={chevronForwardOutline} />
           </IonItem>
+          {/* <IonItem className="list-item">
+            <IonButton fill="clear" className="List">
+              <IonIcon className='profile-icon' slot="start" icon={moon} />
+              <IonLabel className="label">Dark Theme</IonLabel>
+            </IonButton>
+            <IonToggle id="themeToggle" slot="end" ></IonToggle>
+          </IonItem> */}
           <IonItem className="list-item" onClick={handleLogout}>
             <IonButton fill="clear" className="List">
               <IonIcon className="logout-icon" slot="start" icon={logOutOutline} />
               <IonLabel className="label">Log Out</IonLabel>
             </IonButton>
             <IonIcon className="right-icon" slot="end" icon={chevronForwardOutline} />
-          </IonItem>
-          <IonItem className="list-item">
-            <IonButton fill="clear" className="List">
-              <IonIcon className='profile-icon' slot="start" icon={moon} />
-              <IonLabel className="label">Dark Theme</IonLabel>
-            </IonButton>
-            <IonToggle id="themeToggle" slot="end" ></IonToggle>
           </IonItem>
         </IonList>
       </IonContent>
