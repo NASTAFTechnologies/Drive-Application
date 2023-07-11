@@ -43,31 +43,22 @@ const Settings: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <div className="list-container">
-          <IonList>
-            <div onClick={() => history.push('/menu/settings/profile')}>
-              <IonItem className="list-item">
-                <IonButton fill="clear" className="List">
-                  <IonIcon className='profile-icon' slot="start" icon={personOutline} />
-                  <IonLabel className="label">Profile</IonLabel>
-                </IonButton>
-                <IonIcon className="right-icon" slot="end" icon={chevronForwardOutline} />
-              </IonItem>
-            </div>
-
-            <div onClick={handleLogout}>
-              <IonItem className="list-item">
-                <IonButton fill="clear" className="List">
-                  <IonIcon className="logout-icon" slot="start" icon={logOutOutline} />
-                  <IonLabel className="label">Log Out</IonLabel>
-                </IonButton>
-                <IonIcon className="right-icon" slot="end" icon={chevronForwardOutline} />
-              </IonItem>
-            </div>
-
-
-          </IonList>
-        </div>
+        <IonList className="list-container">
+          <IonItem className="list-item" onClick={() => history.push('/menu/settings/profile')}>
+            <IonButton fill="clear" className="List">
+              <IonIcon className='profile-icon' slot="start" icon={personOutline} />
+              <IonLabel className="label">Profile</IonLabel>
+            </IonButton>
+            <IonIcon className="right-icon" slot="end" icon={chevronForwardOutline} />
+          </IonItem>
+          <IonItem className="list-item" onClick={handleLogout}>
+            <IonButton fill="clear" className="List">
+              <IonIcon className="logout-icon" slot="start" icon={logOutOutline} />
+              <IonLabel className="label">Log Out</IonLabel>
+            </IonButton>
+            <IonIcon className="right-icon" slot="end" icon={chevronForwardOutline} />
+          </IonItem>
+        </IonList>
       </IonContent>
     </IonPage>
   );

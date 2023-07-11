@@ -84,22 +84,22 @@ const TripSheet: React.FC = () => {
     saveAs(data, 'trip_data.xlsx');
   };
 
-    // Dark Mode & Light Mode
-    useEffect(() => {
-      const colorModeListener = (e: MediaQueryListEvent | MediaQueryList) => {
-        const rootElement = document.documentElement;
-        rootElement.classList.remove('dark-history', 'light-history');
-        rootElement.classList.add(e.matches ? 'dark-history' : 'light-history');
-      };
-  
-      const colorModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
-      colorModeListener(colorModeQuery); // Set initial class based on current color mode
-      colorModeQuery.addListener(colorModeListener); // Listen for changes in color mode
-  
-      return () => {
-        colorModeQuery.removeListener(colorModeListener); // Clean up the listener when the component unmounts
-      };
-    }, []);
+  // Dark Mode & Light Mode
+  useEffect(() => {
+    const colorModeListener = (e: MediaQueryListEvent | MediaQueryList) => {
+      const rootElement = document.documentElement;
+      rootElement.classList.remove('dark-history', 'light-history');
+      rootElement.classList.add(e.matches ? 'dark-history' : 'light-history');
+    };
+
+    const colorModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    colorModeListener(colorModeQuery); // Set initial class based on current color mode
+    colorModeQuery.addListener(colorModeListener); // Listen for changes in color mode
+
+    return () => {
+      colorModeQuery.removeListener(colorModeListener); // Clean up the listener when the component unmounts
+    };
+  }, []);
   return (
     <IonPage>
       <IonHeader className='header-title'>
@@ -134,8 +134,10 @@ const TripSheet: React.FC = () => {
           </div>
         </div>
         <div className='excel-download-btn'>
-            <IonButton color="success" size='small' onClick={handleDownloadExcel}>Download Excel</IonButton>
-          </div>
+          <IonButton color="success" size='small' onClick={handleDownloadExcel} className="custom-button">
+            Download Excel
+          </IonButton>
+        </div>
         <div className="table-container">
           <table className="ionic-table">
             <thead>

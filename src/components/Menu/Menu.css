@@ -3,7 +3,7 @@
   margin: 0px 10px 5px 10px;
   display: flex;
   box-shadow: none;
-  border-radius: 15px;
+  border-radius: 10px;
 }
 .white{
   background-color: transparent;
@@ -55,9 +55,15 @@
 .dark-menu .Menu-Button{
   background: #fff;
 }
+.dark-menu .Menu-Button:hover .Menu-icon,
+.Menu-Button:hover .Menu-lable {
+  color: #000;
+
+}
 .dark-menu .Menu-Button:hover {
   background: #dfff41;
-  color: #000;
+  color: #fff;
+  
 }
 .content {
   padding: 20px;

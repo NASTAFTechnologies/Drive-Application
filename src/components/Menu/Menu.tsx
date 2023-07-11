@@ -77,9 +77,6 @@ const Menu: React.FC = () => {
             onClick={() => handleTabChange('Menu1')}
           >
             <IonIcon className={`Menu-icon ${activeTab === 'Menu1' ? 'active' : ''}`} icon={homeOutline} />
-            <div className={`Menu-lable ${activeTab === 'Menu1' ? 'active' : ''}`}>
-              {/* <IonLabel>Home</IonLabel> */}
-            </div>
           </IonTabButton>
           <IonTabButton
             tab="Menu2"
@@ -88,9 +85,6 @@ const Menu: React.FC = () => {
             onClick={() => handleTabChange('Menu2')}
           >
             <IonIcon className={`Menu-icon ${activeTab === 'Menu1' ? 'active' : ''}`} icon={receiptOutline} />
-            <div className={`Menu-lable ${activeTab === 'Menu1' ? 'active' : ''}`}>
-              {/* <IonLabel>History</IonLabel> */}
-            </div>
           </IonTabButton>
           {/* <IonTabButton
             tab="Menu3"
@@ -106,13 +100,10 @@ const Menu: React.FC = () => {
           <IonTabButton
             tab="Menu4"
             href="/menu/setting"
-            className={`Menu-Button ${activeTab === 'Menu3' ? 'active' : ''}`}
+            className={`Menu-Button  ${activeTab === 'Menu3' ? 'active' : ''}`}
             onClick={() => handleTabChange('Menu4')}
           >
             <IonIcon className={`Menu-icon ${activeTab === 'Menu3' ? 'active' : ''}`} icon={cogOutline} />
-            <div className={`Menu-lable ${activeTab === 'Menu3' ? 'active' : ''}`}>
-              {/* <IonLabel>Settings</IonLabel> */}
-            </div>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>
