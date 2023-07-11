@@ -33,16 +33,16 @@
   font-size: 15px;
 }
 /* Dark & Night Mode */
-.light-settings {
+.light {
   --ion-background-color: #f4f4f4;
   --ion-text-color: #000000;
 }
 
-.dark-settings {
+.dark {
   --ion-background-color: #222222;
   --ion-text-color: #ffffff;
 }
-.dark-settings .List  {
+.dark .List  {
   color: #fff;
 }
 

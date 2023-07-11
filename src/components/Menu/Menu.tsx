@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './Menu.css';
 import { Route, Redirect } from 'react-router-dom';
-import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel, IonPage } from '@ionic/react';
-import { settingsOutline, locationOutline, homeOutline, receiptOutline, cogOutline } from 'ionicons/icons';
+import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonPage } from '@ionic/react';
+import { homeOutline, receiptOutline, cogOutline } from 'ionicons/icons';
 
 // import Location from '../Location/Location';
 import Settings from '../Settings/Settings';
@@ -29,8 +29,8 @@ const Menu: React.FC = () => {
   useEffect(() => {
     const colorModeListener = (e: MediaQueryListEvent | MediaQueryList) => {
       const rootElement = document.documentElement;
-      rootElement.classList.remove('dark-menu', 'light-menu');
-      rootElement.classList.add(e.matches ? 'dark-menu' : 'light-menu');
+      rootElement.classList.remove('dark', 'light');
+      rootElement.classList.add(e.matches ? 'dark' : 'light');
     };
 
     const colorModeQuery = window.matchMedia('(prefers-color-scheme: dark)');

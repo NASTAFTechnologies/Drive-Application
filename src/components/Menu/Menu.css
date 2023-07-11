@@ -34,33 +34,33 @@
   color: #fff;
   font-size: 13px;
 }
-.light-menu {
+.light {
   --ion-background-color: #f4f4f4;
   --ion-text-color: #000000;
 }
 
-.dark-menu {
+.dark {
   --ion-background-color: #222222;
   --ion-text-color: #ffffff;
 }
-.dark-menu .Menu-icon{
+.dark .Menu-icon{
   color: #000;
 }
-.dark-menu .Menu-lable {
+.dark .Menu-lable {
   color: #000;
 }
-.dark-menu .tab-bar-menu{
+.dark .tab-bar-menu{
   background-color: #0e0c0c;
 }
-.dark-menu .Menu-Button{
+.dark .Menu-Button{
   background: #fff;
 }
-.dark-menu .Menu-Button:hover .Menu-icon,
+.dark .Menu-Button:hover .Menu-icon,
 .Menu-Button:hover .Menu-lable {
   color: #000;
 
 }
-.dark-menu .Menu-Button:hover {
+.dark .Menu-Button:hover {
   background: #dfff41;
   color: #fff;
   

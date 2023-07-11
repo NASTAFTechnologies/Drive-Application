@@ -84,22 +84,6 @@ const TripSheet: React.FC = () => {
     saveAs(data, 'trip_data.xlsx');
   };
 
-  // Dark Mode & Light Mode
-  useEffect(() => {
-    const colorModeListener = (e: MediaQueryListEvent | MediaQueryList) => {
-      const rootElement = document.documentElement;
-      rootElement.classList.remove('dark-history', 'light-history');
-      rootElement.classList.add(e.matches ? 'dark-history' : 'light-history');
-    };
-
-    const colorModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    colorModeListener(colorModeQuery); // Set initial class based on current color mode
-    colorModeQuery.addListener(colorModeListener); // Listen for changes in color mode
-
-    return () => {
-      colorModeQuery.removeListener(colorModeListener); // Clean up the listener when the component unmounts
-    };
-  }, []);
   return (
     <IonPage>
       <IonHeader className='header-title'>

@@ -89,27 +89,27 @@
 }
 
 /*  */
-.light-history {
+.light {
   --ion-background-color: #f4f4f4;
   --ion-text-color: #000000;
 }
 
-.dark-history {
+.dark {
   --ion-background-color: #222222;
   --ion-text-color: #ffffff;
 }
-.dark-history .excel-download-btn .custom-button {
+.dark .excel-download-btn .custom-button {
   --color: #fff;
 }
-.dark-history .ionic-table th {
+.dark .ionic-table th {
   color: #000000;
 }
 
-.dark-history .date-filter {
+.dark .date-filter {
   background-color: #222222;
 }
 
-.dark-history .table-container {
+.dark .table-container {
   background-color: #222222;
 }
 

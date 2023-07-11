@@ -28,21 +28,6 @@ const Home: React.FC = () => {
     history.push('/menu/home/closebooking');
   };
 
-  useEffect(() => {
-    const colorModeListener = (e: MediaQueryListEvent | MediaQueryList) => {
-      const rootElement = document.documentElement;
-      rootElement.classList.remove('dark', 'light');
-      rootElement.classList.add(e.matches ? 'dark' : 'light');
-    };
-
-    const colorModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    colorModeListener(colorModeQuery); // Set initial class based on current color mode
-    colorModeQuery.addListener(colorModeListener); // Listen for changes in color mode
-
-    return () => {
-      colorModeQuery.removeListener(colorModeListener); // Clean up the listener when the component unmounts
-    };
-  }, []);
 
   return (
     <IonPage className={`theme ${document.documentElement.classList.contains('dark') ? 'dark' : 'light'}`}>
