@@ -76,14 +76,17 @@
     }
   }
   /*  */
-.light {
+.light-history {
   --ion-background-color: #f4f4f4;
   --ion-text-color: #000000;
 }
 
-.dark {
+.dark-history {
   --ion-background-color: #222222;
   --ion-text-color: #ffffff;
+}
+.dark-history  .ionic-table th {
+  color: #000000;
 }
 
 .content {
