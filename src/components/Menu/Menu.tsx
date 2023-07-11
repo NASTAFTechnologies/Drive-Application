@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Menu.css';
 import { Route, Redirect } from 'react-router-dom';
 import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel, IonPage } from '@ionic/react';
-import { settingsOutline, locationOutline, homeOutline, receiptOutline } from 'ionicons/icons';
+import { settingsOutline, locationOutline, homeOutline, receiptOutline, cogOutline } from 'ionicons/icons';
 
 // import Location from '../Location/Location';
 import Settings from '../Settings/Settings';
@@ -78,7 +78,7 @@ const Menu: React.FC = () => {
           >
             <IonIcon className={`Menu-icon ${activeTab === 'Menu1' ? 'active' : ''}`} icon={homeOutline} />
             <div className={`Menu-lable ${activeTab === 'Menu1' ? 'active' : ''}`}>
-              <IonLabel>Home</IonLabel>
+              {/* <IonLabel>Home</IonLabel> */}
             </div>
           </IonTabButton>
           <IonTabButton
@@ -89,7 +89,7 @@ const Menu: React.FC = () => {
           >
             <IonIcon className={`Menu-icon ${activeTab === 'Menu1' ? 'active' : ''}`} icon={receiptOutline} />
             <div className={`Menu-lable ${activeTab === 'Menu1' ? 'active' : ''}`}>
-              <IonLabel>History</IonLabel>
+              {/* <IonLabel>History</IonLabel> */}
             </div>
           </IonTabButton>
           {/* <IonTabButton
@@ -109,9 +109,9 @@ const Menu: React.FC = () => {
             className={`Menu-Button ${activeTab === 'Menu3' ? 'active' : ''}`}
             onClick={() => handleTabChange('Menu4')}
           >
-            <IonIcon className={`Menu-icon ${activeTab === 'Menu3' ? 'active' : ''}`} icon={settingsOutline} />
+            <IonIcon className={`Menu-icon ${activeTab === 'Menu3' ? 'active' : ''}`} icon={cogOutline} />
             <div className={`Menu-lable ${activeTab === 'Menu3' ? 'active' : ''}`}>
-              <IonLabel>Settings</IonLabel>
+              {/* <IonLabel>Settings</IonLabel> */}
             </div>
           </IonTabButton>
         </IonTabBar>

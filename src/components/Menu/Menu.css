@@ -1,6 +1,6 @@
 .tab-bar-menu {
   background-color: transparent !important;
-  margin: 0px 10px 10px 10px;
+  margin: 0px 10px 5px 10px;
   display: flex;
   box-shadow: none;
   border-radius: 15px;
@@ -15,19 +15,19 @@
 }
 
 .Menu-Button:hover {
-  background: #dfff41;
-  color: #000;
+  /* background: #dfff41; */
+  color: #dfff41;
 }
 
 .Menu-Button:hover .Menu-icon,
 .Menu-Button:hover .Menu-lable {
-  color: #000;
+  color: #dfff41;
 }
 
 .Menu-icon {
-  color: #dfff41;
+  color: #fff;
   transition: 0.5s;
-  font-size: 30px;
+  font-size: 32px;
 }
 
 .Menu-lable {

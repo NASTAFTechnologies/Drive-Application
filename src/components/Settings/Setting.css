@@ -1,8 +1,11 @@
 .list-item {
   padding: 10px 0px;
-
 }
-
+.right-icon{
+  position: absolute;
+  right: 15px;
+  font-size: 20px;
+}
 .profile-icon {
   margin-right: 30px;
   margin-left: 10px;
@@ -21,4 +24,25 @@
   align-items: center;
   color: #000;
   font-size: 15px;
+}
+/* Dark & Night Mode */
+.light-settings {
+  --ion-background-color: #f4f4f4;
+  --ion-text-color: #000000;
+}
+
+.dark-settings {
+  --ion-background-color: #222222;
+  --ion-text-color: #ffffff;
+}
+.dark-settings .List  {
+  color: #fff;
+}
+.dark-settings .list-item{
+  border-bottom:1px Solid #fff ;
+}
+
+.content {
+  padding: 20px;
+  text-align: center;
 }
