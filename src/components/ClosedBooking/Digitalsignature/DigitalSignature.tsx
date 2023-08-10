@@ -1,11 +1,21 @@
 import React, { useRef, useEffect } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonBackButton } from '@ionic/react';
 import './DigitalSignature.css';
 import { useHistory } from 'react-router-dom';
 import SignatureCanvas from 'react-signature-canvas';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonBackButton, useIonToast, } from '@ionic/react';
+
 
 const DigitalSignature: React.FC = () => {
   const signatureCanvasRef = useRef<any>();
+  const history = useHistory();
+  const [present] = useIonToast();
+  const presentToast = (position: 'top' | 'middle' | 'bottom') => {
+    present({
+      message: 'Signature Saved !',
+      duration: 1500,
+      position: position,
+    });
+  };
 
   const clearCanvas = () => {
     signatureCanvasRef.current.clear();
@@ -13,10 +23,8 @@ const DigitalSignature: React.FC = () => {
 
   const getSignatureAsImage = () => {
     const image = signatureCanvasRef.current.toDataURL();
-    // Use the image as needed
     console.log(image);
   };
-  const history = useHistory();
 
   useEffect(() => {
     const isAuthenticated = localStorage.getItem('auth');
@@ -28,6 +36,7 @@ const DigitalSignature: React.FC = () => {
   const handleBack = () => {
     history.push('/menu/home/closebooking');
   };
+
   return (
     <IonPage>
       <IonHeader>
@@ -44,13 +53,18 @@ const DigitalSignature: React.FC = () => {
         <div className="signature-container">
           <SignatureCanvas
             ref={signatureCanvasRef}
-            canvasProps={{ className: 'signature-canvas' }}
-            penColor="blue"
+            canvasProps={{
+              className: 'signature-canvas', width: 350, height: 400,
+              style: { borderRadius: '10px' }
+            }}
+            penColor="black"
             backgroundColor="lightgray"
           />
+
           <div className="button-container">
             <IonButton onClick={clearCanvas}>Clear</IonButton>
-            <IonButton onClick={getSignatureAsImage}>Save</IonButton>
+            <IonButton onClick={() => presentToast('top')} type="submit">Save
+            </IonButton>
           </div>
         </div>
       </IonContent>
