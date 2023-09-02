@@ -14,7 +14,9 @@
 .date-filter .filter-input {
   margin-top: 15px;
 }
-
+.filter-input .input{
+  color: #000000;
+}
 .date-filter .sumbit-flt-btn {
   text-align: center;
   margin-top: 20px;
@@ -100,6 +102,10 @@
 }
 .dark .excel-download-btn .custom-button {
   --color: #fff;
+}
+.dark .filter-input .input{
+  background-color: transparent;
+  color: #fff;
 }
 .dark .ionic-table th {
   color: #000000;

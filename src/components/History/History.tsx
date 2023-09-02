@@ -96,6 +96,7 @@ const TripSheet: React.FC = () => {
           <div className="filter-input">
             <label className='filter-label' htmlFor="fromDate">From:</label>
             <IonInput
+              className='input'
               type="date"
               id="fromDate"
               value={startDate}
@@ -106,6 +107,7 @@ const TripSheet: React.FC = () => {
           <div className="filter-input">
             <label className='filter-label' htmlFor="toDate">To:</label>
             <IonInput
+              className='input'
               type="date"
               id="toDate"
               value={endDate}
