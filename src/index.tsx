@@ -1,8 +1,8 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import reportWebVitals from './reportWebVitals';
+// import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+// import reportWebVitals from './reportWebVitals';
 
 const container = document.getElementById('root');
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -13,6 +13,6 @@ root.render(
   </React.StrictMode>
 );
 
-serviceWorkerRegistration.unregister();
+// serviceWorkerRegistration.unregister();
 
-reportWebVitals();
+// reportWebVitals();

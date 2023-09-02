@@ -1,10 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import './Menu.css';
-import { Route, Redirect } from 'react-router-dom';
-import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonPage } from '@ionic/react';
-import { homeOutline, receiptOutline, cogOutline } from 'ionicons/icons';
+import { Route, Redirect, Switch, useHistory } from 'react-router-dom';
+import {
+  IonTabs,
+  IonRouterOutlet,
+  IonTabBar,
+  IonTabButton,
+  IonIcon,
+  IonPage,
+} from '@ionic/react';
+import {
+  homeOutline,
+  receiptOutline,
+  cogOutline,
+} from 'ionicons/icons';
 
-// import Location from '../Location/Location';
+// Import your components
 import Settings from '../Settings/Settings';
 import TripSheet from '../History/History';
 import NewBooking from '../NewBooking/NewBooking';
@@ -19,12 +30,28 @@ import UpdateToll from '../ClosedBooking/StartDuty/UpdateToll/UpdateToll';
 import DigitalSignature from '../ClosedBooking/Digitalsignature/DigitalSignature';
 
 const Menu: React.FC = () => {
-
   const [activeTab, setActiveTab] = useState('Menu1');
+  const history = useHistory(); // Get the history object
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
+    switch (tab) {
+      case 'Menu1':
+        history.push('/menu/home');
+        break;
+      case 'Menu2':
+        history.push('/menu/tripsheet');
+        break;
+      case 'Menu3':
+        break;
+      case 'Menu4':
+        history.push('/menu/setting');
+        break;
+      default:
+        break;
+    }
   };
+
   // Dark Mode & Light Mode
   useEffect(() => {
     const colorModeListener = (e: MediaQueryListEvent | MediaQueryList) => {
@@ -46,28 +73,30 @@ const Menu: React.FC = () => {
     <IonPage>
       <IonTabs className='white'>
         <IonRouterOutlet>
-          <Route exact path="/menu/home" component={Home} />
-          <Route exact path="/menu/home/newbooking" component={NewBooking} />
-          <Route exact path="/menu/home/viewbooking" component={ViewBooking} />
-          <Route exact path="/menu/home/closebooking" component={ClosedBooking} />
-          <Route exact path="/menu/home/closebooking/startduty" component={StartDuty} />
-          <Route exact path="/menu/home/startduty/updatetoll" component={UpdateToll} />
-          <Route exact path="/menu/home/startduty/digitalsign" component={DigitalSignature} />
-          <Route exact path="/menu/home/closebooking/closeduty" component={CloseDuty} />
-          <Route exact path="/menu/home/closebooking/viewduty" component={ViewDuty} />
-          <Route exact path="/menu/tripsheet" component={TripSheet} />
-          {/* <Route exact path="/menu/location" component={Location} /> */}
-          <Route exact path="/menu/setting" component={Settings} />
-          <Route exact path="/menu/settings/profile" component={Profile} />
-          <Route exact path="/menu">
-            <Redirect to="/menu/tripsheet" />
-            {/* <Redirect to="/menu/location" /> */}
-            <Redirect to="/menu/setting" />
-            <Redirect to="/menu/settings/profile" />
-            <Redirect to="/menu/home/newbooking" />
-            <Redirect to="/menu/home/viewbooking" />
-            <Redirect to="/menu/home" />
-          </Route>
+          <Switch>
+            <Route exact path="/menu/home" component={Home} />
+            <Route exact path="/menu/home/newbooking" component={NewBooking} />
+            <Route exact path="/menu/home/viewbooking" component={ViewBooking} />
+            <Route exact path="/menu/home/closebooking" component={ClosedBooking} />
+            <Route exact path="/menu/home/closebooking/startduty" component={StartDuty} />
+            <Route exact path="/menu/home/startduty/updatetoll" component={UpdateToll} />
+            <Route exact path="/menu/home/startduty/digitalsign" component={DigitalSignature} />
+            <Route exact path="/menu/home/closebooking/closeduty" component={CloseDuty} />
+            <Route exact path="/menu/home/closebooking/viewduty" component={ViewDuty} />
+            <Route exact path="/menu/tripsheet" component={TripSheet} />
+            {/* <Route exact path="/menu/location" component={Location} /> */}
+            <Route exact path="/menu/setting" component={Settings} />
+            <Route exact path="/menu/settings/profile" component={Profile} />
+            <Route exact path="/menu">
+              <Redirect to="/menu/tripsheet" />
+              {/* <Redirect to="/menu/location" /> */}
+              <Redirect to="/menu/setting" />
+              <Redirect to="/menu/settings/profile" />
+              <Redirect to="/menu/home/newbooking" />
+              <Redirect to="/menu/home/viewbooking" />
+              <Redirect to="/menu/home" />
+            </Route>
+          </Switch>
         </IonRouterOutlet>
         <IonTabBar slot="bottom" className={`tab-bar-menu`}>
           <IonTabButton
@@ -86,6 +115,7 @@ const Menu: React.FC = () => {
           >
             <IonIcon className={`Menu-icon ${activeTab === 'Menu1' ? 'active' : ''}`} icon={receiptOutline} />
           </IonTabButton>
+          {/* Uncomment and add your Location tab button here */}
           {/* <IonTabButton
             tab="Menu3"
             href="/menu/location"
@@ -109,6 +139,6 @@ const Menu: React.FC = () => {
       </IonTabs>
     </IonPage>
   );
-}
+};
 
 export default Menu;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Login from './components/form/LoginForm';
@@ -23,7 +23,6 @@ import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
 setupIonicReact();
-
 const App: React.FC = () => {
   const isAuthenticated = localStorage.getItem('auth');
 
@@ -31,10 +30,15 @@ const App: React.FC = () => {
     <IonApp>
       <IonReactRouter>
         <IonRouterOutlet>
-          <Route path="/menu" component={Menu} />
-          <Route exact path="/">
-            {isAuthenticated ? <Redirect to="/menu" /> : <Login />}
-          </Route>
+          <Router>
+            <Switch>
+              <Route exact path="/">
+                {isAuthenticated ? <Redirect to="/menu" /> : <Login />}
+              </Route>
+              <Route path="/menu" component={Menu} />
+              {/* ... (other routes) */}
+            </Switch>
+          </Router>
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
