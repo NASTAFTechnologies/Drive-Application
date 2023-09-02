@@ -16,9 +16,11 @@ import {
     IonCard,
     IonCardHeader,
     IonCardTitle,
+    IonIcon,
 } from '@ionic/react';
 import './ViewDuty.css';
 import { useHistory } from 'react-router-dom';
+import { chevronBackOutline } from 'ionicons/icons';
 
 const ViewDuty: React.FC = () => {
     const [present] = useIonToast();
@@ -119,8 +121,8 @@ const ViewDuty: React.FC = () => {
             <IonHeader>
                 <IonToolbar>
                     <IonButtons slot="start">
-                        <IonButton onClick={handleBack}>
-                            <IonBackButton defaultHref="/menu" className="profile-back-button" />
+                        <IonButton className='profile-back-button' onClick={handleBack}>
+                            <IonIcon icon={chevronBackOutline} />
                         </IonButton>
                     </IonButtons>
                     <IonTitle>View Duty</IonTitle>

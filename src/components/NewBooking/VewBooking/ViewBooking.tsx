@@ -13,9 +13,11 @@ import {
     IonButton,
     IonBackButton,
     useIonToast,
+    IonIcon,
 } from '@ionic/react';
 import './ViewBooking.css'
 import { useHistory } from 'react-router-dom';
+import { chevronBackOutline } from 'ionicons/icons';
 
 const ViewBooking: React.FC = () => {
 
@@ -45,37 +47,37 @@ const ViewBooking: React.FC = () => {
     const handleInputChange = (e: CustomEvent) => {
         const { name, value } = e.detail;
         switch (name) {
-          case 'tripSheetNo':
-            setTripSheetNo(value);
-            break;
-          case 'tripDate':
-            setTripDate(value);
-            break;
-          case 'reportTime':
-            setReportTime(value);
-            break;
-          case 'dutyType':
-            setDutyType(value);
-            break;
-          case 'vehicleType':
-            setVehicleType(value);
-            break;
-          case 'contactNumber':
-            setContactNumber(value);
-            break;
-          case 'companyName':
-            setCompanyName(value); // Use the setter function to update the variable
-            break;
-          case 'guestName':
-            setGuestName(value); // Use the setter function to update the variable
-            break;
-          case 'address':
-            setAddress(value); // Use the setter function to update the variable
-            break;
-          default:
-            break;
+            case 'tripSheetNo':
+                setTripSheetNo(value);
+                break;
+            case 'tripDate':
+                setTripDate(value);
+                break;
+            case 'reportTime':
+                setReportTime(value);
+                break;
+            case 'dutyType':
+                setDutyType(value);
+                break;
+            case 'vehicleType':
+                setVehicleType(value);
+                break;
+            case 'contactNumber':
+                setContactNumber(value);
+                break;
+            case 'companyName':
+                setCompanyName(value); // Use the setter function to update the variable
+                break;
+            case 'guestName':
+                setGuestName(value); // Use the setter function to update the variable
+                break;
+            case 'address':
+                setAddress(value); // Use the setter function to update the variable
+                break;
+            default:
+                break;
         }
-      };
+    };
 
     const history = useHistory();
 
@@ -96,8 +98,8 @@ const ViewBooking: React.FC = () => {
             <IonHeader>
                 <IonToolbar>
                     <IonButtons slot="start">
-                        <IonButton onClick={handleBack}>
-                            <IonBackButton defaultHref="/menu" className="profile-back-button" />
+                        <IonButton className='profile-back-button' onClick={handleBack}>
+                            <IonIcon icon={chevronBackOutline} />
                         </IonButton>
                     </IonButtons>
                     <IonTitle>View Booking</IonTitle>

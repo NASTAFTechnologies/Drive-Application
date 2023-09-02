@@ -11,10 +11,12 @@ import {
     IonInput,
     IonItem,
     IonList,
-    useIonToast
+    useIonToast,
+    IonIcon
 } from '@ionic/react';
 import './UpdateToll.css';
 import { useHistory } from 'react-router-dom';
+import { chevronBackOutline } from 'ionicons/icons';
 
 const UpdateToll: React.FC = () => {
     const history = useHistory();
@@ -29,7 +31,7 @@ const UpdateToll: React.FC = () => {
     }, [history]);
 
     const handleBack = () => {
-        history.push('/menu/home/closebooking');
+        history.push('/menu/home/closebooking/closeduty');
     };
 
     const handleFileUpload = (files: FileList | null) => {
@@ -56,8 +58,8 @@ const UpdateToll: React.FC = () => {
             <IonHeader>
                 <IonToolbar>
                     <IonButtons slot="start">
-                        <IonButton onClick={handleBack}>
-                            <IonBackButton defaultHref="/menu" className="profile-back-button" />
+                        <IonButton className='profile-back-button' onClick={handleBack}>
+                            <IonIcon icon={chevronBackOutline} />
                         </IonButton>
                     </IonButtons>
                     <IonTitle>Update Toll & Parking</IonTitle>
@@ -70,7 +72,7 @@ const UpdateToll: React.FC = () => {
                             <IonInput label="Enter Toll & Parking" labelPlacement="floating" placeholder=""></IonInput>
                         </IonItem>
                         <IonItem>
-                        <IonInput type='number' label="Enter Amount" labelPlacement="floating" placeholder=""></IonInput>
+                            <IonInput type='number' label="Enter Amount" labelPlacement="floating" placeholder=""></IonInput>
                         </IonItem>
                     </IonList>
                     <div className="File-upload-btn">

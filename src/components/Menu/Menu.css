@@ -13,7 +13,9 @@
   background: #000;
   transition: 0.5s;
 }
-
+.profile-back-button{
+  font-size: 22px;
+}
 .Menu-Button:hover {
   /* background: #dfff41; */
   color: #dfff41;

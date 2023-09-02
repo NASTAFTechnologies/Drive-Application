@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { IonCard, IonIcon, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonModal, IonBackButton } from '@ionic/react';
 import { useHistory } from "react-router-dom";
-import { closeCircleOutline, earthOutline, eyeOutline } from 'ionicons/icons';
+import { chevronBackOutline, closeCircleOutline, earthOutline, eyeOutline } from 'ionicons/icons';
 import './ClosedBooking.css';
 
 const ClosedBooking: React.FC = () => {
@@ -46,8 +46,8 @@ const ClosedBooking: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonButton onClick={handleBack}>
-              <IonBackButton defaultHref="/menu" className="profile-back-button" />
+            <IonButton className='profile-back-button' onClick={handleBack}>
+              <IonIcon icon={chevronBackOutline} />
             </IonButton>
           </IonButtons>
           <IonTitle>Closed Booking</IonTitle>

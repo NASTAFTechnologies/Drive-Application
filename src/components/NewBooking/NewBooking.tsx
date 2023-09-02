@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { IonCard, IonCardContent, IonCardHeader, IonBackButton, IonCardTitle } from '@ionic/react';
+import { IonCard, IonCardContent, IonCardHeader, IonBackButton, IonCardTitle, IonIcon } from '@ionic/react';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonButtons } from '@ionic/react';
 import { useHistory } from "react-router-dom";
+import { chevronBackOutline } from 'ionicons/icons';
 
 const NewBooking: React.FC = () => {
     const history = useHistory();
@@ -24,8 +25,8 @@ const NewBooking: React.FC = () => {
             <IonHeader>
                 <IonToolbar>
                     <IonButtons slot="start">
-                        <IonButton onClick={handleBack}>
-                            <IonBackButton defaultHref="/menu" className="profile-back-button" />
+                        <IonButton className='profile-back-button' onClick={handleBack}>
+                            <IonIcon icon={chevronBackOutline} />
                         </IonButton>
                     </IonButtons>
                     <IonTitle>New Booking</IonTitle>

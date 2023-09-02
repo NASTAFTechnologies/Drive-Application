@@ -12,9 +12,11 @@ import {
     IonButtons,
     IonButton,
     IonBackButton,
+    IonIcon,
 } from '@ionic/react';
 import './CloseDuty.css';
 import { useHistory } from 'react-router-dom';
+import { chevronBackOutline } from 'ionicons/icons';
 
 const CloseDuty: React.FC = () => {
     const [tripSheetNo, setTripSheetNo] = useState('98897');
@@ -123,8 +125,8 @@ const CloseDuty: React.FC = () => {
             <IonHeader>
                 <IonToolbar>
                     <IonButtons slot="start">
-                        <IonButton onClick={handleBack}>
-                            <IonBackButton defaultHref="/menu" className="profile-back-button" />
+                        <IonButton className='profile-back-button' onClick={handleBack}>
+                            <IonIcon icon={chevronBackOutline} />
                         </IonButton>
                     </IonButtons>
                     <IonTitle>Close Duty</IonTitle>

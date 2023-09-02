@@ -1,6 +1,7 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonItem, IonLabel, IonAvatar, IonButtons, IonIcon, IonBackButton, IonInput, IonAlert } from '@ionic/react';
 import { useHistory } from "react-router-dom";
+import { chevronBackOutline } from 'ionicons/icons';
 import { createOutline, create } from 'ionicons/icons';
 import './Profile.css';
 
@@ -26,7 +27,7 @@ const Profile: React.FC = () => {
   };
 
   const handleBack = () => {
-    history.push("/menu");
+    history.push('/menu/setting');
   };
 
   const handleEmailChange = (event: CustomEvent) => {
@@ -91,8 +92,8 @@ const Profile: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonButton onClick={handleBack}>
-              <IonBackButton defaultHref="/menu" className="profile-back-button" />
+            <IonButton onClick={handleBack} className="profile-back-button">
+              <IonIcon icon={chevronBackOutline} />
             </IonButton>
           </IonButtons>
           <IonTitle>Profile</IonTitle>

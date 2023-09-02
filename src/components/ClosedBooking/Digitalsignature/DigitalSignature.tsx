@@ -2,7 +2,8 @@ import React, { useRef, useEffect } from 'react';
 import './DigitalSignature.css';
 import { useHistory } from 'react-router-dom';
 import SignatureCanvas from 'react-signature-canvas';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonBackButton, useIonToast, } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonBackButton, useIonToast, IonIcon, } from '@ionic/react';
+import { chevronBackOutline } from 'ionicons/icons';
 
 
 const DigitalSignature: React.FC = () => {
@@ -34,7 +35,7 @@ const DigitalSignature: React.FC = () => {
   }, [history]);
 
   const handleBack = () => {
-    history.push('/menu/home/closebooking');
+    history.push('/menu/home/closebooking/closeduty');
   };
 
   return (
@@ -42,8 +43,8 @@ const DigitalSignature: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonButton onClick={handleBack}>
-              <IonBackButton defaultHref="/menu" className="profile-back-button" />
+            <IonButton className='profile-back-button' onClick={handleBack}>
+              <IonIcon icon={chevronBackOutline} />
             </IonButton>
           </IonButtons>
           <IonTitle>Digital Signature</IonTitle>

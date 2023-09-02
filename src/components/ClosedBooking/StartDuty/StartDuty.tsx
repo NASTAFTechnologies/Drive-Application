@@ -13,9 +13,11 @@ import {
     IonButton,
     IonBackButton,
     useIonToast,
+    IonIcon,
 } from '@ionic/react';
 import './StartDuty.css';
 import { useHistory } from 'react-router-dom';
+import { chevronBackOutline } from 'ionicons/icons';
 
 const StartDuty: React.FC = () => {
     const [present] = useIonToast();
@@ -110,8 +112,8 @@ const StartDuty: React.FC = () => {
             <IonHeader>
                 <IonToolbar>
                     <IonButtons slot="start">
-                        <IonButton onClick={handleBack}>
-                            <IonBackButton defaultHref="/menu" className="profile-back-button" />
+                        <IonButton className='profile-back-button' onClick={handleBack}>
+                            <IonIcon icon={chevronBackOutline} />
                         </IonButton>
                     </IonButtons>
                     <IonTitle>Start Duty</IonTitle>
