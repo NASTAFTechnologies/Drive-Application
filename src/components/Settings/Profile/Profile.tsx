@@ -1,91 +1,82 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonItem, IonLabel, IonAvatar, IonButtons, IonIcon, IonBackButton, IonInput, IonAlert } from '@ionic/react';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonItem, IonLabel, IonAvatar, IonButtons, IonIcon, IonInput } from '@ionic/react';
 import { useHistory } from "react-router-dom";
 import { chevronBackOutline } from 'ionicons/icons';
+import { RouteComponentProps } from 'react-router-dom';
+
 import { createOutline, create } from 'ionicons/icons';
+import axios from 'axios';
 import './Profile.css';
 
-const Profile: React.FC = () => {
+interface ProfileProps extends RouteComponentProps<{ userid: string }> { }
+
+const Profile: React.FC<ProfileProps> = ({ match }) => {
+  const { userid } = match.params;
   const history = useHistory();
-  const [name, setName] = useState("Fahad");
-  const [mobile, setMobile] = useState("7550256613");
-  const [password, setPassword] = useState("hello");
-  const [confirmPassword, setConfirmPassword] = useState("hello");
-  const [email, setEmail] = useState("fahadlee@gmail.com");
   const [isEditMode, setIsEditMode] = useState(false);
   const [avatar, setAvatar] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_52W9ux_gz02TW9vR2Wypppvuxycuftej6jD2qm4&s');
+  // const [driverData, setDriverData] = useState({});
+  // const [loading, setLoading] = useState(true);
   const [showSaveAlert, setShowSaveAlert] = useState(false);
-
-  const handleNameChange = (event: CustomEvent) => {
-    const inputElement = event.target as HTMLInputElement;
-    setName(inputElement.value);
-  };
-
-  const handleMobileChange = (event: CustomEvent) => {
-    const inputElement = event.target as HTMLInputElement;
-    setMobile(inputElement.value);
-  };
-
+  const [userData, setUserData] = useState({
+    ufirstname: '', // Initialize with empty values
+    mobileno: '',
+    userpassword: '',
+    userconfirmpassword: '',
+    email: '',
+  });
   const handleBack = () => {
     history.push('/menu/setting');
   };
-
-  const handleEmailChange = (event: CustomEvent) => {
-    const inputElement = event.target as HTMLInputElement;
-    setEmail(inputElement.value);
-  };
-
-  const handlePasswordChange = (event: CustomEvent) => {
-    const inputElement = event.target as HTMLInputElement;
-    setPassword(inputElement.value);
-  };
-
-  const handleConfirmPasswordChange = (event: CustomEvent) => {
-    const inputElement = event.target as HTMLInputElement;
-    setConfirmPassword(inputElement.value);
-  };
-
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
-
     const reader = new FileReader();
-
     reader.onload = (readerEvent) => {
       const result = readerEvent.target?.result;
       if (result) {
         setAvatar(String(result));
       }
     };
-
     reader.readAsDataURL(file);
   };
-
   const toggleEditMode = () => {
     setIsEditMode(!isEditMode);
   };
-
   const handleSave = () => {
     setShowSaveAlert(true);
   };
-
-  const handleSaveConfirm = () => {
-    // Perform save operation here
-    setIsEditMode(false);
-    setShowSaveAlert(false);
+  const handleSaveConfirm = async () => {
+    try {
+      console.log('Edit button clicked');
+      await axios.put(`http://localhost:8081/updateProfile/${userid}`, userData);
+      console.log('Customer updated');
+      setIsEditMode(false);
+      setShowSaveAlert(false);
+    } catch (error) {
+      console.error('Error saving profile:', error);
+    }
   };
-
   const handleSaveCancel = () => {
     setShowSaveAlert(false);
   };
 
   useEffect(() => {
-    const isAuthenticated = localStorage.getItem('auth');
-    if (!isAuthenticated) {
-      history.replace('/'); // Redirect to the login page if not authenticated
-    }
-  }, [history]);
+    // Retrieve the logged-in driver's username from local storage
+    const loggedInUsername = localStorage.getItem('loggedInUsername');
 
+    // Make an API request to fetch the driver's details based on their username
+    // axios.get(`http://localhost:8081/getDriverProfile?username=${loggedInUsername}`)
+    // axios.get(`http://localhost:8081/getDriverProfile?username=${loggedInUsername}`)
+    axios.get(`http://localhost:8081/getDriverProfile?username=${loggedInUsername}`)
+      .then((response) => {
+        const driverProfile = response.data;
+        setUserData(driverProfile);
+      })
+      .catch((error) => {
+        console.error('Error fetching driver profile:', error);
+      });
+  }, []);
 
   return (
     <IonPage className="profile-page">
@@ -120,25 +111,23 @@ const Profile: React.FC = () => {
         <div className="input-container">
           <IonItem className="profile-input">
             <IonLabel position="floating">Name</IonLabel>
-            <IonInput value={name} onIonInput={handleNameChange} disabled={!isEditMode}></IonInput>
+            <IonInput name='ufirstname' disabled={!isEditMode}>{userData.ufirstname}</IonInput>
           </IonItem>
           <IonItem className="profile-input">
             <IonLabel position="floating">Mobile Number</IonLabel>
-            <IonInput value={mobile} onIonInput={handleMobileChange} disabled={!isEditMode}></IonInput>
+            <IonInput name='mobileno' disabled={!isEditMode}>{userData.mobileno}</IonInput>
           </IonItem>
           <IonItem className="profile-input">
             <IonLabel position="floating">Password</IonLabel>
-            <IonInput type='password' value={password} onIonInput={handlePasswordChange} disabled={!isEditMode}>
-            </IonInput>
+            <IonInput name='userpassword' type='password' disabled={!isEditMode}>{userData.userpassword}</IonInput>
           </IonItem>
           <IonItem className="profile-input">
             <IonLabel position="floating">Confirm Password</IonLabel>
-            <IonInput type='password' value={confirmPassword} onIonInput={handleConfirmPasswordChange} disabled={!isEditMode}>
-            </IonInput>
+            <IonInput name='userconfirmpassword' type='password' disabled={!isEditMode}>{userData.userconfirmpassword}</IonInput>
           </IonItem>
           <IonItem className="profile-input">
             <IonLabel position="floating">Email ID</IonLabel>
-            <IonInput value={email} onIonInput={handleEmailChange} disabled={!isEditMode}></IonInput>
+            <IonInput name='email' disabled={!isEditMode}>{userData.ufirstname}</IonInput>
           </IonItem>
           {isEditMode ? (
             <>
@@ -155,7 +144,7 @@ const Profile: React.FC = () => {
               <IonIcon slot="end" icon={create}></IonIcon>
             </IonButton>
           )}
-          <IonAlert
+          {/* <IonAlert
             isOpen={showSaveAlert}
             onDidDismiss={handleSaveCancel}
             header="Confirm Save"
@@ -172,11 +161,10 @@ const Profile: React.FC = () => {
                 handler: handleSaveConfirm
               }
             ]}
-          />
+          /> */}
         </div>
       </IonContent>
     </IonPage>
   );
 };
-
 export default Profile;

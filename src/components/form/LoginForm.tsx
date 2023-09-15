@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import './Form.css';
+import axios from "axios"; // Import Axios for making HTTP requests
+
+
 import {
   IonContent,
   IonInput,
@@ -18,10 +21,9 @@ import {
 
 const Login: React.FC = () => {
   const history = useHistory();
-  const [email, setEmail] = useState('admin@gmail.com');
-  const [password, setPassword] = useState('Admin@321');
   const [showPassword, setShowPassword] = useState(false);
   const [showLoginSuccess, setShowLoginSuccess] = useState(false);
+  const [input, setInput] = React.useState({ username: "", userpassword: "" });
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -33,24 +35,31 @@ const Login: React.FC = () => {
       history.replace('/menu');
     }
   }, [history]);
-
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const [username] = useState("");
+  const formSubmitter = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (email === 'admin@gmail.com' && password === 'Admin@321') {
-      setTimeout(() => {
-        localStorage.setItem('auth', 'true');
+    // setSuccess("");
+    try {
+      const response = await axios.post("http://localhost:8081/login", input); // Make a POST request to your backend
+
+      if (response.status === 200) {
         setShowLoginSuccess(true);
-      }, 2000);
-    } else {
-      console.log('Invalid login credentials');
+        localStorage.setItem('loggedInUsername', input.username); 
+        localStorage.setItem('userId', username);
+
+        localStorage.setItem("auth", 'true');
+      } else {
+        // Failed login
+        console.log('Invalid login credentials');
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      // setError("An error occurred while logging in.");
     }
   };
 
   const handleLoginSuccessAlertClose = () => {
-    setEmail('');
-    setPassword('');
     setShowLoginSuccess(false);
-
     setTimeout(() => {
       history.push('/menu'); // Redirect to /menu route
     }, 0);
@@ -61,7 +70,7 @@ const Login: React.FC = () => {
       <IonContent>
         <div className="login-container">
           <div className="glasses">
-            <form onSubmit={handleLogin}>
+            <form onSubmit={formSubmitter}>
               <h1>Login</h1>
               <div className="form-input">
                 <div className="icon">
@@ -69,10 +78,10 @@ const Login: React.FC = () => {
                 </div>
                 <IonInput
                   className="custom-input"
-                  type="email"
+                  type="text"
                   placeholder="Email"
-                  value={email}
-                  onIonChange={(e) => setEmail(e.detail.value!)}
+                  name='username'
+                  onIonChange={(e) => setInput({ ...input, username: e.detail.value! })}
                   required
                 ></IonInput>
               </div>
@@ -84,8 +93,8 @@ const Login: React.FC = () => {
                   className="custom-input"
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Password"
-                  value={password}
-                  onIonChange={(e) => setPassword(e.detail.value!)}
+                  name='userpassword'
+                  onIonChange={(e) => setInput({ ...input, userpassword: e.detail.value! })}
                   required
                 ></IonInput>
                 <div
