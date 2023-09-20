@@ -1,0 +1,27 @@
+.green-status {
+    color: green !important;
+    border: 1px solid green ;
+}
+
+.orange-status {
+    color: orange !important;
+    border: 1px solid orange ;
+
+}
+
+.red-status {
+    color: red !important;
+    border: 1px solid red ;
+}
+#car-status {
+    text-transform: uppercase;
+    background-color: #000;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 5px;
+    position: absolute;
+    top: 0;
+    right: 5px;
+    display: flex ;
+    align-items: end;
+}

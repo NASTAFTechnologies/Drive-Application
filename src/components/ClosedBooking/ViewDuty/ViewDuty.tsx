@@ -1,8 +1,8 @@
 import React, { FormEvent, useEffect, useState } from 'react';
+import axios from 'axios';
 import {
     IonInput,
     IonItem,
-    IonLabel,
     IonTextarea,
     IonPage,
     IonHeader,
@@ -11,7 +11,6 @@ import {
     IonContent,
     IonButtons,
     IonButton,
-    IonBackButton,
     useIonToast,
     IonCard,
     IonCardHeader,
@@ -24,6 +23,55 @@ import { chevronBackOutline } from 'ionicons/icons';
 
 const ViewDuty: React.FC = () => {
     const [present] = useIonToast();
+    const [userData, setUserData] = useState({
+        tripid: '',
+        startdate: '',
+        reporttime: '',
+        duty: '',
+        vehType: '',
+        customer: '',
+        guestname: '',
+        guestmobileno: '',
+        address1: '',
+        startkm: '',
+        starttime: '',
+        toll: '',
+        closedate: '',
+        closetime: '',
+        closekm: '',
+        advancepaidtovendor: '',
+        parking:'',
+    });
+
+    useEffect(() => {
+        // Retrieve duty type and tripid from localStorage
+        const selectDuty = localStorage.getItem('selectDuty');
+        const selectTripid = localStorage.getItem('selectTripid');
+
+        // Check if duty type and tripid are available
+        if (selectDuty && selectTripid) {
+            // Fetch trip sheet details based on selectedDuty and selectedTripid
+            axios
+                .get(`http://localhost:8081/tripsheet/${selectTripid}/${selectDuty}`)
+                .then((response) => {
+                    setUserData(response.data);
+                })
+                .catch((error) => {
+                    console.error('Error fetching trip sheet details:', error);
+                });
+        } else {
+            // Handle the case where duty type and tripid are not available in localStorage
+            console.error('Duty type and tripid not found in localStorage');
+        }
+    }, []);
+
+    const handleInputChange = (e: CustomEvent) => {
+        const { name, value } = e.detail;
+        setUserData((prevUserData) => ({
+            ...prevUserData,
+            [name]: value,
+        }));
+    };
 
     const presentToast = (position: 'top' | 'middle' | 'bottom') => {
         present({
@@ -33,75 +81,11 @@ const ViewDuty: React.FC = () => {
         });
     };
 
-    const [tripSheetNo, setTripSheetNo] = useState('98897');
-    const [StartingDate, setStartingDate] = useState('2023-07-20');
-    const [StartingTime, setStartingTime] = useState('11:33');
-    const [StartingKilometers, setStartingKilometers] = useState('13567');
-    const [ClosingDate, setClosingDate] = useState('2023-07-20');
-    const [ClosingTime, setClosingTime] = useState('11:33');
-    const [ClosingKilometers, setClosingKilometers] = useState('13867');
-    const [vehicleType, setVehicleType] = useState('-');
-    const [GuestMobile, setGuestMobile] = useState('7550256616');
-    const [companyName, setCompanyName] = useState('Default Company');
-    const [guestName, setGuestName] = useState('Default Guest');
-    const [Advance, setAdvance] = useState('0');
-    const [TollParking, setTollParking] = useState('0');
-    const [address, setAddress] = useState('ITC Choll Park');
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // Add logic to handle form submission
     };
 
-    const handleInputChange = (e: CustomEvent) => {
-        const { name, value } = e.detail;
-        switch (name) {
-            case 'tripSheetNo':
-                setTripSheetNo(value);
-                break;
-            case 'StartingDate':
-                setStartingDate(value);
-                break;
-            case 'StartingTime':
-                setStartingTime(value);
-                break;
-            case 'StartingKilometers':
-                setStartingKilometers(value);
-                break;
-            case 'ClosingDate':
-                setClosingDate(value);
-                break;
-            case 'ClosingTime':
-                setClosingTime(value);
-                break;
-            case 'ClosingKilometers':
-                setClosingKilometers(value);
-                break;
-            case 'vehicleType':
-                setVehicleType(value);
-                break;
-            case 'GuestMobile':
-                setGuestMobile(value);
-                break;
-            case 'companyName':
-                setCompanyName(value);
-                break;
-            case 'guestName':
-                setGuestName(value);
-                break;
-            case 'TollParking':
-                setTollParking(value);
-                break;
-            case 'Advance':
-                setAdvance(value);
-                break;
-            case 'address':
-                setAddress(value);
-                break;
-            default:
-                break;
-        }
-    };
 
     const history = useHistory();
 
@@ -133,129 +117,49 @@ const ViewDuty: React.FC = () => {
                     <h1 className='trip-Title'>Trip Details</h1>
                     <form onSubmit={handleSubmit}>
                         <IonItem className='field-item'>
-                            <IonLabel className='bold-label'>Trip Sheet No :</IonLabel>
-                            <IonInput name='tripSheetNo' value={tripSheetNo} readonly />
+                            <IonInput label='Trip Sheet No :' name="tripid" onIonChange={handleInputChange} value={userData.tripid} readonly />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className='bold-label'>Starting Date :</IonLabel>
-                            <IonInput
-                                type='date'
-                                name='StartingDate'
-                                value={StartingDate}
-                                onIonChange={handleInputChange}
-                                required
-                            />
+                            <IonInput label='Trip Date :' name="startdate" value={userData.startdate} onIonChange={handleInputChange} required />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className='bold-label'>Starting Time :</IonLabel>
-                            <IonInput
-                                type='time'
-                                name='StartingTime'
-                                value={StartingTime}
-                                onIonChange={handleInputChange}
-                                required
-                            />
+                            <IonInput label='Start Time :' name="starttime" value={userData.starttime} onIonChange={handleInputChange} required />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className='bold-label'>Starting Kilometers :</IonLabel>
-                            <IonInput
-                                type='tel'
-                                name='StartingKilometers'
-                                value={StartingKilometers}
-                                onIonChange={handleInputChange}
-                                required
-                            />
+                            <IonInput label='Start Kilometers :' name='startkm' value={userData.startkm} onIonChange={handleInputChange} required />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className='bold-label'>Closing Date :</IonLabel>
-                            <IonInput
-                                type='date'
-                                name='ClosingDate'
-                                value={ClosingDate}
-                                onIonChange={handleInputChange}
-                                required
-                            />
+                            <IonInput label='Closing Date :' name='closedate' value={userData.closedate} onIonChange={handleInputChange} required />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className='bold-label'>Closing Time :</IonLabel>
-                            <IonInput
-                                type='time'
-                                name='ClosingTime'
-                                value={ClosingTime}
-                                onIonChange={handleInputChange}
-                                required
-                            />
+                            <IonInput label='Closing Time :' name='closetime' value={userData.closetime} onIonChange={handleInputChange} required />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className='bold-label'>Closing Kilometers :</IonLabel>
-                            <IonInput
-                                type='tel'
-                                name='ClosingKilometers'
-                                value={ClosingKilometers}
-                                onIonChange={handleInputChange}
-                                required
-                            />
+                            <IonInput label='Closing Kilometers :' name='closekm' value={userData.closekm} onIonChange={handleInputChange} required />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className='bold-label'>Guest Name :</IonLabel>
-                            <IonInput
-                                name='guestName'
-                                value={guestName}
-                                onIonChange={handleInputChange}
-                                readonly
-                            />
+                            <IonInput label='Guest Name :' name="guestname" value={userData.guestname} readonly />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className='bold-label'>Guest Mobile :</IonLabel>
-                            <IonInput
-                                type='tel'
-                                name='GuestMobile'
-                                value={GuestMobile}
-                                onIonChange={handleInputChange}
-                                readonly
-                            />
+                            <IonInput label='Contact Number :' name="guestmobileno" value={userData.guestmobileno} onIonChange={handleInputChange} readonly />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className='bold-label'>Vehicle Type :</IonLabel>
-                            <IonInput name='vehicleType' value={vehicleType} readonly />
+                            <IonInput label='Vehicle Type :' name="vehType" value={userData.vehType} readonly />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className='bold-label'>Company Name :</IonLabel>
-                            <IonInput
-                                name='companyName'
-                                value={companyName}
-                                onIonChange={handleInputChange}
-                                readonly
-                            />
+                            <IonInput label='Company Name ' name="customer" value={userData.customer} readonly />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className='bold-label'>Advance :</IonLabel>
-                            <IonInput
-                                type='number'
-                                name='Advance'
-                                value={Advance}
-                                onIonChange={handleInputChange}
-                                required
-                            />
+                            <IonInput label='Advance :' name='advancepaidtovendor' value={userData.advancepaidtovendor} onIonChange={handleInputChange} required />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className='bold-label'>Toll & Parking :</IonLabel>
-                            <IonInput
-                                type='number'
-                                name='TollParking'
-                                value={TollParking}
-                                onIonChange={handleInputChange}
-                                required
-                            />
+                            <IonInput label='Toll :' name='toll' value={userData.toll} onIonChange={handleInputChange} required />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className='bold-label'>Address :</IonLabel>
-                            <IonTextarea
-                                name='address'
-                                value={address}
-                                onIonChange={handleInputChange}
-                                readonly
-                            />
+                            <IonInput label='Parking :' name='parking' value={userData.parking} onIonChange={handleInputChange} required />
+                        </IonItem>
+                        <IonItem className='field-item'>
+                            <IonTextarea label='Address :' name='address1' value={userData.address1} onIonChange={handleInputChange} readonly />
                         </IonItem>
                     </form>
                 </div>

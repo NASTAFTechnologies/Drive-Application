@@ -3,21 +3,15 @@ import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIte
 import { useHistory } from "react-router-dom";
 import { chevronBackOutline } from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router-dom';
-
 import { createOutline, create } from 'ionicons/icons';
 import axios from 'axios';
 import './Profile.css';
-
-interface ProfileProps extends RouteComponentProps<{ userid: string }> { }
-
+interface ProfileProps extends RouteComponentProps<{ username: string }> { }
 const Profile: React.FC<ProfileProps> = ({ match }) => {
-  const { userid } = match.params;
+  const { username } = match.params;
   const history = useHistory();
   const [isEditMode, setIsEditMode] = useState(false);
   const [avatar, setAvatar] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_52W9ux_gz02TW9vR2Wypppvuxycuftej6jD2qm4&s');
-  // const [driverData, setDriverData] = useState({});
-  // const [loading, setLoading] = useState(true);
-  const [showSaveAlert, setShowSaveAlert] = useState(false);
   const [userData, setUserData] = useState({
     ufirstname: '', // Initialize with empty values
     mobileno: '',
@@ -43,31 +37,41 @@ const Profile: React.FC<ProfileProps> = ({ match }) => {
   const toggleEditMode = () => {
     setIsEditMode(!isEditMode);
   };
-  const handleSave = () => {
-    setShowSaveAlert(true);
-  };
-  const handleSaveConfirm = async () => {
+  const handleSave = async () => {
+    const loggedInUsername = localStorage.getItem('loggedInUsername');
     try {
       console.log('Edit button clicked');
-      await axios.put(`http://localhost:8081/updateProfile/${userid}`, userData);
-      console.log('Customer updated');
-      setIsEditMode(false);
-      setShowSaveAlert(false);
+      // Create a new object with only the fields you want to update
+      const updatedFields = {
+        ufirstname: userData.ufirstname,
+        mobileno: userData.mobileno,
+        userpassword: userData.userpassword,
+        userconfirmpassword: userData.userconfirmpassword,
+        email: userData.email,
+      };
+      const response = await axios.put(`http://localhost:8081/updateProfile`, updatedFields, {
+        params: { username: loggedInUsername }
+      });
+      console.log('Server Response:', response.data);
+      if (response.data && response.data.ufirstname && response.data.mobileno && response.data.userpassword && response.data.userconfirmpassword && response.data.email) {
+        setUserData(response.data); // Update state with the response data
+        setIsEditMode(false);
+      } else {
+        console.error('Unexpected server response:', response.data);
+      }
     } catch (error) {
       console.error('Error saving profile:', error);
     }
   };
-  const handleSaveCancel = () => {
-    setShowSaveAlert(false);
+  const handleInputChange = (e: CustomEvent) => {
+    const { name, value } = e.detail;
+    setUserData((prevUserData) => ({
+      ...prevUserData,
+      [name]: value,
+    }));
   };
-
   useEffect(() => {
-    // Retrieve the logged-in driver's username from local storage
     const loggedInUsername = localStorage.getItem('loggedInUsername');
-
-    // Make an API request to fetch the driver's details based on their username
-    // axios.get(`http://localhost:8081/getDriverProfile?username=${loggedInUsername}`)
-    // axios.get(`http://localhost:8081/getDriverProfile?username=${loggedInUsername}`)
     axios.get(`http://localhost:8081/getDriverProfile?username=${loggedInUsername}`)
       .then((response) => {
         const driverProfile = response.data;
@@ -77,7 +81,6 @@ const Profile: React.FC<ProfileProps> = ({ match }) => {
         console.error('Error fetching driver profile:', error);
       });
   }, []);
-
   return (
     <IonPage className="profile-page">
       <IonHeader>
@@ -110,24 +113,19 @@ const Profile: React.FC<ProfileProps> = ({ match }) => {
         </div>
         <div className="input-container">
           <IonItem className="profile-input">
-            <IonLabel position="floating">Name</IonLabel>
-            <IonInput name='ufirstname' disabled={!isEditMode}>{userData.ufirstname}</IonInput>
+            <IonInput label='Name' name='ufirstname' onIonChange={handleInputChange} value={userData.ufirstname} disabled={!isEditMode}></IonInput>
           </IonItem>
           <IonItem className="profile-input">
-            <IonLabel position="floating">Mobile Number</IonLabel>
-            <IonInput name='mobileno' disabled={!isEditMode}>{userData.mobileno}</IonInput>
+            <IonInput label='Mobile Number' name='mobileno' onIonChange={handleInputChange} value={userData.mobileno} disabled={!isEditMode}></IonInput>
           </IonItem>
           <IonItem className="profile-input">
-            <IonLabel position="floating">Password</IonLabel>
-            <IonInput name='userpassword' type='password' disabled={!isEditMode}>{userData.userpassword}</IonInput>
+            <IonInput label='Password' name='userpassword' type='password' onIonChange={handleInputChange} value={userData.userpassword} disabled={!isEditMode}></IonInput>
           </IonItem>
           <IonItem className="profile-input">
-            <IonLabel position="floating">Confirm Password</IonLabel>
-            <IonInput name='userconfirmpassword' type='password' disabled={!isEditMode}>{userData.userconfirmpassword}</IonInput>
+            <IonInput label='Confirm Password' name='userconfirmpassword' onIonChange={handleInputChange} value={userData.userconfirmpassword} type='password' disabled={!isEditMode}></IonInput>
           </IonItem>
           <IonItem className="profile-input">
-            <IonLabel position="floating">Email ID</IonLabel>
-            <IonInput name='email' disabled={!isEditMode}>{userData.ufirstname}</IonInput>
+            <IonInput label='Email ID' name='email' value={userData.email} onIonChange={handleInputChange} disabled={!isEditMode}></IonInput>
           </IonItem>
           {isEditMode ? (
             <>
@@ -144,24 +142,6 @@ const Profile: React.FC<ProfileProps> = ({ match }) => {
               <IonIcon slot="end" icon={create}></IonIcon>
             </IonButton>
           )}
-          {/* <IonAlert
-            isOpen={showSaveAlert}
-            onDidDismiss={handleSaveCancel}
-            header="Confirm Save"
-            message="Are you sure you want to save the changes?"
-            buttons={[
-              {
-                text: 'Cancel',
-                role: 'cancel',
-                cssClass: 'secondary',
-                handler: handleSaveCancel
-              },
-              {
-                text: 'Save',
-                handler: handleSaveConfirm
-              }
-            ]}
-          /> */}
         </div>
       </IonContent>
     </IonPage>

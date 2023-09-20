@@ -12,11 +12,22 @@ app.get('/', (req, res) => {
 });
 //connect from route folder
 const loginRoutes = require('./Router/login');
+const bookingdetails = require('./Router/bookingdetails');
+const closedbookingdetails = require('./Router/closedbooking');
 
 
 // login Database
 app.use('/', loginRoutes);
 // // End login database
+
+// login Database
+app.use('/', bookingdetails);
+// // End login database
+
+// login Database
+app.use('/', closedbookingdetails);
+// // End login database
+
 
 const port = 8081;
 app.listen(port, () => {

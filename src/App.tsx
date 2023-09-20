@@ -4,6 +4,8 @@ import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Login from './components/form/LoginForm';
 import Menu from './components/Menu/Menu';
+// import ViewBookingPage from './components/NewBooking/VewBooking/ViewBooking';
+import './App.css'
 import './theme/variables.css'
 
 /* Core CSS required for Ionic components to work properly */
@@ -36,7 +38,6 @@ const App: React.FC = () => {
                 {isAuthenticated ? <Redirect to="/menu" /> : <Login />}
               </Route>
               <Route path="/menu" component={Menu} />
-              {/* ... (other routes) */}
             </Switch>
           </Router>
         </IonRouterOutlet>

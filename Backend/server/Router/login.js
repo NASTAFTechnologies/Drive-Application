@@ -34,13 +34,12 @@ router.get('/getDriverProfile', (req, res) => {
         res.status(200).json(driverProfile);
     });
 });
-//
-router.put('/updateProfile/:userid', (req, res) => {
-    const userid = req.params.userid;
+router.put('/updateProfile', (req, res) => {
+    const username = req.query.username; // Use req.query to get the username as a query parameter
     const userData = req.body;
-    console.log('username:', userid); // Log the Billing
+    console.log('username:', username);
     console.log('Updated billing data:', userData);
-    db.query('UPDATE usercreation SET ? WHERE userid = ?', [userData, userid], (err, result) => {
+    db.query('UPDATE usercreation SET ? WHERE username = ?', [userData, username], (err, result) => {
         if (err) {
             console.error('Error updating data in MySQL:', err);
             return res.status(500).json({ error: "Failed to update data in MySQL" });
