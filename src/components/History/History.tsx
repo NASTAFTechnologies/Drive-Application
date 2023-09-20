@@ -2,88 +2,54 @@ import React, { useEffect, useState } from 'react';
 import './History.css';
 import { IonButton, IonContent, IonHeader, IonInput, IonPage, IonTitle, IonToolbar, IonAlert } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
-import * as XLSX from 'xlsx';
-import { saveAs } from 'file-saver';
-
+import axios from 'axios';
 const TripSheet: React.FC = () => {
   const history = useHistory();
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [filteredData, setFilteredData] = useState<{
-    id: number;
-    date: string;
-    startTime: string;
-    duty: string;
-    vehicleType: string;
-    Action: string;
-  }[]>([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [showPopupForSubmit, setshowPopupForSubmit] = useState(false);
-
+  const filterData = () => {
+    if (!startDate || !endDate) {
+      setShowPopup(true); // Show an alert if both dates are not entered
+      return;
+    }
+    const loggedInUsername = localStorage.getItem('loggedInUsername');
+    if (loggedInUsername) {
+      axios
+        .get(`http://localhost:8081/tripsheetfilter/${loggedInUsername}`, {
+          // .get(`http://localhost:8081/tripsheetfilter/akash?startDate=2023-01-01&endDate=2023-09-20`, {
+          params: {
+            startDate: startDate,
+            endDate: endDate,
+          },
+        })
+        .then((response) => {
+          setFilteredData(response.data);
+        })
+        .catch((error) => {
+          console.error('Error fetching trip sheet details:', error);
+        });
+    } else {
+      console.error('Duty type and tripid not found in localStorage');
+    }
+  };
   useEffect(() => {
     const isAuthenticated = localStorage.getItem('auth');
     if (!isAuthenticated) {
       history.replace('/'); // Redirect to the login page if not authenticated
     }
   }, [history]);
-
-  // TABLE DATA
-  const data = [
-    { id: 1, date: '2023-07-01', startTime: '09:00', duty: 'Morning Shift', vehicleType: 'Car', Action: 'Accept' },
-    { id: 2, date: '2023-07-02', startTime: '13:00', duty: 'Afternoon Shift', vehicleType: 'Truck', Action: 'Accept' },
-    { id: 3, date: '2023-07-04', startTime: '13:00', duty: 'Evening Shift', vehicleType: 'Truck', Action: 'Open' },
-    { id: 4, date: '2023-07-07', startTime: '13:00', duty: 'Night Shift', vehicleType: 'Truck', Action: 'Pending' },
-    { id: 5, date: '2023-07-12', startTime: '13:00', duty: 'Night Shift', vehicleType: 'Truck', Action: 'Pending' },
-    { id: 6, date: '2023-07-17', startTime: '13:00', duty: 'Night Shift', vehicleType: 'Truck', Action: 'Pending' },
-    // Add more data rows here...
-  ];
-
-  // Filter the data based on the selected date range
-  // Filter the data based on the selected date range
-  const filterData = () => {
-    if (!startDate || !endDate) {
-      setshowPopupForSubmit(true);
-      setFilteredData([]);
-    } else {
-      const filtered = data.filter(item => {
-        return item.date >= startDate && item.date <= endDate;
-      });
-      setFilteredData(filtered);
-
-      if (filtered.length === 0) {
-        setshowPopupForSubmit(true);
-      } else {
-        setshowPopupForSubmit(false);
-      }
-    }
-  };
-
-
-
-  // Function to handle downloadExcel button click
-  const handleDownloadExcel = () => {
-    if (!startDate || !endDate) {
-      setShowPopup(true);
-    } else {
-      if (filteredData.length === 0) {
-        setshowPopupForSubmit(true);
-      } else {
-        downloadExcel();
-      }
-    }
-  };
-
-
-  // Function to download the data as an Excel file
-  const downloadExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(filteredData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Trip Data');
-    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-    const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
-    saveAs(data, 'trip_data.xlsx');
-  };
-
+  
+  interface TripData {
+    tripid: number;
+    startdate: string;
+    starttime: string;
+    duty: string;
+    vehType: string;
+    apps: string;
+  }
   return (
     <IonPage>
       <IonHeader className='header-title'>
@@ -95,32 +61,18 @@ const TripSheet: React.FC = () => {
         <div className={`date-filter`}>
           <div className="filter-input">
             <label className='filter-label' htmlFor="fromDate">From:</label>
-            <IonInput
-              className='input'
-              type="date"
-              id="fromDate"
-              value={startDate}
-              onIonChange={(e) => setStartDate(e.detail.value!)}
-              required
-            />
+            <IonInput className='input' type="date" id="fromDate" value={startDate} onIonChange={(e) => setStartDate(e.detail.value!)} required />
           </div>
           <div className="filter-input">
             <label className='filter-label' htmlFor="toDate">To:</label>
-            <IonInput
-              className='input'
-              type="date"
-              id="toDate"
-              value={endDate}
-              onIonChange={(e) => setEndDate(e.detail.value!)}
-              required
-            />
+            <IonInput className='input' type="date" id="toDate" value={endDate} onIonChange={(e) => setEndDate(e.detail.value!)} required />
           </div>
           <div className='sumbit-flt-btn'>
             <IonButton size='small' onClick={filterData}>Submit</IonButton>
           </div>
         </div>
         <div className='excel-download-btn'>
-          <IonButton color="success" size='small' onClick={handleDownloadExcel} className="custom-button">
+          <IonButton color="success" size='small'  className="custom-button">
             Download Excel
           </IonButton>
         </div>
@@ -136,17 +88,19 @@ const TripSheet: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredData.length > 0 ? (
-                filteredData.map((item) => (
-                  <tr key={item.id}>
-                    <td>{item.date}</td>
-                    <td>{item.startTime}</td>
+              {filteredData && filteredData.length > 0 ? (
+                filteredData.map((item: TripData) => (
+                  <tr key={item.tripid}>
+                    <td>{item.startdate}</td>
+                    <td>{item.starttime}</td>
                     <td>{item.duty}</td>
-                    <td>{item.vehicleType}</td>
+                    <td>{item.vehType}</td>
                     <td>
-                      <div className={`action-button action-${item.Action.toLowerCase()}`}>
-                        {item.Action}
-                      </div>
+                      {item.apps && (
+                        <div className={`action-button action-${item.apps.toLowerCase()}`}>
+                          {item.apps}
+                        </div>
+                      )}
                     </td>
                   </tr>
                 ))
@@ -162,7 +116,7 @@ const TripSheet: React.FC = () => {
       <IonAlert
         isOpen={showPopup}
         onDidDismiss={() => setShowPopup(false)}
-        header="Download Failured"
+        header="Download Failure"
         message="Please enter both from and to dates."
         buttons={['OK']}
       />
@@ -176,5 +130,4 @@ const TripSheet: React.FC = () => {
     </IonPage>
   );
 };
-
 export default TripSheet;

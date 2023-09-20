@@ -14,19 +14,34 @@ app.get('/', (req, res) => {
 const loginRoutes = require('./Router/login');
 const bookingdetails = require('./Router/bookingdetails');
 const closedbookingdetails = require('./Router/closedbooking');
-
+const historypagedetails = require('./Router/historypage');
+const signaturerouter = require('./Router/signature');
+const closedutyrouter = require('./Router/closeduty');
 
 // login Database
 app.use('/', loginRoutes);
 // // End login database
 
-// login Database
+// view booking Database
 app.use('/', bookingdetails);
 // // End login database
 
 // login Database
 app.use('/', closedbookingdetails);
 // // End login database
+
+// login Database
+app.use('/', historypagedetails);
+// // End login database
+
+// login Database
+app.use('/', signaturerouter);
+// // End login database
+
+// login Database
+app.use('/', closedutyrouter);
+// // End login database
+
 
 
 const port = 8081;
