@@ -17,6 +17,7 @@ const closedbookingdetails = require('./Router/closedbooking');
 const historypagedetails = require('./Router/historypage');
 const signaturerouter = require('./Router/signature');
 const closedutyrouter = require('./Router/closeduty');
+const uploadbill = require('./Router/upload');
 
 // login Database
 app.use('/', loginRoutes);
@@ -40,6 +41,10 @@ app.use('/', signaturerouter);
 
 // login Database
 app.use('/', closedutyrouter);
+// // End login database
+
+// login Database
+app.use('/', uploadbill);
 // // End login database
 
 

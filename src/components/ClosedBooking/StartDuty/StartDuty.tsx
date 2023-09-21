@@ -9,6 +9,7 @@ import {
     IonTitle,
     IonContent,
     IonButtons,
+    IonCheckbox,
     IonButton,
     useIonToast,
     IonIcon,
@@ -33,6 +34,7 @@ const StartDuty: React.FC = () => {
         address1: '',
         startkm: '',
         starttime: '',
+
     });
 
     useEffect(() => {
@@ -79,6 +81,31 @@ const StartDuty: React.FC = () => {
             });
     };
 
+    const handleUpdateduty = () => {
+        const tripid = localStorage.getItem('selectTripid');
+        const updatedData = {
+            tripid: tripid,
+            startkm: userData.startkm,
+        };
+        console.log(updatedData);
+        axios
+            .post('http://localhost:8081/update_updatekm', updatedData)
+            .then((response) => {
+                console.log('Update successful:', response.data);
+                presentToast('top');
+                history.push('/menu/home');
+            })
+            .catch((error) => {
+                console.error('Error updating status:', error);
+                presentToast('top');
+            });
+    };
+
+    const handlestart = () => {
+        handleUpdateduty();
+        handleStartDuty();
+    };
+
     const presentToast = (position: 'top' | 'middle' | 'bottom') => {
         present({
             message: 'Your Duty Was Started !',
@@ -87,8 +114,17 @@ const StartDuty: React.FC = () => {
         });
     };
 
+    // const handleInputChange = (e: CustomEvent) => {
+    //     const { name, value } = e.detail;
+    //     setUserData((prevUserData) => ({
+    //         ...prevUserData,
+    //         [name]: value,
+    //     }));
+    // };
+
     const handleInputChange = (e: CustomEvent) => {
-        const { name, value } = e.detail;
+        const { name, value } = e.target as HTMLInputElement;
+        console.log(`Input Name: ${name}, Input Value: ${value}`);
         setUserData((prevUserData) => ({
             ...prevUserData,
             [name]: value,
@@ -152,18 +188,23 @@ const StartDuty: React.FC = () => {
                             <IonTextarea label='Address :' name="address1" value={userData.address1} onIonChange={handleInputChange} readonly />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonInput label='Trip Date :' name="startdate" value={userData.startdate} onIonChange={handleInputChange} required />
+                            <IonInput label='Trip Date :' name="startdate" value={userData.startdate} onIonChange={handleInputChange} readonly />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonInput label='Start Time :' name="starttime" value={userData.starttime} onIonChange={handleInputChange} required />
+                            <IonInput label='Start Time :' name="starttime" value={userData.starttime} onIonChange={handleInputChange} readonly />
                         </IonItem>
                         <IonItem className='field-item'>
                             <IonInput label='Start Kilometers :' name='startkm' value={userData.startkm} onIonChange={handleInputChange} required />
                         </IonItem>
-                        <IonButton className='booking-accept-btn' expand='block' onClick={handleStartDuty} size='small' type='submit'>
+                        <IonItem>
+                            <IonCheckbox  aria-required />
+                            Above Mentioned value are correct
+                        </IonItem>
+                        <IonButton className='booking-accept-btn' expand='block' onClick={handlestart} size='small' type='submit'>
                             Start Duty
                         </IonButton>
                         <IonButton onClick={handleBtnClickToll} className='accept-btn' size='small'>Upload-Toll / Parking</IonButton>
+
                     </form>
                 </div>
             </IonContent>

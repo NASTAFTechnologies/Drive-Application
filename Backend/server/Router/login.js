@@ -34,21 +34,20 @@ router.get('/getDriverProfile', (req, res) => {
         res.status(200).json(driverProfile);
     });
 });
-router.put('/updateProfile', (req, res) => {
-    const username = req.query.username; // Use req.query to get the username as a query parameter
-    const userData = req.body;
-    console.log('username:', username);
-    console.log('Updated billing data:', userData);
-    db.query('UPDATE usercreation SET ? WHERE username = ?', [userData, username], (err, result) => {
+
+// updating trip toll and parking
+router.post('/update_updateprofile', (req, res) => {
+    const { ufirstname, mobileno, userpassword, userconfirmpassword, email, username } = req.body;
+    const query = 'UPDATE usercreation SET ufirstname = ?, mobileno = ?, userpassword = ?, userconfirmpassword = ?, email = ? WHERE username = ?';
+
+    db.query(query, [ufirstname, mobileno, userpassword, userconfirmpassword, email, username], (err, results) => {
         if (err) {
-            console.error('Error updating data in MySQL:', err);
-            return res.status(500).json({ error: "Failed to update data in MySQL" });
+            console.error('Error updating status:', err);
+            res.status(500).json({ message: 'Internal server error' });
+            return;
         }
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ error: "Customer not found" });
-        }
-        console.log('Data updated in MySQL');
-        return res.status(200).json({ message: "Data updated successfully" });
+        res.status(200).json({ message: 'Status updated successfully' });
     });
 });
+//end
 module.exports = router;

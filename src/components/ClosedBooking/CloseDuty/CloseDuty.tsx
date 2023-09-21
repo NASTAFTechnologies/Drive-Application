@@ -10,6 +10,8 @@ import {
     IonTitle,
     IonContent,
     IonButtons,
+    IonCheckbox,
+    useIonToast,
     IonButton,
     IonIcon,
 } from '@ionic/react';
@@ -18,6 +20,7 @@ import { useHistory } from 'react-router-dom';
 import { chevronBackOutline } from 'ionicons/icons';
 
 const CloseDuty: React.FC = () => {
+    const [present] = useIonToast();
     const [userData, setUserData] = useState({
         tripid: '',
         startdate: '',
@@ -31,15 +34,22 @@ const CloseDuty: React.FC = () => {
         startkm: '',
         starttime: '',
         toll: '',
-        permit: '',
+        parking: '',
         closedate: '',
         closetime: '',
         closekm: '',
     });
 
+    const presentToast = (position: 'top' | 'middle' | 'bottom') => {
+        present({
+            message: 'Your Duty Was Started !',
+            duration: 1500,
+            position: position,
+        });
+    };
+
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // Add logic to handle form submission
     };
 
     useEffect(() => {
@@ -64,8 +74,39 @@ const CloseDuty: React.FC = () => {
         }
     }, []);
 
+    const handleUpdateduty = () => {
+        const tripid = localStorage.getItem('selectTripid');
+        const updatedData = {
+            tripid: tripid,
+            closekm: userData.closekm,
+            closedate: userData.closedate,
+            closetime: userData.closetime,
+        };
+        console.log(updatedData);
+        axios
+            .post('http://localhost:8081/update_updateclosekm', updatedData)
+            .then((response) => {
+                console.log('Update successful:', response.data);
+                presentToast('top');
+            })
+            .catch((error) => {
+                console.error('Error updating status:', error);
+                presentToast('top');
+            });
+    };
+
+    const handleBtnCloseduty = () => {
+        history.push('/menu/home/startduty/digitalsign'); // Replace '/another-page' with the desired path of the destination page
+    };
+
+    const handleBtnClickCloseduty = () => {
+        handleBtnCloseduty();
+        handleUpdateduty();
+    };
+
     const handleInputChange = (e: CustomEvent) => {
-        const { name, value } = e.detail;
+        const { name, value } = e.target as HTMLInputElement;
+        console.log(`Input Name: ${name}, Input Value: ${value}`);
         setUserData((prevUserData) => ({
             ...prevUserData,
             [name]: value,
@@ -87,9 +128,9 @@ const CloseDuty: React.FC = () => {
     const handleBtnClickToll = () => {
         history.push('/menu/home/startduty/updatetoll'); // Replace '/another-page' with the desired path of the destination page
     };
-    const handleBtnClickCloseduty = () => {
-        history.push('/menu/home/startduty/digitalsign'); // Replace '/another-page' with the desired path of the destination page
-    };
+    // const handleBtnClickCloseduty = () => {
+    //     history.push('/menu/home/startduty/digitalsign'); // Replace '/another-page' with the desired path of the destination page
+    // };
     return (
         <IonPage>
             <IonHeader>
@@ -133,7 +174,7 @@ const CloseDuty: React.FC = () => {
                             <IonInput label='Toll Charges :' name='toll' value={userData.toll} onIonChange={handleInputChange} readonly />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonInput label='Permit Charges :' name='permit' value={userData.permit} onIonChange={handleInputChange} readonly />
+                            <IonInput label='Parking Charges :' name='parking' value={userData.parking} onIonChange={handleInputChange} readonly />
                         </IonItem>
                         <IonItem className='field-item'>
                             <IonInput label='Start Date :' name='startdate' value={userData.startdate} onIonChange={handleInputChange} readonly />
@@ -145,13 +186,17 @@ const CloseDuty: React.FC = () => {
                             <IonInput label='Start Kilometers :' name='startkm' value={userData.startkm} onIonChange={handleInputChange} readonly />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonInput label='Closing Date :' name='closedate' value={userData.closedate} onIonChange={handleInputChange} readonly />
+                            <IonInput label='Closing Date :' name='closedate' value={userData.closedate} onIonChange={handleInputChange} />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonInput label='Closing Time :' name='closetime' value={userData.closetime} onIonChange={handleInputChange} readonly />
+                            <IonInput label='Closing Time :' name='closetime' value={userData.closetime} onIonChange={handleInputChange} />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonInput label='Closing Kilometers :' name='closekm' value={userData.closekm} onIonChange={handleInputChange} readonly />
+                            <IonInput label='Closing Kilometers :' name='closekm' value={userData.closekm} onIonChange={handleInputChange} />
+                        </IonItem>
+                        <IonItem>
+                            <IonCheckbox aria-required />
+                            Above Mentioned value are correct
                         </IonItem>
                         <IonButton className='booking-accept-btn' expand='block' onClick={handleBtnClickCloseduty} size='small' type='submit' >
                             Close Duty

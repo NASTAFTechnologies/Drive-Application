@@ -1,5 +1,5 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonItem, IonLabel, IonAvatar, IonButtons, IonIcon, IonInput } from '@ionic/react';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonCheckbox, IonContent, useIonToast, IonButton, IonItem, IonLabel, IonAvatar, IonButtons, IonIcon, IonInput } from '@ionic/react';
 import { useHistory } from "react-router-dom";
 import { chevronBackOutline } from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router-dom';
@@ -10,6 +10,7 @@ interface ProfileProps extends RouteComponentProps<{ username: string }> { }
 const Profile: React.FC<ProfileProps> = ({ match }) => {
   const { username } = match.params;
   const history = useHistory();
+  const [present] = useIonToast();
   const [isEditMode, setIsEditMode] = useState(false);
   const [avatar, setAvatar] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_52W9ux_gz02TW9vR2Wypppvuxycuftej6jD2qm4&s');
   const [userData, setUserData] = useState({
@@ -37,34 +38,45 @@ const Profile: React.FC<ProfileProps> = ({ match }) => {
   const toggleEditMode = () => {
     setIsEditMode(!isEditMode);
   };
-  const handleSave = async () => {
-    const loggedInUsername = localStorage.getItem('loggedInUsername');
-    try {
-      console.log('Edit button clicked');
-      // Create a new object with only the fields you want to update
-      const updatedFields = {
-        ufirstname: userData.ufirstname,
-        mobileno: userData.mobileno,
-        userpassword: userData.userpassword,
-        userconfirmpassword: userData.userconfirmpassword,
-        email: userData.email,
-      };
-      const response = await axios.put(`http://localhost:8081/updateProfile`, updatedFields, {
-        params: { username: loggedInUsername }
-      });
-      console.log('Server Response:', response.data);
-      if (response.data && response.data.ufirstname && response.data.mobileno && response.data.userpassword && response.data.userconfirmpassword && response.data.email) {
-        setUserData(response.data); // Update state with the response data
-        setIsEditMode(false);
-      } else {
-        console.error('Unexpected server response:', response.data);
-      }
-    } catch (error) {
-      console.error('Error saving profile:', error);
-    }
+  const presentToast = (position: 'top' | 'middle' | 'bottom') => {
+    present({
+      message: 'Your Duty Was Started !',
+      duration: 1500,
+      position: position,
+    });
   };
+  const handleUpdateduty = () => {
+    const username = localStorage.getItem('loggedInUsername');
+    const updatedData = {
+      username: username,
+      ufirstname: userData.ufirstname,
+      mobileno: userData.mobileno,
+      userpassword: userData.userpassword,
+      userconfirmpassword: userData.userconfirmpassword,
+      email: userData.email,
+    };
+    console.log(updatedData);
+    axios
+      .post('http://localhost:8081/update_updateprofile', updatedData)
+      .then((response) => {
+        console.log('Update successful:', response.data);
+        presentToast('top');
+      })
+      .catch((error) => {
+        console.error('Error updating status:', error);
+        presentToast('top');
+      });
+  };
+  // const handleInputChange = (e: CustomEvent) => {
+  //   const { name, value } = e.detail;
+  //   setUserData((prevUserData) => ({
+  //     ...prevUserData,
+  //     [name]: value,
+  //   }));
+  // };
   const handleInputChange = (e: CustomEvent) => {
-    const { name, value } = e.detail;
+    const { name, value } = e.target as HTMLInputElement;
+    console.log(`Input Name: ${name}, Input Value: ${value}`);
     setUserData((prevUserData) => ({
       ...prevUserData,
       [name]: value,
@@ -127,9 +139,13 @@ const Profile: React.FC<ProfileProps> = ({ match }) => {
           <IonItem className="profile-input">
             <IonInput label='Email ID' name='email' value={userData.email} onIonChange={handleInputChange} disabled={!isEditMode}></IonInput>
           </IonItem>
+          <IonItem>
+            <IonCheckbox aria-required disabled={!isEditMode} />
+            Above Mentioned value are correct
+          </IonItem>
           {isEditMode ? (
             <>
-              <IonButton className="profile-save-button" expand="block" onClick={handleSave}>
+              <IonButton className="profile-save-button" expand="block" onClick={handleUpdateduty}>
                 Save
               </IonButton>
               <IonButton fill="clear" size="small" onClick={toggleEditMode}>
