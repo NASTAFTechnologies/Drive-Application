@@ -46,10 +46,10 @@ router.post('/update_starttrip_apps', (req, res) => {
 
 // updating trip toll and parking
 router.post('/update_updatekm', (req, res) => {
-  const { startkm, tripid } = req.body;
-  const query = 'UPDATE tripsheet SET startkm = ? WHERE tripid = ?';
+  const { starttime, startdate, startkm, tripid } = req.body;
+  const query = 'UPDATE tripsheet SET starttime = ?, startdate = ?, startkm = ? WHERE tripid = ?';
 
-  db.query(query, [startkm, tripid], (err, results) => {
+  db.query(query, [starttime, startdate, startkm, tripid], (err, results) => {
     if (err) {
       console.error('Error updating status:', err);
       res.status(500).json({ message: 'Internal server error' });

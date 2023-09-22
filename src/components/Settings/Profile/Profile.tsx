@@ -11,30 +11,87 @@ const Profile: React.FC<ProfileProps> = ({ match }) => {
   const { username } = match.params;
   const history = useHistory();
   const [present] = useIonToast();
+  // const [profileImage, setProfileImage] = useState<string>('');
   const [isEditMode, setIsEditMode] = useState(false);
-  const [avatar, setAvatar] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_52W9ux_gz02TW9vR2Wypppvuxycuftej6jD2qm4&s');
+  const [avatar, setAvatar] = useState('/default-profile-image.jpg');
+  // const [avatarUrl, setAvatarUrl] = useState('');
   const [userData, setUserData] = useState({
     ufirstname: '', // Initialize with empty values
     mobileno: '',
     userpassword: '',
     userconfirmpassword: '',
     email: '',
+    avatar: '', // Add the 'avatar' property here
   });
   const handleBack = () => {
     history.push('/menu/setting');
   };
+
+
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (readerEvent) => {
-      const result = readerEvent.target?.result;
-      if (result) {
-        setAvatar(String(result));
-      }
-    };
-    reader.readAsDataURL(file);
+    const loggedInUsername = localStorage.getItem('loggedInUsername');
+    if (!loggedInUsername) {
+      console.error('Logged-in username not found');
+      return;
+    }
+    const formData = new FormData();
+    formData.append('avatar', file);
+    // Send the image data to the server
+    axios.post(`http://localhost:8081/uploadProfilePhoto?username=${loggedInUsername}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+      .then((response) => {
+        console.log('Profile photo uploaded successfully:', response.data);
+      })
+      .catch((error) => {
+        console.error('Error uploading profile photo:', error);
+      });
   };
+  //get profile photo from database
+  useEffect(() => {
+    fetchUserProfile();
+  }, []);
+
+  const fetchUserProfile = () => {
+    const username = localStorage.getItem('loggedInUsername');
+
+    if (!username) {
+      console.error('No username found in localStorage');
+      return;
+    }
+
+    // Construct the image URL
+    const imageUrl = `http://localhost:8081/profile_photos/getProfileImage?username=${username}`;
+
+    fetch(imageUrl)
+      .then((response) => {
+        if (!response.ok) {
+          // Handle the case where the image is not found (404)
+          console.error('Image not found');
+          throw new Error('Image not found');
+        }
+        return response.json(); // Assuming it returns JSON data with the image path
+      })
+      .then((data) => {
+        // Check if the data contains a profile_image property
+        if (data && data.profile_image) {
+          setAvatar(data.profile_image);
+        } else {
+          console.error('Profile image not found in response');
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching user profile:', error);
+      });
+  };
+
+
+  //end
+
   const toggleEditMode = () => {
     setIsEditMode(!isEditMode);
   };
@@ -67,13 +124,6 @@ const Profile: React.FC<ProfileProps> = ({ match }) => {
         presentToast('top');
       });
   };
-  // const handleInputChange = (e: CustomEvent) => {
-  //   const { name, value } = e.detail;
-  //   setUserData((prevUserData) => ({
-  //     ...prevUserData,
-  //     [name]: value,
-  //   }));
-  // };
   const handleInputChange = (e: CustomEvent) => {
     const { name, value } = e.target as HTMLInputElement;
     console.log(`Input Name: ${name}, Input Value: ${value}`);
@@ -108,11 +158,13 @@ const Profile: React.FC<ProfileProps> = ({ match }) => {
       <IonContent>
         <div className='Avatar'>
           <IonAvatar className="profile-avatar">
-            <img alt="Silhouette of a person's head" src={avatar} />
+            <img alt="User's profile" src={avatar || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_52W9ux_gz02TW9vR2Wypppvuxycuftej6jD2qm4&s'} />
           </IonAvatar>
+          {/* {avatar && <img src={avatar} alt="User Profile" />} */}
           <div className="profile-avatar-overlay">
             <input
               type="file"
+              name='avatar'
               accept="image/*"
               onChange={handleFileChange}
               hidden

@@ -39,7 +39,6 @@ const CloseDuty: React.FC = () => {
         closetime: '',
         closekm: '',
     });
-
     const presentToast = (position: 'top' | 'middle' | 'bottom') => {
         present({
             message: 'Your Duty Was Started !',
@@ -47,19 +46,13 @@ const CloseDuty: React.FC = () => {
             position: position,
         });
     };
-
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
     };
-
     useEffect(() => {
-        // Retrieve duty type and tripid from localStorage
         const selectDuty = localStorage.getItem('selectDuty');
         const selectTripid = localStorage.getItem('selectTripid');
-
-        // Check if duty type and tripid are available
         if (selectDuty && selectTripid) {
-            // Fetch trip sheet details based on selectedDuty and selectedTripid
             axios
                 .get(`http://localhost:8081/tripsheet/${selectTripid}/${selectDuty}`)
                 .then((response) => {
@@ -69,11 +62,9 @@ const CloseDuty: React.FC = () => {
                     console.error('Error fetching trip sheet details:', error);
                 });
         } else {
-            // Handle the case where duty type and tripid are not available in localStorage
             console.error('Duty type and tripid not found in localStorage');
         }
     }, []);
-
     const handleUpdateduty = () => {
         const tripid = localStorage.getItem('selectTripid');
         const updatedData = {
@@ -94,43 +85,36 @@ const CloseDuty: React.FC = () => {
                 presentToast('top');
             });
     };
-
     const handleBtnCloseduty = () => {
         history.push('/menu/home/startduty/digitalsign'); // Replace '/another-page' with the desired path of the destination page
     };
-
     const handleBtnClickCloseduty = () => {
         handleBtnCloseduty();
         handleUpdateduty();
     };
-
     const handleInputChange = (e: CustomEvent) => {
         const { name, value } = e.target as HTMLInputElement;
         console.log(`Input Name: ${name}, Input Value: ${value}`);
+
         setUserData((prevUserData) => ({
             ...prevUserData,
             [name]: value,
         }));
+
     };
-
     const history = useHistory();
-
     useEffect(() => {
         const isAuthenticated = localStorage.getItem('auth');
         if (!isAuthenticated) {
             history.replace('/'); // Redirect to the login page if not authenticated
         }
     }, [history]);
-
     const handleBack = () => {
         history.push('/menu/home/closebooking');
     };
     const handleBtnClickToll = () => {
         history.push('/menu/home/startduty/updatetoll'); // Replace '/another-page' with the desired path of the destination page
     };
-    // const handleBtnClickCloseduty = () => {
-    //     history.push('/menu/home/startduty/digitalsign'); // Replace '/another-page' with the desired path of the destination page
-    // };
     return (
         <IonPage>
             <IonHeader>
@@ -186,10 +170,10 @@ const CloseDuty: React.FC = () => {
                             <IonInput label='Start Kilometers :' name='startkm' value={userData.startkm} onIonChange={handleInputChange} readonly />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonInput label='Closing Date :' name='closedate' value={userData.closedate} onIonChange={handleInputChange} />
+                            <IonInput label='Closing Date :' type='date' name='closedate' value={userData.closedate} onIonChange={handleInputChange} />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonInput label='Closing Time :' name='closetime' value={userData.closetime} onIonChange={handleInputChange} />
+                            <IonInput label='Closing Time :' type='time' name='closetime' value={userData.closetime} onIonChange={handleInputChange} />
                         </IonItem>
                         <IonItem className='field-item'>
                             <IonInput label='Closing Kilometers :' name='closekm' value={userData.closekm} onIonChange={handleInputChange} />
@@ -208,5 +192,4 @@ const CloseDuty: React.FC = () => {
         </IonPage>
     );
 };
-
 export default CloseDuty;

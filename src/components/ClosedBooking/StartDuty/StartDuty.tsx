@@ -85,6 +85,8 @@ const StartDuty: React.FC = () => {
         const tripid = localStorage.getItem('selectTripid');
         const updatedData = {
             tripid: tripid,
+            startdate: userData.startdate,
+            starttime: userData.starttime,
             startkm: userData.startkm,
         };
         console.log(updatedData);
@@ -114,14 +116,7 @@ const StartDuty: React.FC = () => {
         });
     };
 
-    // const handleInputChange = (e: CustomEvent) => {
-    //     const { name, value } = e.detail;
-    //     setUserData((prevUserData) => ({
-    //         ...prevUserData,
-    //         [name]: value,
-    //     }));
-    // };
-
+  
     const handleInputChange = (e: CustomEvent) => {
         const { name, value } = e.target as HTMLInputElement;
         console.log(`Input Name: ${name}, Input Value: ${value}`);
@@ -188,13 +183,13 @@ const StartDuty: React.FC = () => {
                             <IonTextarea label='Address :' name="address1" value={userData.address1} onIonChange={handleInputChange} readonly />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonInput label='Trip Date :' name="startdate" value={userData.startdate} onIonChange={handleInputChange} readonly />
+                            <IonInput label='Trip Date :' type='date' name="startdate" value={userData.startdate} onIonChange={handleInputChange}  />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonInput label='Start Time :' name="starttime" value={userData.starttime} onIonChange={handleInputChange} readonly />
+                            <IonInput label='Start Time :' type='time' name="starttime" value={userData.starttime} onIonChange={handleInputChange}  />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonInput label='Start Kilometers :' name='startkm' value={userData.startkm} onIonChange={handleInputChange} required />
+                            <IonInput label='Start Kilometers :' name='startkm' value={userData.startkm} onIonChange={handleInputChange}  />
                         </IonItem>
                         <IonItem>
                             <IonCheckbox  aria-required />
