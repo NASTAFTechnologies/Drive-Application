@@ -11,10 +11,8 @@ const Profile: React.FC<ProfileProps> = ({ match }) => {
   const { username } = match.params;
   const history = useHistory();
   const [present] = useIonToast();
-  // const [profileImage, setProfileImage] = useState<string>('');
   const [isEditMode, setIsEditMode] = useState(false);
-  const [avatar, setAvatar] = useState('/default-profile-image.jpg');
-  // const [avatarUrl, setAvatarUrl] = useState('');
+  const [profileImagePath, setProfileImagePath] = useState('');
   const [userData, setUserData] = useState({
     ufirstname: '', // Initialize with empty values
     mobileno: '',
@@ -53,42 +51,20 @@ const Profile: React.FC<ProfileProps> = ({ match }) => {
   };
   //get profile photo from database
   useEffect(() => {
-    fetchUserProfile();
-  }, []);
-
-  const fetchUserProfile = () => {
-    const username = localStorage.getItem('loggedInUsername');
-
-    if (!username) {
-      console.error('No username found in localStorage');
-      return;
+    const loggedInUsername = localStorage.getItem('loggedInUsername');
+    if (loggedInUsername) {
+      axios.get(`http://localhost:8081/profile_photos?username=${loggedInUsername}`)
+        .then((response) => {
+          const profileImagePath = response.data.profileImagePath.replace(/\\/g, '/');
+          console.log('Profile Image Path:', profileImagePath);
+          setProfileImagePath(profileImagePath);
+          console.log('summa path kattu', profileImagePath);
+        })
+        .catch((error) => {
+          console.error('Error fetching profile photo path:', error);
+        });
     }
-
-    // Construct the image URL
-    const imageUrl = `http://localhost:8081/profile_photos/getProfileImage?username=${username}`;
-
-    fetch(imageUrl)
-      .then((response) => {
-        if (!response.ok) {
-          // Handle the case where the image is not found (404)
-          console.error('Image not found');
-          throw new Error('Image not found');
-        }
-        return response.json(); // Assuming it returns JSON data with the image path
-      })
-      .then((data) => {
-        // Check if the data contains a profile_image property
-        if (data && data.profile_image) {
-          setAvatar(data.profile_image);
-        } else {
-          console.error('Profile image not found in response');
-        }
-      })
-      .catch((error) => {
-        console.error('Error fetching user profile:', error);
-      });
-  };
-
+  }, []);
 
   //end
 
@@ -158,9 +134,9 @@ const Profile: React.FC<ProfileProps> = ({ match }) => {
       <IonContent>
         <div className='Avatar'>
           <IonAvatar className="profile-avatar">
-            <img alt="User's profile" src={avatar || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_52W9ux_gz02TW9vR2Wypppvuxycuftej6jD2qm4&s'} />
+            <img src={`../../../../Backend/server/${profileImagePath}`} />
           </IonAvatar>
-          {/* {avatar && <img src={avatar} alt="User Profile" />} */}
+
           <div className="profile-avatar-overlay">
             <input
               type="file"

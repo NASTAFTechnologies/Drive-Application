@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../../db');
 const multer = require('multer');
-const path = require('path'); // Import path module
+// const path = require('path'); // Import path module
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -15,8 +15,8 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-router.use('/profile_photos', express.static(path.join(__dirname, 'profile_photos')));
-console.log(path.join(__dirname, 'profile_photos'));
+// router.use('/profile_image', express.static('profile_photos'));
+
 // login page databse fetch:    
 router.post('/login', (req, res) => {
     const { username, userpassword } = req.body;
@@ -81,5 +81,47 @@ router.post('/uploadProfilePhoto', upload.single('avatar'), (req, res) => {
     });
 });
 //end
+
+// router.get('/profile_photos', (req, res) => {
+//     const { username } = req.query;
+//     console.log('Received GET request for profile photos:', req.query);
+//     const selectQuery = 'SELECT profile_image FROM usercreation WHERE username = ?';
+//     db.query(selectQuery, [username], (err, results) => {
+//         if (err) {
+//             console.error('Error fetching profile photo path:', err);
+//             res.status(500).json({ message: 'Internal server error' });
+//             return;
+//         }
+//         if (results.length === 0) {
+//             res.status(404).json({ message: 'Profile not found' });
+//             return;
+//         }
+//         const profileImagePath = results[0].profile_image;
+//         // Construct the full file path to the image
+//         const imagePath = path.join(__dirname, 'profile_photos', profileImagePath);
+//         // Serve the image file
+//         res.sendFile(imagePath);
+//     });
+// });
+
+router.get('/profile_photos', (req, res) => {
+    const { username } = req.query;
+    const selectQuery = 'SELECT profile_image FROM usercreation WHERE username = ?';
+    db.query(selectQuery, [username], (err, results) => {
+        if (err) {
+            console.error('Error fetching profile photo path:', err);
+            res.status(500).json({ message: 'Internal server error' });
+            return;
+        }
+        if (results.length === 0) {
+            res.status(404).json({ message: 'Profile not found' });
+            return;
+        }
+        const profileImagePath = results[0].profile_image;
+        console.log('Profile Image Path:', profileImagePath); // Add this line
+        res.status(200).json({ profileImagePath });
+    });
+});
+
 
 module.exports = router;
