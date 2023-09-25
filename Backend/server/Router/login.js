@@ -81,7 +81,6 @@ router.post('/uploadProfilePhoto', upload.single('avatar'), (req, res) => {
     });
 });
 //end
-
 // router.get('/profile_photos', (req, res) => {
 //     const { username } = req.query;
 //     console.log('Received GET request for profile photos:', req.query);

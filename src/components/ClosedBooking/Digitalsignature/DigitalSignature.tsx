@@ -66,29 +66,54 @@ const DigitalSignature: React.FC = () => {
       });
   };
 
+  // const saveSignature = async () => {
+  //   const dataUrl = signatureCanvasRef.current.toDataURL('image/png'); // Get the signature data as a data URL
+  //   const selectTripid = localStorage.getItem('selectTripid');
+  //   try {
+  //     const response = await fetch('http://localhost:8081/api/saveSignature', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ signatureData: dataUrl }), // Store the data URL string
+  //     });
+
+  //     if (response.ok) {
+  //       // Signature saved successfully
+  //       console.log('Signature saved successfully');
+  //     } else {
+  //       // Handle error
+  //       console.error('Failed to save signature');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //   }
+  // };
+
+
   const saveSignature = async () => {
-    const dataUrl = signatureCanvasRef.current.toDataURL('image/png'); // Get the signature data as a data URL
-
+    const dataUrl = signatureCanvasRef.current.toDataURL('image/png');
+    const selectTripid = localStorage.getItem('selectTripid');
+    
     try {
-      const response = await fetch('http://localhost:8081/api/saveSignature', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ signatureData: dataUrl }), // Store the data URL string
-      });
+        const response = await fetch('http://localhost:8081/api/saveSignature', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ tripid: selectTripid, signatureData: dataUrl }), // Include tripid
+        });
 
-      if (response.ok) {
-        // Signature saved successfully
-        console.log('Signature saved successfully');
-      } else {
-        // Handle error
-        console.error('Failed to save signature');
-      }
+        if (response.ok) {
+            console.log('Signature saved successfully');
+        } else {
+            console.error('Failed to save signature');
+        }
     } catch (error) {
-      console.error('Error:', error);
+        console.error('Error:', error);
     }
-  };
+};
+
 
   const handleclosesave = () => {
     saveSignature();

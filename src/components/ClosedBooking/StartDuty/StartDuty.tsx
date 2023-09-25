@@ -63,19 +63,17 @@ const StartDuty: React.FC = () => {
         // Create a payload with the updated data (e.g., changing the 'status' to 'accept')
         const updatedData = {
             tripid: userData.tripid,
-            apps: 'On Going', // Update with the new status value
+            apps: 'On_Going', // Update with the new status value
         };
 
         axios
             .post('http://localhost:8081/update_starttrip_apps', updatedData)
             .then((response) => {
-                // Handle a successful response (e.g., show a confirmation message)
                 console.log('Update successful:', response.data);
                 presentToast('top'); // Show a success message
                 history.push('/menu/home');
             })
             .catch((error) => {
-                // Handle errors (e.g., show an error message)
                 console.error('Error updating status:', error);
                 presentToast('top'); // Show an error message
             });

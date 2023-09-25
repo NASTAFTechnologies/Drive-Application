@@ -70,7 +70,7 @@ const NewBooking: React.FC = () => {
         switch (status) {
             case 'Accept':
                 return 'green-status';
-            case 'waiting':
+            case 'Waiting':
                 return 'orange-status';
             case 'closed':
                 return 'red-status';
@@ -91,15 +91,6 @@ const NewBooking: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                {/* {bookings.map((booking) => (
-                    <IonCard key={booking.tripid} onClick={() => handleCardClickBooking(booking.tripid, booking.duty)}>
-                        <IonCardHeader>
-                            <IonCardTitle>{booking.duty}</IonCardTitle>
-                        </IonCardHeader>
-                        <IonCardContent>{booking.startdate}</IonCardContent>
-                        <span className='cab-status'>{booking.apps}</span>
-                    </IonCard>
-                ))} */}
                 {bookings.map((booking) => (
                     <IonCard key={booking.tripid} onClick={() => handleCardClickBooking(booking.tripid, booking.duty)}>
                         <IonCardHeader>

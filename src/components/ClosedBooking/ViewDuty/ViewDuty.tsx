@@ -23,6 +23,9 @@ import { chevronBackOutline } from 'ionicons/icons';
 
 const ViewDuty: React.FC = () => {
     const [present] = useIonToast();
+    const [uploadedImagePath, setuploadedImagePath] = useState('');
+    const [attachedImagePath, setattachedImagePath] = useState('');
+
     const [userData, setUserData] = useState({
         tripid: '',
         startdate: '',
@@ -40,8 +43,41 @@ const ViewDuty: React.FC = () => {
         closetime: '',
         closekm: '',
         advancepaidtovendor: '',
-        parking:'',
+        parking: '',
     });
+    //get signature image
+    useEffect(() => {
+        const selecteTripid = localStorage.getItem('selectTripid');
+        if (selecteTripid) {
+            axios.get(`http://localhost:8081/signature_photos?tripid=${selecteTripid}`)
+                .then((response) => {
+                    const uploadedImagePath = response.data.uploadedImagePath.replace(/\\/g, '/');
+                    console.log('Profile Image Path:', uploadedImagePath);
+                    setuploadedImagePath(uploadedImagePath);
+                    console.log('summa path kattu', uploadedImagePath);
+                })
+                .catch((error) => {
+                    console.error('Error fetching profile photo path:', error);
+                });
+        }
+    }, []);
+    //get attached image
+    useEffect(() => {
+        const selecteTripid = localStorage.getItem('selectTripid');
+        if (selecteTripid) {
+            axios.get(`http://localhost:8081/uploads?tripid=${selecteTripid}`)
+                .then((response) => {
+                    const attachedImagePath = response.data.attachedImagePath.replace(/\\/g, '/');
+                    console.log('Profile Image Path:', attachedImagePath);
+                    setattachedImagePath(attachedImagePath);
+                    console.log('attached path', attachedImagePath);
+                })
+                .catch((error) => {
+                    console.error('Error fetching profile photo path:', error);
+                });
+        }
+    }, []);
+
 
     useEffect(() => {
         // Retrieve duty type and tripid from localStorage
@@ -168,15 +204,13 @@ const ViewDuty: React.FC = () => {
                         <IonButton
                             className='accept-btn'
                             expand='block'
-                            onClick={() => presentToast('top')}
-                            // size='small'
                             type='submit'
                         >
                             Signature
                         </IonButton>
                     </div>
                     <IonCard>
-                        {/* <img alt="Silhouette of mountains" src="https://img.freepik.com/free-vector/businessman-planning-events-deadlines-agenda_74855-6274.jpg?w=900&t=st=1688480583~exp=1688481183~hmac=88e85cab2e58b10bc489eff32fc71d1633f201a0f8155c6a88b5657262e6a543" /> */}
+                        <img alt="Signature Image" src={`../../../../Backend/server/${uploadedImagePath}`} />
                         <IonCardHeader>
                             <IonCardTitle>Signature Image</IonCardTitle>
                         </IonCardHeader>
@@ -185,15 +219,13 @@ const ViewDuty: React.FC = () => {
                         <IonButton
                             className='accept-btn'
                             expand='block'
-                            onClick={() => presentToast('top')}
-                            // size='small'
                             type='submit'
                         >
                             Attachments
                         </IonButton>
                     </div>
                     <IonCard>
-                        {/* <img alt="Silhouette of mountains" src="https://img.freepik.com/free-vector/businessman-planning-events-deadlines-agenda_74855-6274.jpg?w=900&t=st=1688480583~exp=1688481183~hmac=88e85cab2e58b10bc489eff32fc71d1633f201a0f8155c6a88b5657262e6a543" /> */}
+                        <img alt="Signature Image" src={`../../../../Backend/server/${attachedImagePath}`} />
                         <IonCardHeader>
                             <IonCardTitle>Attachment Image</IonCardTitle>
                         </IonCardHeader>

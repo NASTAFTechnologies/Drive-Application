@@ -136,7 +136,6 @@ const Profile: React.FC<ProfileProps> = ({ match }) => {
           <IonAvatar className="profile-avatar">
             <img src={`../../../../Backend/server/${profileImagePath}`} />
           </IonAvatar>
-
           <div className="profile-avatar-overlay">
             <input
               type="file"

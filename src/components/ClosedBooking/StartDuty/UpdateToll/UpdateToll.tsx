@@ -8,7 +8,6 @@ import {
     IonContent,
     IonButtons,
     IonButton,
-    IonLabel,
     IonInput,
     IonCheckbox,
     IonItem,
@@ -74,26 +73,33 @@ const UpdateToll: React.FC = () => {
         input.click();
     };
 
-    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>, fieldName: 'toll' | 'parking') => {
-        const file = event.target.files?.[0];
-        if (!file) return;
-        const formData = new FormData();
-        formData.append('file', file);
-        try {
-            const response = await axios.post(`http://localhost:8081/uploads`, formData);
-            console.log(response.data);
-            presentToast('top');
-            setSelectedFile(file);
-        } catch (error) {
-            console.error(`Error uploading ${fieldName} file:`, error);
-        }
-    };
-
+    // const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>, fieldName: 'toll' | 'parking') => {
+    //     const file = event.target.files?.[0];
+    //     if (!file) return;
+    //     const formData = new FormData();
+    //     formData.append('file', file);
+    //     try {
+    //         const response = await axios.post(`http://localhost:8081/uploads`, formData);
+    //         console.log(response.data);
+    //         presentToast('top');
+    //         setSelectedFile(file);
+    //     } catch (error) {
+    //         console.error(`Error uploading ${fieldName} file:`, error);
+    //     }
+    // };
     const handleFileChange2 = async (event: React.ChangeEvent<HTMLInputElement>, fieldName: 'toll' | 'parking') => {
         const file = event.target.files?.[0];
         if (!file) return;
+        
+        const selecteeTripid = localStorage.getItem('selectTripid'); // Get the tripid from localStorage
+        
         const formData = new FormData();
         formData.append('file', file);
+        
+        if (selecteeTripid) {
+            formData.append('tripid', selecteeTripid); // Include the tripid in the FormData if it's not null
+        }
+        
         try {
             const response = await axios.post(`http://localhost:8081/uploads`, formData);
             console.log(response.data);
@@ -103,6 +109,30 @@ const UpdateToll: React.FC = () => {
             console.error(`Error uploading ${fieldName} file:`, error);
         }
     };
+    
+    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>, fieldName: 'toll' | 'parking') => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+    
+        const selecteTripid = localStorage.getItem('selectTripid'); // Get the tripid from localStorage
+    
+        const formData = new FormData();
+        formData.append('file', file);
+        
+        if (selecteTripid) {
+            formData.append('tripid', selecteTripid); // Include the tripid in the FormData if it's not null
+        }
+    
+        try {
+            const response = await axios.post(`http://localhost:8081/uploads`, formData);
+            console.log(response.data);
+            presentToast('top');
+            setSelectedFile(file);
+        } catch (error) {
+            console.error(`Error uploading ${fieldName} file:`, error);
+        }
+    };
+    
 
     const handleInputChange = (e: CustomEvent) => {
         const { name, value } = e.target as HTMLInputElement;

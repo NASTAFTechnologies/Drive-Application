@@ -14,9 +14,11 @@
 .date-filter .filter-input {
   margin-top: 15px;
 }
-.filter-input .input{
+
+.filter-input .input {
   color: #000000;
 }
+
 .date-filter .sumbit-flt-btn {
   text-align: center;
   margin-top: 20px;
@@ -69,17 +71,22 @@
   cursor: pointer;
 }
 
-.action-accept {
+.action-Accept {
   color: #ffffff;
   background-color: #5cb85c;
 }
 
-.action-open {
+.action-On_Going {
   color: #ffffff;
   background-color: #f0ad4e;
 }
 
-.action-pending {
+.action-Waiting {
+  color: #ffffff;
+  background-color: #4eaff0;
+}
+
+.action-Closed {
   color: #ffffff;
   background-color: #d9534f;
 }
@@ -100,13 +107,16 @@
   --ion-background-color: #222222;
   --ion-text-color: #ffffff;
 }
+
 .dark .excel-download-btn .custom-button {
   --color: #fff;
 }
-.dark .filter-input .input{
+
+.dark .filter-input .input {
   background-color: transparent;
   color: #fff;
 }
+
 .dark .ionic-table th {
   color: #000000;
 }

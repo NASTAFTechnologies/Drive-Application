@@ -69,7 +69,7 @@ const ClosedBooking: React.FC = () => {
     switch (status) {
       case 'Accept':
         return 'green-status';
-      case 'On Going':
+      case 'On_Going':
         return 'green-status';
       case 'waiting':
         return 'orange-status';

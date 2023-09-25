@@ -97,7 +97,8 @@ const TripSheet: React.FC = () => {
                     <td>{item.vehType}</td>
                     <td>
                       {item.apps && (
-                        <div className={`action-button action-${item.apps.toLowerCase()}`}>
+                        <div className={`action-button action-${item.apps}`}>
+                        {/* <div className={`action-button action-Waiting`}> */}
                           {item.apps}
                         </div>
                       )}
