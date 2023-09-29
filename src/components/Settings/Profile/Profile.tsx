@@ -31,7 +31,6 @@ const Profile: React.FC<ProfileProps> = ({ match }) => {
     if (!file) return;
     const loggedInUsername = localStorage.getItem('loggedInUsername');
     if (!loggedInUsername) {
-      console.error('Logged-in username not found');
       return;
     }
     const formData = new FormData();
@@ -43,10 +42,10 @@ const Profile: React.FC<ProfileProps> = ({ match }) => {
       },
     })
       .then((response) => {
-        console.log('Profile photo uploaded successfully:', response.data);
+
       })
       .catch((error) => {
-        console.error('Error uploading profile photo:', error);
+
       });
   };
   //get profile photo from database
@@ -56,12 +55,10 @@ const Profile: React.FC<ProfileProps> = ({ match }) => {
       axios.get(`http://localhost:8081/profile_photos?username=${loggedInUsername}`)
         .then((response) => {
           const profileImagePath = response.data.profileImagePath.replace(/\\/g, '/');
-          console.log('Profile Image Path:', profileImagePath);
           setProfileImagePath(profileImagePath);
-          console.log('summa path kattu', profileImagePath);
         })
         .catch((error) => {
-          console.error('Error fetching profile photo path:', error);
+
         });
     }
   }, []);
@@ -88,21 +85,17 @@ const Profile: React.FC<ProfileProps> = ({ match }) => {
       userconfirmpassword: userData.userconfirmpassword,
       email: userData.email,
     };
-    console.log(updatedData);
     axios
       .post('http://localhost:8081/update_updateprofile', updatedData)
       .then((response) => {
-        console.log('Update successful:', response.data);
         presentToast('top');
       })
       .catch((error) => {
-        console.error('Error updating status:', error);
         presentToast('top');
       });
   };
   const handleInputChange = (e: CustomEvent) => {
     const { name, value } = e.target as HTMLInputElement;
-    console.log(`Input Name: ${name}, Input Value: ${value}`);
     setUserData((prevUserData) => ({
       ...prevUserData,
       [name]: value,
@@ -116,7 +109,7 @@ const Profile: React.FC<ProfileProps> = ({ match }) => {
         setUserData(driverProfile);
       })
       .catch((error) => {
-        console.error('Error fetching driver profile:', error);
+
       });
   }, []);
   return (

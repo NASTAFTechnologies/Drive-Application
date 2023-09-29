@@ -38,11 +38,9 @@ const DigitalSignature: React.FC = () => {
           setUserData(response.data);
         })
         .catch((error) => {
-          console.error('Error fetching trip sheet details:', error);
         });
     } else {
       // Handle the case where duty type and tripid are not available in localStorage
-      console.error('Duty type and tripid not found in localStorage');
     }
   }, []);
 
@@ -55,64 +53,33 @@ const DigitalSignature: React.FC = () => {
     axios
       .post('http://localhost:8081/update_closetrip_apps', updatedData)
       .then((response) => {
-        console.log(updatedData);
-        console.log('Update successful:', response.data);
         presentToast('top'); // Show a success message
         history.push('/menu/home');
       })
       .catch((error) => {
-        console.error('Error updating status:', error);
         presentToast('top'); // Show an error message
       });
   };
 
-  // const saveSignature = async () => {
-  //   const dataUrl = signatureCanvasRef.current.toDataURL('image/png'); // Get the signature data as a data URL
-  //   const selectTripid = localStorage.getItem('selectTripid');
-  //   try {
-  //     const response = await fetch('http://localhost:8081/api/saveSignature', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ signatureData: dataUrl }), // Store the data URL string
-  //     });
-
-  //     if (response.ok) {
-  //       // Signature saved successfully
-  //       console.log('Signature saved successfully');
-  //     } else {
-  //       // Handle error
-  //       console.error('Failed to save signature');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //   }
-  // };
-
-
   const saveSignature = async () => {
     const dataUrl = signatureCanvasRef.current.toDataURL('image/png');
     const selectTripid = localStorage.getItem('selectTripid');
-    
-    try {
-        const response = await fetch('http://localhost:8081/api/saveSignature', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ tripid: selectTripid, signatureData: dataUrl }), // Include tripid
-        });
 
-        if (response.ok) {
-            console.log('Signature saved successfully');
-        } else {
-            console.error('Failed to save signature');
-        }
+    try {
+      const response = await fetch('http://localhost:8081/api/saveSignature', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ tripid: selectTripid, signatureData: dataUrl }), // Include tripid
+      });
+
+      if (response.ok) {
+      } else {
+      }
     } catch (error) {
-        console.error('Error:', error);
     }
-};
+  };
 
 
   const handleclosesave = () => {

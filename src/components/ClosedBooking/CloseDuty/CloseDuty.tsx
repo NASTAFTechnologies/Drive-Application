@@ -59,10 +59,8 @@ const CloseDuty: React.FC = () => {
                     setUserData(response.data);
                 })
                 .catch((error) => {
-                    console.error('Error fetching trip sheet details:', error);
                 });
         } else {
-            console.error('Duty type and tripid not found in localStorage');
         }
     }, []);
     const handleUpdateduty = () => {
@@ -73,15 +71,12 @@ const CloseDuty: React.FC = () => {
             closedate: userData.closedate,
             closetime: userData.closetime,
         };
-        console.log(updatedData);
         axios
             .post('http://localhost:8081/update_updateclosekm', updatedData)
             .then((response) => {
-                console.log('Update successful:', response.data);
                 presentToast('top');
             })
             .catch((error) => {
-                console.error('Error updating status:', error);
                 presentToast('top');
             });
     };
@@ -94,7 +89,6 @@ const CloseDuty: React.FC = () => {
     };
     const handleInputChange = (e: CustomEvent) => {
         const { name, value } = e.target as HTMLInputElement;
-        console.log(`Input Name: ${name}, Input Value: ${value}`);
 
         setUserData((prevUserData) => ({
             ...prevUserData,

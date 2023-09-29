@@ -10,7 +10,6 @@ router.get('/tripsheet/:username', async (req, res) => {
     const query = 'SELECT * FROM tripsheet WHERE driverName = ? AND apps = "waiting"';
     db.query(query, [username], (err, results) => {
       if (err) {
-        console.error('Error executing query:', err);
         res.status(500).json({ message: 'Internal server error' });
         return;
       }
@@ -18,7 +17,6 @@ router.get('/tripsheet/:username', async (req, res) => {
       res.status(200).json(results);
     });
   } catch (err) {
-    console.error('Error:', err);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
@@ -31,7 +29,6 @@ router.get('/tripsheet/:tripid/:duty', async (req, res) => {
     const query = 'SELECT * FROM tripsheet WHERE tripid = ? AND duty = ?';
     db.query(query, [tripid, duty], (err, results) => {
       if (err) {
-        console.error('Error executing query:', err);
         res.status(500).json({ message: 'Internal server error' });
         return;
       }
@@ -45,7 +42,6 @@ router.get('/tripsheet/:tripid/:duty', async (req, res) => {
       res.status(200).json(results[0]); // Assuming you want to send the first result
     });
   } catch (err) {
-    console.error('Error:', err);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
@@ -59,7 +55,6 @@ router.post('/update_trip_apps', (req, res) => {
 
   db.query(query, [apps, tripid], (err, results) => {
     if (err) {
-      console.error('Error updating status:', err);
       res.status(500).json({ message: 'Internal server error' });
       return;
     }

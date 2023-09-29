@@ -51,11 +51,9 @@ const StartDuty: React.FC = () => {
                     setUserData(response.data);
                 })
                 .catch((error) => {
-                    console.error('Error fetching trip sheet details:', error);
                 });
         } else {
-            // Handle the case where duty type and tripid are not available in localStorage
-            console.error('Duty type and tripid not found in localStorage');
+
         }
     }, []);
 
@@ -69,12 +67,10 @@ const StartDuty: React.FC = () => {
         axios
             .post('http://localhost:8081/update_starttrip_apps', updatedData)
             .then((response) => {
-                console.log('Update successful:', response.data);
                 presentToast('top'); // Show a success message
                 history.push('/menu/home');
             })
             .catch((error) => {
-                console.error('Error updating status:', error);
                 presentToast('top'); // Show an error message
             });
     };
@@ -87,16 +83,13 @@ const StartDuty: React.FC = () => {
             starttime: userData.starttime,
             startkm: userData.startkm,
         };
-        console.log(updatedData);
         axios
             .post('http://localhost:8081/update_updatekm', updatedData)
             .then((response) => {
-                console.log('Update successful:', response.data);
                 presentToast('top');
                 history.push('/menu/home');
             })
             .catch((error) => {
-                console.error('Error updating status:', error);
                 presentToast('top');
             });
     };
@@ -114,10 +107,9 @@ const StartDuty: React.FC = () => {
         });
     };
 
-  
+
     const handleInputChange = (e: CustomEvent) => {
         const { name, value } = e.target as HTMLInputElement;
-        console.log(`Input Name: ${name}, Input Value: ${value}`);
         setUserData((prevUserData) => ({
             ...prevUserData,
             [name]: value,
@@ -181,16 +173,16 @@ const StartDuty: React.FC = () => {
                             <IonTextarea label='Address :' name="address1" value={userData.address1} onIonChange={handleInputChange} readonly />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonInput label='Trip Date :' type='date' name="startdate" value={userData.startdate} onIonChange={handleInputChange}  />
+                            <IonInput label='Trip Date :' type='date' name="startdate" value={userData.startdate} onIonChange={handleInputChange} />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonInput label='Start Time :' type='time' name="starttime" value={userData.starttime} onIonChange={handleInputChange}  />
+                            <IonInput label='Start Time :' type='time' name="starttime" value={userData.starttime} onIonChange={handleInputChange} />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonInput label='Start Kilometers :' name='startkm' value={userData.startkm} onIonChange={handleInputChange}  />
+                            <IonInput label='Start Kilometers :' name='startkm' value={userData.startkm} onIonChange={handleInputChange} />
                         </IonItem>
                         <IonItem>
-                            <IonCheckbox  aria-required />
+                            <IonCheckbox aria-required />
                             Above Mentioned value are correct
                         </IonItem>
                         <IonButton className='booking-accept-btn' expand='block' onClick={handlestart} size='small' type='submit'>

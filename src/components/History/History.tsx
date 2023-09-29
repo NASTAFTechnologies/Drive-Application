@@ -29,10 +29,8 @@ const TripSheet: React.FC = () => {
           setFilteredData(response.data);
         })
         .catch((error) => {
-          console.error('Error fetching trip sheet details:', error);
         });
     } else {
-      console.error('Duty type and tripid not found in localStorage');
     }
   };
   useEffect(() => {
@@ -41,7 +39,7 @@ const TripSheet: React.FC = () => {
       history.replace('/'); // Redirect to the login page if not authenticated
     }
   }, [history]);
-  
+
   interface TripData {
     tripid: number;
     startdate: string;
@@ -50,6 +48,14 @@ const TripSheet: React.FC = () => {
     vehType: string;
     apps: string;
   }
+
+  const handleRowClickBooking = (tripid: number, duty: string) => {
+    localStorage.setItem('selectedDuty', duty);
+    localStorage.setItem('selectedTripid', tripid.toString());
+    // history.push(`/menu/home/viewbooking/`);
+    history.push('/menu/home/closebooking/viewduty');
+  };
+
   return (
     <IonPage>
       <IonHeader className='header-title'>
@@ -72,7 +78,7 @@ const TripSheet: React.FC = () => {
           </div>
         </div>
         <div className='excel-download-btn'>
-          <IonButton color="success" size='small'  className="custom-button">
+          <IonButton color="success" size='small' className="custom-button">
             Download Excel
           </IonButton>
         </div>
@@ -90,7 +96,11 @@ const TripSheet: React.FC = () => {
             <tbody>
               {filteredData && filteredData.length > 0 ? (
                 filteredData.map((item: TripData) => (
-                  <tr key={item.tripid}>
+                  // <tr key={item.tripid} onClick={handleRowClickBooking}>
+                  <tr
+                    key={item.tripid}
+                    onClick={() => handleRowClickBooking(item.tripid, item.duty)}
+                  >
                     <td>{item.startdate}</td>
                     <td>{item.starttime}</td>
                     <td>{item.duty}</td>
@@ -98,7 +108,6 @@ const TripSheet: React.FC = () => {
                     <td>
                       {item.apps && (
                         <div className={`action-button action-${item.apps}`}>
-                        {/* <div className={`action-button action-Waiting`}> */}
                           {item.apps}
                         </div>
                       )}

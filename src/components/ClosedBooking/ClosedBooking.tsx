@@ -41,11 +41,9 @@ const ClosedBooking: React.FC = () => {
       const loggedInUsername = localStorage.getItem('loggedInUsername');
       axios.get(`http://localhost:8081/closedtripsheet/${loggedInUsername}`)
         .then((response) => {
-          console.log('Response data:', response.data); // Log the response data
           setBookings(response.data);
         })
         .catch((error) => {
-          console.error("Error fetching newbookings:", error);
         });
     }
   }, [history]);

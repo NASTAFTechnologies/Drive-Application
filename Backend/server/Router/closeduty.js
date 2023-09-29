@@ -11,7 +11,6 @@ router.post('/update_closetrip_apps', (req, res) => {
 
   db.query(query, [apps, tripid], (err, results) => {
     if (err) {
-      console.error('Error updating status:', err);
       res.status(500).json({ message: 'Internal server error' });
       return;
     }
@@ -27,7 +26,6 @@ router.post('/update_updateclosekm', (req, res) => {
 
   db.query(query, [closekm, closedate, closetime, tripid], (err, results) => {
     if (err) {
-      console.error('Error updating status:', err);
       res.status(500).json({ message: 'Internal server error' });
       return;
     }

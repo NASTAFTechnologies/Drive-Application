@@ -12,7 +12,6 @@ router.get('/closedtripsheet/:username', async (req, res) => {
 
     db.query(query, [username], (err, results) => {
       if (err) {
-        console.error('Error executing query:', err);
         res.status(500).json({ message: 'Internal server error' });
         return;
       }
@@ -20,7 +19,6 @@ router.get('/closedtripsheet/:username', async (req, res) => {
       res.status(200).json(results);
     });
   } catch (err) {
-    console.error('Error:', err);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
@@ -34,7 +32,6 @@ router.post('/update_starttrip_apps', (req, res) => {
 
   db.query(query, [apps, tripid], (err, results) => {
     if (err) {
-      console.error('Error updating status:', err);
       res.status(500).json({ message: 'Internal server error' });
       return;
     }
@@ -51,7 +48,6 @@ router.post('/update_updatekm', (req, res) => {
 
   db.query(query, [starttime, startdate, startkm, tripid], (err, results) => {
     if (err) {
-      console.error('Error updating status:', err);
       res.status(500).json({ message: 'Internal server error' });
       return;
     }

@@ -25,7 +25,6 @@ router.post('/login', (req, res) => {
     }
     db.query('SELECT * FROM usercreation WHERE username = ? AND userpassword = ?', [username, userpassword], (err, result) => {
         if (err) {
-            console.error('Error retrieving user details from MySQL:', err);
             return res.status(500).json({ error: 'Failed to retrieve user details from MySQL' });
         }
         if (result.length === 0) {
@@ -40,7 +39,6 @@ router.get('/getDriverProfile', (req, res) => {
     const query = 'SELECT * FROM usercreation WHERE username = ?';
     db.query(query, [username], (err, results) => {
         if (err) {
-            console.error('Error fetching driver profile:', err);
             return res.status(500).json({ error: 'Server error' });
         }
         if (results.length === 0) {
@@ -57,7 +55,6 @@ router.post('/update_updateprofile', (req, res) => {
 
     db.query(query, [ufirstname, mobileno, userpassword, userconfirmpassword, email, username], (err, results) => {
         if (err) {
-            console.error('Error updating status:', err);
             res.status(500).json({ message: 'Internal server error' });
             return;
         }
@@ -72,43 +69,19 @@ router.post('/uploadProfilePhoto', upload.single('avatar'), (req, res) => {
     const updateQuery = 'UPDATE usercreation SET profile_image = ? WHERE username = ?';
     db.query(updateQuery, [filePath, username], (err, results) => {
         if (err) {
-            console.error('Error updating profile photo:', err); // Log the error
             res.status(500).json({ message: 'Internal server error' });
             return;
         }
-        console.log('Profile photo uploaded successfully');
         res.status(200).json({ message: 'Profile photo uploaded successfully' });
     });
 });
 //end
-// router.get('/profile_photos', (req, res) => {
-//     const { username } = req.query;
-//     console.log('Received GET request for profile photos:', req.query);
-//     const selectQuery = 'SELECT profile_image FROM usercreation WHERE username = ?';
-//     db.query(selectQuery, [username], (err, results) => {
-//         if (err) {
-//             console.error('Error fetching profile photo path:', err);
-//             res.status(500).json({ message: 'Internal server error' });
-//             return;
-//         }
-//         if (results.length === 0) {
-//             res.status(404).json({ message: 'Profile not found' });
-//             return;
-//         }
-//         const profileImagePath = results[0].profile_image;
-//         // Construct the full file path to the image
-//         const imagePath = path.join(__dirname, 'profile_photos', profileImagePath);
-//         // Serve the image file
-//         res.sendFile(imagePath);
-//     });
-// });
 
 router.get('/profile_photos', (req, res) => {
     const { username } = req.query;
     const selectQuery = 'SELECT profile_image FROM usercreation WHERE username = ?';
     db.query(selectQuery, [username], (err, results) => {
         if (err) {
-            console.error('Error fetching profile photo path:', err);
             res.status(500).json({ message: 'Internal server error' });
             return;
         }
@@ -117,7 +90,6 @@ router.get('/profile_photos', (req, res) => {
             return;
         }
         const profileImagePath = results[0].profile_image;
-        console.log('Profile Image Path:', profileImagePath); // Add this line
         res.status(200).json({ profileImagePath });
     });
 });

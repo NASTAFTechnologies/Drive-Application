@@ -19,28 +19,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 //file upload in tripsheet
-// router.post('/uploads', upload.single('file'), (req, res) => {
-//     if (!req.file) {
-//         return res.status(400).json({ error: 'No file uploaded.' });
-//     }
-//     const selecteTripid = req.body.tripid;
-//     const fileData = {
-//         name: req.file.originalname,
-//         mimetype: req.file.mimetype,
-//         size: req.file.size,
-//         path: req.file.path.replace(/\\/g, '/').replace(/^path_to_save_uploads\//, ''),
-//         tripid: req.body.tripid,
-//         tripid: selecteTripid,
-//     };
-//     const query = 'INSERT INTO upload SET ?';
-//     db.query(query, fileData, (err, result) => {
-//         if (err) {
-//             console.error('Error storing file in the database:', err);
-//             return res.status(500).json({ error: 'Error storing file in the database.' });
-//         }
-//         return res.status(200).json({ message: 'File uploaded and data inserted successfully.' });
-//     });
-// });
+
 router.post('/uploads', upload.single('file'), (req, res) => {
     const selecteTripid = req.body.tripid;
     const fileData = {
@@ -54,11 +33,9 @@ router.post('/uploads', upload.single('file'), (req, res) => {
     const updateQuery = 'INSERT INTO upload SET ?';
     db.query(updateQuery, [fileData], (err, results) => {
         if (err) {
-            console.error('Error updating profile photo:', err); // Log the error
             res.status(500).json({ message: 'Internal server error' });
             return;
         }
-        console.log('Profile photo uploaded successfully');
         res.status(200).json({ message: 'Profile photo uploaded successfully' });
     });
 });
@@ -70,7 +47,6 @@ router.post('/update_updatetrip', (req, res) => {
 
     db.query(query, [toll, parking, tripid], (err, results) => {
         if (err) {
-            console.error('Error updating status:', err);
             res.status(500).json({ message: 'Internal server error' });
             return;
         }

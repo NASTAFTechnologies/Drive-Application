@@ -11,7 +11,6 @@ router.get('/tripsheetfilter/:username', (req, res) => {
         const query = "SELECT * FROM tripsheet WHERE driverName = ? AND startdate >= ? AND startdate <= ? ";
         db.query(query, [username, startDate, endDate], (err, results) => {
             if (err) {
-                console.error('Error executing query:', err);
                 res.status(500).json({ message: 'Internal server error' });
                 return;
             }
@@ -23,7 +22,6 @@ router.get('/tripsheetfilter/:username', (req, res) => {
             res.status(200).json(results); // Send filtered data
         });
     } catch (err) {
-        console.error('Error:', err);
         res.status(500).json({ message: 'Internal server error' });
     }
 });

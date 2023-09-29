@@ -32,7 +32,6 @@ app.get('/profile_photos', (req, res) => {
   const selectQuery = 'SELECT profile_image FROM usercreation WHERE username = ?';
   db.query(selectQuery, [username], (err, results) => {
     if (err) {
-      console.error('Error fetching profile photo path:', err);
       res.status(500).json({ message: 'Internal server error' });
       return;
     }
@@ -41,7 +40,6 @@ app.get('/profile_photos', (req, res) => {
       return;
     }
     const profileImagePath = results[0].profile_image;
-    console.log('Profile Image backend Path:', profileImagePath); // Add this line
     res.status(200).json({ profileImagePath });
   });
 });
@@ -54,7 +52,6 @@ app.get('/signature_photos', (req, res) => {
   const selectQuery = 'SELECT signature_path FROM signatures WHERE tripid = ?';
   db.query(selectQuery, [tripid], (err, results) => {
     if (err) {
-      console.error('Error fetching signature photo path:', err);
       res.status(500).json({ message: 'Internal server error' });
       return;
     }
@@ -74,7 +71,6 @@ app.get('/signature_photos', (req, res) => {
       .filter(segment => segment !== '..')
       .join(path.sep);
 
-    console.log('Cleaned Relative signature Image Path:', cleanedRelativePath); // Add this line
     res.status(200).json({ uploadedImagePath: cleanedRelativePath });
   });
 });
@@ -83,11 +79,9 @@ app.get('/signature_photos', (req, res) => {
 
 app.get('/uploads', (req, res) => {
   const { tripid } = req.query;
-  console.log('tripid ',req.query);
   const selectQuery = 'SELECT path FROM upload WHERE tripid = ?';
   db.query(selectQuery, [tripid], (err, results) => {
     if (err) {
-      console.error('Error fetching profile photo path:', err);
       res.status(500).json({ message: 'Internal server error' });
       return;
     }
@@ -95,9 +89,8 @@ app.get('/uploads', (req, res) => {
       res.status(404).json({ message: 'Profile not found' });
       return;
     }
-    const attachedImagePath = results[0].path;
-    console.log('attached Image backend Path:', attachedImagePath); // Add this line
-    res.status(200).json({ attachedImagePath });
+    const attachedImagePaths = results.map((result) => result.path);
+    res.status(200).json({ attachedImagePaths });
   });
 });
 

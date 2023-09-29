@@ -44,16 +44,14 @@ const Login: React.FC = () => {
 
       if (response.status === 200) {
         setShowLoginSuccess(true);
-        localStorage.setItem('loggedInUsername', input.username); 
+        localStorage.setItem('loggedInUsername', input.username);
         localStorage.setItem('userId', username);
 
         localStorage.setItem("auth", 'true');
       } else {
         // Failed login
-        console.log('Invalid login credentials');
       }
     } catch (error) {
-      console.error("Error:", error);
       // setError("An error occurred while logging in.");
     }
   };

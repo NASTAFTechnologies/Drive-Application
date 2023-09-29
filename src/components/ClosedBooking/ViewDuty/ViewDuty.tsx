@@ -24,7 +24,7 @@ import { chevronBackOutline } from 'ionicons/icons';
 const ViewDuty: React.FC = () => {
     const [present] = useIonToast();
     const [uploadedImagePath, setuploadedImagePath] = useState('');
-    const [attachedImagePath, setattachedImagePath] = useState('');
+    const [attachedImagePath, setAttachedImagePath] = useState<string[]>([]);
 
     const [userData, setUserData] = useState({
         tripid: '',
@@ -52,52 +52,46 @@ const ViewDuty: React.FC = () => {
             axios.get(`http://localhost:8081/signature_photos?tripid=${selecteTripid}`)
                 .then((response) => {
                     const uploadedImagePath = response.data.uploadedImagePath.replace(/\\/g, '/');
-                    console.log('Profile Image Path:', uploadedImagePath);
                     setuploadedImagePath(uploadedImagePath);
-                    console.log('summa path kattu', uploadedImagePath);
                 })
                 .catch((error) => {
-                    console.error('Error fetching profile photo path:', error);
                 });
         }
     }, []);
-    //get attached image
+
     useEffect(() => {
         const selecteTripid = localStorage.getItem('selectTripid');
         if (selecteTripid) {
             axios.get(`http://localhost:8081/uploads?tripid=${selecteTripid}`)
                 .then((response) => {
-                    const attachedImagePath = response.data.attachedImagePath.replace(/\\/g, '/');
-                    console.log('Profile Image Path:', attachedImagePath);
-                    setattachedImagePath(attachedImagePath);
-                    console.log('attached path', attachedImagePath);
+                    const paths = response.data.attachedImagePaths;
+                    if (paths && paths.length > 0) {
+                        // const sanitizedImagePaths = paths.map((path) => path.replace(/\\/g, '/'));
+                        const sanitizedImagePaths = paths.map((path: string) => path.replace(/\\/g, '/'));
+
+                        setAttachedImagePath(sanitizedImagePaths);
+                    } else {
+                    }
                 })
                 .catch((error) => {
-                    console.error('Error fetching profile photo path:', error);
                 });
         }
     }, []);
-
 
     useEffect(() => {
         // Retrieve duty type and tripid from localStorage
         const selectDuty = localStorage.getItem('selectDuty');
         const selectTripid = localStorage.getItem('selectTripid');
 
-        // Check if duty type and tripid are available
         if (selectDuty && selectTripid) {
-            // Fetch trip sheet details based on selectedDuty and selectedTripid
             axios
                 .get(`http://localhost:8081/tripsheet/${selectTripid}/${selectDuty}`)
                 .then((response) => {
                     setUserData(response.data);
                 })
                 .catch((error) => {
-                    console.error('Error fetching trip sheet details:', error);
                 });
         } else {
-            // Handle the case where duty type and tripid are not available in localStorage
-            console.error('Duty type and tripid not found in localStorage');
         }
     }, []);
 
@@ -128,7 +122,7 @@ const ViewDuty: React.FC = () => {
     useEffect(() => {
         const isAuthenticated = localStorage.getItem('auth');
         if (!isAuthenticated) {
-            history.replace('/'); // Redirect to the login page if not authenticated
+            history.replace('/');
         }
     }, [history]);
 
@@ -210,7 +204,10 @@ const ViewDuty: React.FC = () => {
                         </IonButton>
                     </div>
                     <IonCard>
-                        <img alt="Signature Image" src={`../../../../Backend/server/${uploadedImagePath}`} />
+                        <img
+                            alt="Signature Image"
+                            src={`../../../../Backend/server/${uploadedImagePath}`} // Make sure the path is correct
+                        />
                         <IonCardHeader>
                             <IonCardTitle>Signature Image</IonCardTitle>
                         </IonCardHeader>
@@ -225,7 +222,13 @@ const ViewDuty: React.FC = () => {
                         </IonButton>
                     </div>
                     <IonCard>
-                        <img alt="Signature Image" src={`../../../../Backend/server/${attachedImagePath}`} />
+                        {attachedImagePath.map((path, index) => (
+                            <img
+                                key={index}
+                                alt={`Image ${index + 1}`}
+                                src={`../../../../Backend/server/${path}`}
+                            />
+                        ))}
                         <IonCardHeader>
                             <IonCardTitle>Attachment Image</IonCardTitle>
                         </IonCardHeader>

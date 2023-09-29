@@ -18,14 +18,12 @@ router.post('/api/saveSignature', (req, res) => {
 
     fs.writeFile(imagePath, imageBuffer, (error) => {
         if (error) {
-            console.error('Error saving signature image:', error);
             res.status(500).json({ error: 'Failed to save signature' });
         } else {
             const relativeImagePath = path.relative(baseImagePath, imagePath); // Calculate relative path
             const sql = 'INSERT INTO signatures (tripid, signature_path) VALUES (?, ?)';
             db.query(sql, [tripid, relativeImagePath], (dbError, results) => {
                 if (dbError) {
-                    console.error('Error saving signature data:', dbError);
                     res.status(500).json({ error: 'Failed to save signature' });
                 } else {
                     res.json({ message: 'Signature saved successfully' });

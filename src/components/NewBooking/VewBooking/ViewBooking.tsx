@@ -64,13 +64,11 @@ const ViewBooking: React.FC = () => {
             .post('http://localhost:8081/update_trip_apps', updatedData)
             .then((response) => {
                 // Handle a successful response (e.g., show a confirmation message)
-                console.log('Update successful:', response.data);
                 presentToast('top'); // Show a success message
                 history.push('/menu/home');
             })
             .catch((error) => {
                 // Handle errors (e.g., show an error message)
-                console.error('Error updating status:', error);
                 presentToast('top',); // Show an error message
             });
     };
@@ -98,11 +96,10 @@ const ViewBooking: React.FC = () => {
                     setUserData(response.data);
                 })
                 .catch((error) => {
-                    console.error('Error fetching trip sheet details:', error);
+
                 });
         } else {
             // Handle the case where duty type and tripid are not available in localStorage
-            console.error('Duty type and tripid not found in localStorage');
         }
     }, []);
     //end
