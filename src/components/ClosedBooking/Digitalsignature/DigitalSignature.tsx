@@ -10,6 +10,12 @@ const DigitalSignature: React.FC = () => {
   const signatureCanvasRef = useRef<any>();
   const history = useHistory();
   const [present] = useIonToast();
+  // const [formValues, setFormValues] = useState({
+  //   guestname: '',
+  //   guestmobileno: '',
+  //   email: '',
+  //   useage: '',
+  // });
   const [userData, setUserData] = useState({
     tripid: '',
   });
@@ -81,11 +87,28 @@ const DigitalSignature: React.FC = () => {
     }
   };
 
+  const handlecheck = async () => {
+    // const selectgustname = localStorage.getItem('selectguestname');
+    try {
+      // const dataToSend = {
+      //   guestname: selectgustname,
+      // };
+
+      await axios.post('http://localhost:8081/send-email');
+      // alert('Email sent successfully');
+      // setSuccess(true);
+      // console.log();
+    } catch (error) {
+      console.error('Error sending email:', error);
+      alert('An error occurred while sending the email');
+    }
+
+  };
 
   const handleclosesave = () => {
     saveSignature();
     handleCloseDuty();
-
+    handlecheck();
   };
 
   useEffect(() => {

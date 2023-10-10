@@ -53,6 +53,7 @@ const ViewDuty: React.FC = () => {
                 .then((response) => {
                     const uploadedImagePath = response.data.uploadedImagePath.replace(/\\/g, '/');
                     setuploadedImagePath(uploadedImagePath);
+                    console.log(uploadedImagePath);
                 })
                 .catch((error) => {
                 });
@@ -206,7 +207,7 @@ const ViewDuty: React.FC = () => {
                     <IonCard>
                         <img
                             alt="Signature Image"
-                            src={`../../../../Backend/server/${uploadedImagePath}`} // Make sure the path is correct
+                            src={`../../../../Backend/server/Router/path_to_save_images/${uploadedImagePath}`} // Make sure the path is correct
                         />
                         <IonCardHeader>
                             <IonCardTitle>Signature Image</IonCardTitle>

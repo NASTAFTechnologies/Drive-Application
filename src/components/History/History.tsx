@@ -52,7 +52,6 @@ const TripSheet: React.FC = () => {
   const handleRowClickBooking = (tripid: number, duty: string) => {
     localStorage.setItem('selectDuty', duty);
     localStorage.setItem('selectTripid', tripid.toString());
-    // history.push(`/menu/home/viewbooking/`);
     history.push('/menu/home/closebooking/viewduty');
   };
 
