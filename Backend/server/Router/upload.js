@@ -30,7 +30,7 @@ router.post('/uploads', upload.single('file'), (req, res) => {
         tripid: req.body.tripid,
         tripid: selecteTripid,
     };
-    const updateQuery = 'INSERT INTO upload SET ?';
+    const updateQuery = 'INSERT INTO tripsheetupload SET ?';
     db.query(updateQuery, [fileData], (err, results) => {
         if (err) {
             res.status(500).json({ message: 'Internal server error' });

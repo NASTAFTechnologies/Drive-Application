@@ -117,7 +117,6 @@ const ViewDuty: React.FC = () => {
         e.preventDefault();
     };
 
-
     const history = useHistory();
 
     useEffect(() => {
