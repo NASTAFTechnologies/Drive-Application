@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import {
     IonPage,
     IonHeader,
@@ -7,12 +8,12 @@ import {
     IonContent,
     IonButtons,
     IonButton,
-    IonBackButton,
     IonInput,
+    IonCheckbox,
     IonItem,
     IonList,
     useIonToast,
-    IonIcon
+    IonIcon,
 } from '@ionic/react';
 import './UpdateToll.css';
 import { useHistory } from 'react-router-dom';
@@ -21,7 +22,15 @@ import { chevronBackOutline } from 'ionicons/icons';
 const UpdateToll: React.FC = () => {
     const history = useHistory();
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [selectedFile2, setSelectedFile2] = useState<File | null>(null);
+    // const [toll, setToll] = useState<string | null>(null);
+    // const [parking, setParking] = useState<string | null>(null);
+    const [inputData, setInputData] = useState({
+        toll: '',
+        parking: '',
+    });
     const [present] = useIonToast();
+
 
     useEffect(() => {
         const isAuthenticated = localStorage.getItem('auth');
@@ -34,17 +43,6 @@ const UpdateToll: React.FC = () => {
         history.push('/menu/home/closebooking/closeduty');
     };
 
-    const handleFileUpload = (files: FileList | null) => {
-        // Handle the uploaded file(s) here
-        if (files && files.length > 0) {
-            // Process the files as needed
-            const file = files[0];
-            setSelectedFile(file);
-            console.log(file);
-            presentToast('top'); // Show toast notification after file upload
-        }
-    };
-
     const presentToast = (position: 'top' | 'middle' | 'bottom') => {
         present({
             message: 'File Uploaded Successfully!',
@@ -53,12 +51,105 @@ const UpdateToll: React.FC = () => {
         });
     };
 
+    const handleUpload = (fieldName: 'toll') => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.pdf, .jpg, .jpeg, .png';
+        input.onchange = (event: Event) => {
+            const changeEvent = event as unknown as React.ChangeEvent<HTMLInputElement>;
+            handleFileChange(changeEvent, fieldName);
+        };
+        input.click();
+    };
+
+    const handleUpload2 = (fieldName: 'parking') => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.pdf, .jpg, .jpeg, .png';
+        input.onchange = (event: Event) => {
+            const changeEvent = event as unknown as React.ChangeEvent<HTMLInputElement>;
+            handleFileChange2(changeEvent, fieldName);
+        };
+        input.click();
+    };
+
+    const handleFileChange2 = async (event: React.ChangeEvent<HTMLInputElement>, fieldName: 'toll' | 'parking') => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+
+        const selecteeTripid = localStorage.getItem('selectTripid'); // Get the tripid from localStorage
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        if (selecteeTripid) {
+            formData.append('tripid', selecteeTripid); // Include the tripid in the FormData if it's not null
+        }
+
+        try {
+            const response = await axios.post(`http://localhost:8081/uploads`, formData);
+            presentToast('top');
+            setSelectedFile2(file);
+        } catch (error) {
+
+        }
+    };
+
+    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>, fieldName: 'toll' | 'parking') => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+
+        const selecteTripid = localStorage.getItem('selectTripid'); // Get the tripid from localStorage
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        if (selecteTripid) {
+            formData.append('tripid', selecteTripid); // Include the tripid in the FormData if it's not null
+        }
+
+        try {
+            const response = await axios.post(`http://localhost:8081/uploads`, formData);
+            presentToast('top');
+            setSelectedFile(file);
+        } catch (error) {
+
+        }
+    };
+
+
+    const handleInputChange = (e: CustomEvent) => {
+        const { name, value } = e.target as HTMLInputElement;
+        setInputData((prevInputData) => ({
+            ...prevInputData,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = () => {
+        const tripid = localStorage.getItem('selectTripid');
+        const updatedData = {
+            tripid: tripid,
+            toll: inputData.toll,// Include both toll and parking in the request data
+            parking: inputData.parking, // Include parking
+        };
+        axios
+            .post('http://localhost:8081/update_updatetrip', updatedData)
+            .then((response) => {
+                presentToast('top');
+                history.push('/menu/home');
+            })
+            .catch((error) => {
+                presentToast('top');
+            });
+    };
+
     return (
         <IonPage>
             <IonHeader>
                 <IonToolbar>
                     <IonButtons slot="start">
-                        <IonButton className='profile-back-button' onClick={handleBack}>
+                        <IonButton className="profile-back-button" onClick={handleBack}>
                             <IonIcon icon={chevronBackOutline} />
                         </IonButton>
                     </IonButtons>
@@ -69,29 +160,54 @@ const UpdateToll: React.FC = () => {
                 <div className="container-file-upload">
                     <IonList>
                         <IonItem>
-                            <IonInput label="Enter Toll & Parking" labelPlacement="floating" placeholder=""></IonInput>
+                            <IonInput
+                                label="Enter Toll Amount"
+                                name='toll'
+                                labelPlacement="floating"
+                                value={inputData.toll}
+                                onIonChange={handleInputChange}
+                                required
+                            ></IonInput>
+                        </IonItem>
+                        <div className="File-upload-btn">
+                            <input type="file" id="uploadTollInput" style={{ display: 'none' }} />
+                            <IonButton size="small" onClick={() => handleUpload('toll')}>
+                                Upload Toll Bill
+                            </IonButton>
+                            {selectedFile && (
+                                <div>
+                                    Uploaded Toll Bill: {selectedFile.name}
+                                </div>
+                            )}
+                        </div>
+                        <IonItem>
+                            <IonInput
+                                label="Enter parking Amount"
+                                name="parking" // Ensure that the name matches the key in the request body
+                                labelPlacement="floating"
+                                value={inputData.parking}
+                                onIonChange={handleInputChange}
+                                required
+                            ></IonInput>
                         </IonItem>
                         <IonItem>
-                            <IonInput type='number' label="Enter Amount" labelPlacement="floating" placeholder=""></IonInput>
+                            <IonCheckbox aria-label='Entered amount is correcct' aria-required />
                         </IonItem>
+                        <div className="File-upload-btn">
+                            <input type="file" id="uploadParkingInput" style={{ display: 'none' }} />
+                            <IonButton size="small" onClick={() => handleUpload2('parking')}>
+                                Upload Parking Bill
+                            </IonButton>
+                            {selectedFile2 && (
+                                <div>
+                                    Uploaded Parking Bill: {selectedFile2.name}
+                                </div>
+                            )}
+                        </div>
                     </IonList>
-                    <div className="File-upload-btn">
-                        <input
-                            type="file"
-                            id="uploadInput"
-                            style={{ display: 'none' }}
-                            onChange={(e) => handleFileUpload(e.target.files)}
-                        />
-                        <IonButton size='small' onClick={() => document.getElementById('uploadInput')?.click()}>
-                            Upload Bill PDF or Photo
-                        </IonButton>
-                        {selectedFile && (
-                            <div>
-                                Uploaded File: {selectedFile.name}
-                                {/* You can display additional information about the file if needed */}
-                            </div>
-                        )}
-                    </div>
+                    <IonButton expand="full" onClick={handleSubmit}>
+                        Submit
+                    </IonButton>
                 </div>
             </IonContent>
         </IonPage>

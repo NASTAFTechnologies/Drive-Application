@@ -1,8 +1,9 @@
 import React, { FormEvent, useEffect, useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import {
     IonInput,
     IonItem,
-    IonLabel,
     IonTextarea,
     IonPage,
     IonHeader,
@@ -11,75 +12,35 @@ import {
     IonContent,
     IonButtons,
     IonButton,
-    IonBackButton,
     useIonToast,
     IonIcon,
 } from '@ionic/react';
 import './ViewBooking.css'
-import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom'; // Import useHistory here
 import { chevronBackOutline } from 'ionicons/icons';
 
 const ViewBooking: React.FC = () => {
-
     const [present] = useIonToast();
-    const presentToast = (position: 'top' | 'middle' | 'bottom') => {
-        present({
-            message: 'Your Booking Was Accepted !',
-            duration: 1500,
-            position: position,
-        });
-    };
+    const history = useHistory(); // Use useHistory to get the history object
+    const [userData, setUserData] = useState({
+        tripid: '',
+        startdate: '',
+        reporttime: '',
+        duty: '',
+        vehType: '',
+        customer: '',
+        guestname: '',
+        guestmobileno: '',
+        address1: '',
+    });
 
-    const [tripSheetNo, setTripSheetNo] = useState('98897');
-    const [tripDate, setTripDate] = useState('2023-07-20');
-    const [reportTime, setReportTime] = useState('11:33');
-    const [dutyType, setDutyType] = useState('Local');
-    const [vehicleType, setVehicleType] = useState('-');
-    const [companyName, setCompanyName] = useState('Default Company');
-    const [guestName, setGuestName] = useState('Default Guest');
-    const [contactNumber, setContactNumber] = useState('7550256616');
-    const [address, setAddress] = useState('ITC Choll Park');
-
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        // Add logic to handle form submission
-    };
     const handleInputChange = (e: CustomEvent) => {
         const { name, value } = e.detail;
-        switch (name) {
-            case 'tripSheetNo':
-                setTripSheetNo(value);
-                break;
-            case 'tripDate':
-                setTripDate(value);
-                break;
-            case 'reportTime':
-                setReportTime(value);
-                break;
-            case 'dutyType':
-                setDutyType(value);
-                break;
-            case 'vehicleType':
-                setVehicleType(value);
-                break;
-            case 'contactNumber':
-                setContactNumber(value);
-                break;
-            case 'companyName':
-                setCompanyName(value); // Use the setter function to update the variable
-                break;
-            case 'guestName':
-                setGuestName(value); // Use the setter function to update the variable
-                break;
-            case 'address':
-                setAddress(value); // Use the setter function to update the variable
-                break;
-            default:
-                break;
-        }
+        setUserData((prevUserData) => ({
+            ...prevUserData,
+            [name]: value,
+        }));
     };
-
-    const history = useHistory();
 
     useEffect(() => {
         const isAuthenticated = localStorage.getItem('auth');
@@ -91,8 +52,57 @@ const ViewBooking: React.FC = () => {
     const handleBack = () => {
         history.push('/menu/home/newbooking');
     };
+    //change app status to accept
+    const handleAccept = () => {
+        // Create a payload with the updated data (e.g., changing the 'status' to 'accept')
+        const updatedData = {
+            tripid: userData.tripid,
+            apps: 'Accept', // Update with the new status value
+        };
 
+        axios
+            .post('http://localhost:8081/update_trip_apps', updatedData)
+            .then((response) => {
+                // Handle a successful response (e.g., show a confirmation message)
+                presentToast('top'); // Show a success message
+                history.push('/menu/home');
+            })
+            .catch((error) => {
+                // Handle errors (e.g., show an error message)
+                presentToast('top',); // Show an error message
+            });
+    };
+    //end
 
+    const presentToast = (position: 'top' | 'middle' | 'bottom') => {
+        present({
+            message: 'Your Duty Was Started !',
+            duration: 1500,
+            position: position,
+        });
+    };
+    //get duty type details based on login duty type and tripid
+    useEffect(() => {
+        // Retrieve duty type and tripid from localStorage
+        const selectedDuty = localStorage.getItem('selectedDuty');
+        const selectedTripid = localStorage.getItem('selectedTripid');
+
+        // Check if duty type and tripid are available
+        if (selectedDuty && selectedTripid) {
+            // Fetch trip sheet details based on selectedDuty and selectedTripid
+            axios
+                .get(`http://localhost:8081/tripsheet/${selectedTripid}/${selectedDuty}`)
+                .then((response) => {
+                    setUserData(response.data);
+                })
+                .catch((error) => {
+
+                });
+        } else {
+            // Handle the case where duty type and tripid are not available in localStorage
+        }
+    }, []);
+    //end
     return (
         <IonPage>
             <IonHeader>
@@ -107,72 +117,35 @@ const ViewBooking: React.FC = () => {
             </IonHeader>
             <IonContent>
                 <div className='form-container'>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={(e: FormEvent<HTMLFormElement>) => e.preventDefault()}>
                         <IonItem className='field-item'>
-                            <IonLabel className="bold-label">Trip Sheet No :</IonLabel>
-                            <IonInput
-                                name="tripSheetNo"
-                                value={tripSheetNo}
-                                onIonChange={handleInputChange}
-                                readonly
-                            />
+                            <IonInput label='Trip Sheet No :' name="tripid" onIonChange={handleInputChange} value={userData.tripid} readonly />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className="bold-label">Trip Date :</IonLabel>
-                            <IonInput
-                                type="date"
-                                name="tripDate"
-                                value={tripDate}
-                                onIonChange={handleInputChange}
-                                required
-                            />
+                            <IonInput label='Trip Date :' name="startdate" value={userData.startdate} onIonChange={handleInputChange} required />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className="bold-label">Report Time :</IonLabel>
-                            <IonInput
-                                type="time"
-                                name="reportTime"
-                                value={reportTime}
-                                onIonChange={handleInputChange}
-                                required
-                            />
+                            <IonInput label='Report Time :' name="reporttime" value={userData.reporttime} onIonChange={handleInputChange} required />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className="bold-label">Duty Type :</IonLabel>
-                            <IonInput name="dutyType" value={dutyType} readonly />
+                            <IonInput label='Duty Type :' name="duty" value={userData.duty} readonly />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className="bold-label">Vehicle Type :</IonLabel>
-                            <IonInput name="vehicleType" value={vehicleType} readonly />
+                            <IonInput label='Vehicle Type :' name="vehType" value={userData.vehType} readonly />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className="bold-label">Company Name :</IonLabel>
-                            <IonInput name="companyName" value={companyName} readonly />
+                            <IonInput label='Company Name ' name="customer" value={userData.customer} readonly />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className="bold-label">Guest Name :</IonLabel>
-                            <IonInput name="guestName" value={guestName} readonly />
+                            <IonInput label='Guest Name :' name="guestname" value={userData.guestname} readonly />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className="bold-label">Contact Number :</IonLabel>
-                            <IonInput
-                                type="tel"
-                                name="contactNumber"
-                                value={contactNumber}
-                                onIonChange={handleInputChange}
-                                readonly
-                            />
+                            <IonInput label='Contact Number :' type="tel" name="guestmobileno" value={userData.guestmobileno} onIonChange={handleInputChange} readonly />
                         </IonItem>
                         <IonItem className='field-item'>
-                            <IonLabel className="bold-label">Address :</IonLabel>
-                            <IonTextarea
-                                name="address"
-                                value={address}
-                                onIonChange={handleInputChange}
-                                readonly
-                            />
+                            <IonTextarea label='Address :' name="address1" value={userData.address1} onIonChange={handleInputChange} readonly />
                         </IonItem>
-                        <IonButton className="booking-accept-btn" expand="block" onClick={() => presentToast('top')} size="small" type="submit">Accept
+                        <IonButton className="booking-accept-btn" expand="block" onClick={handleAccept} size="small" type="submit">Accept
                         </IonButton>
                     </form>
                 </div>

@@ -1,15 +1,24 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import './DigitalSignature.css';
 import { useHistory } from 'react-router-dom';
 import SignatureCanvas from 'react-signature-canvas';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonBackButton, useIonToast, IonIcon, } from '@ionic/react';
 import { chevronBackOutline } from 'ionicons/icons';
-
+import axios from 'axios';
 
 const DigitalSignature: React.FC = () => {
   const signatureCanvasRef = useRef<any>();
   const history = useHistory();
   const [present] = useIonToast();
+  // const [formValues, setFormValues] = useState({
+  //   guestname: '',
+  //   guestmobileno: '',
+  //   email: '',
+  //   useage: '',
+  // });
+  const [userData, setUserData] = useState({
+    tripid: '',
+  });
   const presentToast = (position: 'top' | 'middle' | 'bottom') => {
     present({
       message: 'Signature Saved !',
@@ -21,16 +30,91 @@ const DigitalSignature: React.FC = () => {
   const clearCanvas = () => {
     signatureCanvasRef.current.clear();
   };
+  useEffect(() => {
+    // Retrieve duty type and tripid from localStorage
+    const selectDuty = localStorage.getItem('selectDuty');
+    const selectTripid = localStorage.getItem('selectTripid');
 
-  const getSignatureAsImage = () => {
-    const image = signatureCanvasRef.current.toDataURL();
-    console.log(image);
+    // Check if duty type and tripid are available
+    if (selectDuty && selectTripid) {
+      // Fetch trip sheet details based on selectedDuty and selectedTripid
+      axios
+        .get(`http://localhost:8081/tripsheet/${selectTripid}/${selectDuty}`)
+        .then((response) => {
+          setUserData(response.data);
+        })
+        .catch((error) => {
+        });
+    } else {
+      // Handle the case where duty type and tripid are not available in localStorage
+    }
+  }, []);
+
+  const handleCloseDuty = () => {
+    const updatedData = {
+      tripid: userData.tripid,
+      apps: 'Closed',
+    };
+
+    axios
+      .post('http://localhost:8081/update_closetrip_apps', updatedData)
+      .then((response) => {
+        presentToast('top'); // Show a success message
+        history.push('/menu/home');
+      })
+      .catch((error) => {
+        presentToast('top'); // Show an error message
+      });
+  };
+
+  const saveSignature = async () => {
+    const dataUrl = signatureCanvasRef.current.toDataURL('image/png');
+    const selectTripid = localStorage.getItem('selectTripid');
+
+    try {
+      const response = await fetch('http://localhost:8081/api/saveSignature', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ tripid: selectTripid, signatureData: dataUrl }), // Include tripid
+      });
+
+      if (response.ok) {
+      } else {
+      }
+    } catch (error) {
+    }
+  };
+
+  const handlecheck = async () => {
+    // const selectgustname = localStorage.getItem('selectguestname');
+    try {
+      // const dataToSend = {
+      //   guestname: selectgustname,
+      // };
+
+      await axios.post('http://localhost:8081/send-email');
+      // alert('Email sent successfully');
+      // setSuccess(true);
+      // console.log();
+    } catch (error) {
+      console.error('Error sending email:', error);
+      alert('An error occurred while sending the email');
+    }
+
+  };
+
+  const handleclosesave = () => {
+    saveSignature();
+    handleCloseDuty();
+    handlecheck();
   };
 
   useEffect(() => {
     const isAuthenticated = localStorage.getItem('auth');
     if (!isAuthenticated) {
-      history.replace('/'); // Redirect to the login page if not authenticated
+      history.replace('/');
     }
   }, [history]);
 
@@ -64,7 +148,7 @@ const DigitalSignature: React.FC = () => {
 
           <div className="button-container">
             <IonButton onClick={clearCanvas}>Clear</IonButton>
-            <IonButton onClick={() => presentToast('top')} type="submit">Save
+            <IonButton onClick={handleclosesave} type="submit">Save
             </IonButton>
           </div>
         </div>

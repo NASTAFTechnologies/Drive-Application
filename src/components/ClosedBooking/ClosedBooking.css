@@ -40,7 +40,7 @@
     height: 80px;
     font-size: 17px;
     --border-radius: 10px;
-    
+
     --background: #fff;
     --color: #000;
     --background-hover: #ccc;
@@ -60,12 +60,13 @@
     margin-top: 20px;
     font-size: 19px;
 }
+
 /* Styles specific to iPhone */
 .popup-container.iphone {
     display: flex;
-  }
-  
-  /* Styles specific to Android */
-  .popup-container.android {
+}
+
+/* Styles specific to Android */
+.popup-container.android {
     display: initial;
-  }
+}
